@@ -12,4 +12,7 @@ class UserDTO {
     @XmlElement
     String name
 
+    @XmlElement
+    String account
+
 }

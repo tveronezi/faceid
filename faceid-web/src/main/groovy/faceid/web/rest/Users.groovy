@@ -13,7 +13,10 @@ class Users {
     @Produces('application/json')
     @GET
     public List<UserDTO> list() {
-        return []
+        return [
+                new UserDTO(name: 'Michael Jackson', account: 'jackson'),
+                new UserDTO(name: 'Paul McCartney', account: 'mccartney')
+        ]
     }
 
 }
