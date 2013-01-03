@@ -1,3 +1,12 @@
+Ext.Loader.setConfig({
+    enabled: true,
+    paths: {
+        'faceid': 'app/js'
+    }
+});
+
+Ext.require('faceid.i18n');
+
 Ext.application({
     name: 'HelloExt',
     launch: function () {
@@ -5,8 +14,8 @@ Ext.application({
             layout: 'fit',
             items: [
                 {
-                    title: 'Hello Ext',
-                    html: 'Hello! Welcome to Ext JS.'
+                    title: faceid.i18n.get('application.name'),
+                    html: faceid.i18n.get('application.hello', {name: 'User'})
                 }
             ]
         });
