@@ -1,4 +1,4 @@
-package web.data.dto
+package faceid.web.data.dto
 
 import javax.xml.bind.annotation.XmlAccessType
 import javax.xml.bind.annotation.XmlAccessorType

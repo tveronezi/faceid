@@ -1,6 +1,6 @@
-package web
+package faceid.web
 
-import web.rest.Users
+import faceid.web.rest.Users
 
 import javax.ws.rs.ApplicationPath
 

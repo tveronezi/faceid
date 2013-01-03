@@ -1,6 +1,6 @@
-package web.rest
+package faceid.web.rest
 
-import web.data.dto.UserDTO
+import faceid.web.data.dto.UserDTO
 
 import javax.ws.rs.GET
 import javax.ws.rs.Path
