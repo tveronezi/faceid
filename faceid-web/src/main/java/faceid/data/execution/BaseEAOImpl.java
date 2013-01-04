@@ -16,7 +16,7 @@ import java.util.List;
 @Stateless
 @Local(BaseEAO.class)
 public class BaseEAOImpl implements BaseEAO {
-    @PersistenceContext(unitName = "usersPU")
+    @PersistenceContext(unitName = "userPU")
     private EntityManager em;
 
     @Override

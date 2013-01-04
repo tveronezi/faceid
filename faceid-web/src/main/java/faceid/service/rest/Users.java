@@ -12,6 +12,7 @@ import java.util.List;
 public class Users {
 
     @GET
+    @Path("/list")
     @Produces("application/json")
     public List<UserDto> list() {
         final List<UserDto> result = new ArrayList<UserDto>();
