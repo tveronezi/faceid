@@ -3,5 +3,6 @@ Ext.define('faceid.portlets.Portlet', {
     height: 100,
     width: 100,
     title: '-',
-    draggable: true
+    draggable: true,
+    resizable: true
 });
