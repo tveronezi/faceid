@@ -8,6 +8,7 @@ import faceid.data.execution.command.FindByStringField;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import java.util.List;
 
 @Stateless
 public class UserImpl {
@@ -28,4 +29,7 @@ public class UserImpl {
         return this.baseEAO.execute(find);
     }
 
+    public List<User> listAll() {
+        return this.baseEAO.findAll(User.class);
+    }
 }

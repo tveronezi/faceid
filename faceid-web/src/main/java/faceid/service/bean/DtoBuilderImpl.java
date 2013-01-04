@@ -14,6 +14,7 @@ public class DtoBuilderImpl {
         }
         final UserDto result = new UserDto();
         result.setName(user.getName());
+        result.setAccount(user.getAccount());
         return result;
     }
 }
