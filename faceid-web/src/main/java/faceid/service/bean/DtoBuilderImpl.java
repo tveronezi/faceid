@@ -13,6 +13,7 @@ public class DtoBuilderImpl {
             return null;
         }
         final UserDto result = new UserDto();
+        result.setId(user.getUid());
         result.setName(user.getName());
         result.setAccount(user.getAccount());
         return result;

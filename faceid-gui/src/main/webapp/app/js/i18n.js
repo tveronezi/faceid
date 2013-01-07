@@ -1,8 +1,12 @@
 (function () {
+    // Add your messages to this list.
+    // This is a list of extjs Templates, therefore you can use parameters in it.
     var messages = {
         'application.name': 'faceid',
         'application.users': 'Users',
-        'application.log': 'Log'
+        'application.log': 'Log',
+        'user.name': 'Name',
+        'user.account': 'Account'
     };
 
     Ext.define('faceid.i18n', {
@@ -26,7 +30,7 @@
                 messages[key] = t;
             });
             this.messages = messages;
-            this.missing = new Ext.Template('![{key}]!');
+            this.missing = new Ext.Template('[!{key}!]');
         }
     });
 })();

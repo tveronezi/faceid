@@ -11,6 +11,9 @@ import javax.xml.bind.annotation.XmlRootElement
 class UserDto implements Serializable {
 
     @XmlElement
+    Long id
+
+    @XmlElement
     String name
 
     @XmlElement

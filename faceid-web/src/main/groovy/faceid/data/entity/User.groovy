@@ -6,7 +6,7 @@ import javax.persistence.Table
 import javax.persistence.UniqueConstraint
 
 @Entity
-@Table(name = 'user_tbl', uniqueConstraints = @UniqueConstraint(columnNames = ['usr_name']))
+@Table(name = 'user_tbl', uniqueConstraints = @UniqueConstraint(columnNames = ['usr_account']))
 class User extends BaseEntity {
 
     @Column(name = 'usr_name', nullable = false)

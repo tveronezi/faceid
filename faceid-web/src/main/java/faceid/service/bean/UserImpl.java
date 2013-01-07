@@ -29,6 +29,10 @@ public class UserImpl {
         return this.baseEAO.execute(find);
     }
 
+    public User getUserById(Long id) {
+        return this.baseEAO.find(User.class, id);
+    }
+
     public List<User> listAll() {
         return this.baseEAO.findAll(User.class);
     }

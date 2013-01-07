@@ -1,4 +1,4 @@
-Ext.define('faceid.portlets.PortletContainer', {
+Ext.define('faceid.view.portlets.PortletContainer', {
     extend: 'Ext.panel.Panel',
     layout: 'absolute',
     logic: function () {
@@ -75,8 +75,8 @@ Ext.define('faceid.portlets.PortletContainer', {
             updateAreaMap(panel);
         }
 
-        addPanel('faceid.portlets.Users', 50, 50);
-        addPanel('faceid.portlets.AuthenticationLog', 460, 50);
+        addPanel('faceid.view.Users', 50, 50);
+        addPanel('faceid.view.AuthenticationLog', 460, 50);
 
         Ext.apply(this, {items: items});
     },
