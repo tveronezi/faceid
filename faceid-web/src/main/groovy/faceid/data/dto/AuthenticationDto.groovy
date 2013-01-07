@@ -13,7 +13,7 @@ class AuthenticationDto implements Serializable {
     Long id
 
     @XmlElement
-    Date date
+    Long timestamp
 
     @XmlElement
     String account

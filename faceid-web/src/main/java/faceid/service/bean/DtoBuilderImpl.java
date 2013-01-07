@@ -28,7 +28,7 @@ public class DtoBuilderImpl {
         final AuthenticationDto result = new AuthenticationDto();
         result.setId(log.getUid());
         result.setAccount(log.getAccount());
-        result.setDate(log.getDate());
+        result.setTimestamp(log.getDate().getTime());
         result.setType(log.getLogType().name());
         return result;
     }

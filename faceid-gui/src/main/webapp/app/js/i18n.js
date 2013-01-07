@@ -2,14 +2,23 @@
     // Add your messages to this list.
     // This is a list of extjs Templates, therefore you can use parameters in it.
     var messages = {
+        'ok': 'Ok',
+        'cancel': 'Cancel',
         'application.name': 'faceid',
         'application.users': 'Users',
         'application.log': 'Log',
+        'application.authenticationTest': 'Authentication Test',
         'user.name': 'Name',
         'user.account': 'Account',
         'authentication.date': 'Date',
         'authentication.account': 'Account',
-        'authentication.type': 'Type'
+        'authentication.password': 'Password',
+        'authentication.type': 'Type',
+        'authentication.type.BAD_USER': 'Bad user',
+        'authentication.type.BAD_PASSWORD': 'Bad password',
+        'authentication.type.SUCCESS': 'Success'
+
+
     };
 
     Ext.define('faceid.i18n', {

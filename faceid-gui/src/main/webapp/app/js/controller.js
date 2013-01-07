@@ -51,12 +51,15 @@
                 model: 'faceid.model.AuthenticationLog'
             });
 
-            faceid.channel.send('application', 'ready', {});
-
             faceid.channel.bind('portletContainer', 'panelsettings-request', function () {
+                var panels = [
+                    'faceid.view.Users',
+                    'faceid.view.AuthenticationLog',
+                    'faceid.view.AuthenticationTest'
+                ];
                 var countdown = Ext.create('faceid.countdown', {
                     key: 'PanelSettings',
-                    value: 2
+                    value: panels.length
                 });
 
                 faceid.channel.bind('countdown', 'trigger-PanelSettings', function () {
@@ -66,13 +69,37 @@
                 });
 
                 var settings = [];
-                createPanelSettings('faceid.view.Users', settings, countdown);
-                createPanelSettings('faceid.view.AuthenticationLog', settings, countdown);
+                Ext.Array.each(panels, function (clsName) {
+                    createPanelSettings(clsName, settings, countdown);
+                });
             });
 
             faceid.channel.bind('portletContainer', 'panelsettings-update', function (data) {
                 updatePanelSettings(data);
             });
+
+            faceid.channel.bind('AuthenticationTest', 'authentication-request', function (data) {
+                Ext.Ajax.request({
+                    method: 'POST',
+                    url: 'rest/authentication',
+                    params: data,
+                    success: function (response) {
+                        var text = response.responseText;
+                        faceid.channel.send('AuthenticationTest', 'authentication-response', {
+                            success: (text === 'true')
+                        });
+                    }
+                });
+            });
+
+            faceid.channel.bind('AuthenticationTest', 'authentication-response', function (data) {
+                Ext.data.StoreManager.lookup('authenticationLog').load();
+            });
+
+            Ext.data.StoreManager.lookup('users').load();
+            Ext.data.StoreManager.lookup('authenticationLog').load();
+
+            faceid.channel.send('application', 'ready', {});
         }
     });
 })();
