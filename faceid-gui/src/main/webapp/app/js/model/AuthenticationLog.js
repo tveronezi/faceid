@@ -1,6 +1,6 @@
 Ext.define('faceid.model.AuthenticationLog', {
     extend: 'Ext.data.Model',
-    fields: ['id', 'date', 'account'],
+    fields: ['id', 'date', 'account', 'type'],
 
     proxy: {
         type: 'rest',

@@ -8,7 +8,8 @@
         'user.name': 'Name',
         'user.account': 'Account',
         'authentication.date': 'Date',
-        'authentication.account': 'Account'
+        'authentication.account': 'Account',
+        'authentication.type': 'Type'
     };
 
     Ext.define('faceid.i18n', {

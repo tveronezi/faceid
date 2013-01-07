@@ -1,5 +1,6 @@
 package faceid.service;
 
+import faceid.service.rest.Authentication;
 import faceid.service.rest.Users;
 
 import javax.ws.rs.ApplicationPath;
@@ -11,6 +12,6 @@ import java.util.Set;
 @ApplicationPath("/rest")
 public class ApplicationConfig extends Application {
     public Set<Class<?>> getClasses() {
-        return new HashSet<Class<?>>(Arrays.asList(Users.class));
+        return new HashSet<Class<?>>(Arrays.asList(Users.class, Authentication.class));
     }
 }

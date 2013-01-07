@@ -1,6 +1,5 @@
 package faceid.service.bean;
 
-
 import faceid.data.entity.User;
 import faceid.data.execution.BaseEAO;
 import faceid.data.execution.command.CreateUser;

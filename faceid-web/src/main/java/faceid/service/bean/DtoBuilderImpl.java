@@ -1,6 +1,8 @@
 package faceid.service.bean;
 
+import faceid.data.dto.AuthenticationDto;
 import faceid.data.dto.UserDto;
+import faceid.data.entity.AuthenticationLog;
 import faceid.data.entity.User;
 
 import javax.ejb.Singleton;
@@ -16,6 +18,18 @@ public class DtoBuilderImpl {
         result.setId(user.getUid());
         result.setName(user.getName());
         result.setAccount(user.getAccount());
+        return result;
+    }
+
+    public AuthenticationDto buildAuthenticationLog(AuthenticationLog log) {
+        if (log == null) {
+            return null;
+        }
+        final AuthenticationDto result = new AuthenticationDto();
+        result.setId(log.getUid());
+        result.setAccount(log.getAccount());
+        result.setDate(log.getDate());
+        result.setType(log.getLogType().name());
         return result;
     }
 }
