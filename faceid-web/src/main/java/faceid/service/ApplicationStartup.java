@@ -23,7 +23,7 @@ public class ApplicationStartup {
     }
 
     private void createUser(String name, String account, String pass) {
-        User usr = userService.getUser(name);
+        User usr = this.userService.getUser(name);
         if (usr != null) {
             return;
         }

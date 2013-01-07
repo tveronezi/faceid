@@ -6,7 +6,9 @@
         'application.users': 'Users',
         'application.log': 'Log',
         'user.name': 'Name',
-        'user.account': 'Account'
+        'user.account': 'Account',
+        'authentication.date': 'Date',
+        'authentication.account': 'Account'
     };
 
     Ext.define('faceid.i18n', {

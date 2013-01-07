@@ -5,8 +5,9 @@ Ext.define('faceid.view.Users', {
     title: faceid.i18n.get('application.users'),
     layout: 'fit',
     initComponent: function () {
+        var store = Ext.data.StoreManager.lookup('users');
         var grid = Ext.create('Ext.grid.Panel', {
-            store: 'Users',
+            store: store,
             columns: [
                 { text: faceid.i18n.get('user.account'), dataIndex: 'account' },
                 { text: faceid.i18n.get('user.name'), dataIndex: 'name', flex: 1 }
@@ -17,7 +18,6 @@ Ext.define('faceid.view.Users', {
             items: [grid]
         });
 
-        var store = grid.getStore()
         store.load();
         this.callParent(arguments);
     }
