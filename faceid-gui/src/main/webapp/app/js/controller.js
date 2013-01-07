@@ -1,6 +1,7 @@
 (function () {
     var requires = [
         'faceid.channel',
+        'faceid.model.AuthenticationLog',
         'faceid.model.PanelSettings',
         'faceid.model.User'
     ];
