@@ -2,6 +2,8 @@ Ext.define('faceid.view.AuthenticationLog', {
     extend: 'faceid.view.portlets.Portlet',
     title: faceid.i18n.get('application.log'),
     layout: 'fit',
+    width: 400,
+    height: 150,
     initComponent: function () {
         var grid = Ext.create('Ext.grid.Panel', {
             border: false,
@@ -11,7 +13,7 @@ Ext.define('faceid.view.AuthenticationLog', {
                     text: faceid.i18n.get('authentication.date'),
                     width: 130,
                     dataIndex: 'timestamp',
-                    renderer: function(value) {
+                    renderer: function (value) {
                         var date = new Date(value);
                         return Ext.Date.format(date, 'Y-n-j g:i:s A');
                     }
@@ -25,7 +27,7 @@ Ext.define('faceid.view.AuthenticationLog', {
                     text: faceid.i18n.get('authentication.type'),
                     dataIndex: 'type',
                     flex: 1,
-                    renderer: function(value) {
+                    renderer: function (value) {
                         return faceid.i18n.get('authentication.type.' + value);
                     }
                 }

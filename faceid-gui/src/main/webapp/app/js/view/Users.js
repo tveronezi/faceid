@@ -2,6 +2,8 @@ Ext.define('faceid.view.Users', {
     extend: 'faceid.view.portlets.Portlet',
     title: faceid.i18n.get('application.users'),
     layout: 'fit',
+    width: 300,
+    height: 150,
     initComponent: function () {
         var grid = Ext.create('Ext.grid.Panel', {
             store: Ext.data.StoreManager.lookup('users'),
