@@ -45,14 +45,9 @@ Ext.define('faceid.view.portlets.PortletContainer', {
                 x: panel.x,
                 y: panel.y
             });
-
-            // The 'move' does not have the old x and y values.
-            panel.originalX = panel.x;
-            panel.originalY = panel.y;
         }
 
         function addPanel(panelSettings) {
-
             if (Ext.isEmpty(panelSettings.get('height'))) {
                 panelSettings.set('height', 200);
             }
