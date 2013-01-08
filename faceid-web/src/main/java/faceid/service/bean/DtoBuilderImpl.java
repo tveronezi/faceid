@@ -7,7 +7,7 @@ import faceid.data.entity.User;
 
 import javax.ejb.Singleton;
 
-@Singleton
+@Singleton(name = "faceid-DtoBuilderImpl")
 public class DtoBuilderImpl {
 
     public UserDto buildUser(User user) {
