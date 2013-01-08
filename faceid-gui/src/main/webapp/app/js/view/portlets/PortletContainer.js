@@ -21,9 +21,10 @@ Ext.define('faceid.view.portlets.PortletContainer', {
                 var overlapArea = xOverlap * yOverlap;
                 if (overlapArea > 0) {
                     overlap = true;
+                    return false; // break the loop
                 }
-                return false; // break the loop
             });
+            console.log('Panel overlaps?', overlap, thisPanel);
             return overlap;
         }
 
@@ -45,6 +46,8 @@ Ext.define('faceid.view.portlets.PortletContainer', {
                 x: panel.x,
                 y: panel.y
             });
+            panel.originalX = panel.x;
+            panel.originalY = panel.y;
         }
 
         function addPanel(panelSettings) {
@@ -58,8 +61,8 @@ Ext.define('faceid.view.portlets.PortletContainer', {
                 panelSettings.set('x', 0);
             }
             if (Ext.isEmpty(panelSettings.get('y'))) {
-                lastX = lastX + panelSettings.get('height');
                 panelSettings.set('y', lastX);
+                lastX = lastX + panelSettings.get('height');
             }
             panelSettings.save();
 
