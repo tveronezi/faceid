@@ -51,7 +51,7 @@
                 model: 'faceid.model.AuthenticationLog'
             });
 
-            faceid.channel.bind('portletContainer', 'panelsettings-request', function () {
+            faceid.channel.bind('portletContainer', 'all-panelsettings-request', function () {
                 var panels = [
                     'faceid.view.Users',
                     'faceid.view.AuthenticationLog',
@@ -63,7 +63,7 @@
                 });
 
                 faceid.channel.bind('countdown', 'trigger-PanelSettings', function () {
-                    faceid.channel.send('portletContainer', 'panelsettings-loaded', {
+                    faceid.channel.send('portletContainer', 'all-panelsettings-loaded', {
                         settings: settings
                     });
                 });
@@ -94,6 +94,20 @@
 
             faceid.channel.bind('AuthenticationTest', 'authentication-response', function (data) {
                 Ext.data.StoreManager.lookup('authenticationLog').load();
+            });
+
+            faceid.channel.bind('portletContainer', 'panelsettings-request', function (data) {
+                var panel = data.panel;
+                var PanelSettings = Ext.ModelManager.getModel('faceid.model.PanelSettings');
+                PanelSettings.load(Ext.ClassManager.getName(panel), {
+                    callback: function (bean) {
+                        console.log('PanelSetting loaded.', bean);
+                        faceid.channel.send('portletContainer', 'panelsettings-response', {
+                            panel: panel,
+                            settings: bean
+                        });
+                    }
+                });
             });
 
             Ext.data.StoreManager.lookup('users').load();

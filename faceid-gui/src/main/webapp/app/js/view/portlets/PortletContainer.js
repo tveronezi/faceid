@@ -5,7 +5,7 @@ Ext.define('faceid.view.portlets.PortletContainer', {
     logic: function () {
         var self = this;
         var areaMap = {};
-        var lastX = 0;
+        var lastY = 0;
 
         function doesItOverlap(thisPanel) {
             var thisId = thisPanel.getId();
@@ -46,8 +46,6 @@ Ext.define('faceid.view.portlets.PortletContainer', {
                 x: panel.x,
                 y: panel.y
             });
-            panel.originalX = panel.x;
-            panel.originalY = panel.y;
         }
 
         function addPanel(panelSettings) {
@@ -61,8 +59,8 @@ Ext.define('faceid.view.portlets.PortletContainer', {
                 panelSettings.set('x', 0);
             }
             if (Ext.isEmpty(panelSettings.get('y'))) {
-                panelSettings.set('y', lastX);
-                lastX = lastX + panelSettings.get('height');
+                panelSettings.set('y', lastY);
+                lastY = lastY + panelSettings.get('height') + 1;
             }
             panelSettings.save();
 
@@ -73,40 +71,39 @@ Ext.define('faceid.view.portlets.PortletContainer', {
                 height: panelSettings.get('height')
             });
 
-            panel.on('resize', function (thisPanel, width, height, oldWidth, oldHeight) {
-                if (doesItOverlap(thisPanel)) {
-                    thisPanel.updateBox({
-                        x: thisPanel.originalX,
-                        y: thisPanel.originalY,
-                        width: oldWidth,
-                        height: oldHeight
+            var eventHandler = function (panel) {
+                if (doesItOverlap(panel)) {
+                    faceid.channel.send('portletContainer', 'panelsettings-request', {
+                        panel: panel
                     });
                 } else {
-                    updateAreaMap(thisPanel);
+                    updateAreaMap(panel);
                 }
+            };
+
+            panel.on('resize', function (thisPanel, width, height, oldWidth, oldHeight) {
+                eventHandler(panel);
             });
             panel.on('move', function (thisPanel, x, y) {
-                if (doesItOverlap(thisPanel)) {
-                    thisPanel.updateBox({
-                        x: thisPanel.originalX,
-                        y: thisPanel.originalY,
-                        width: thisPanel.width,
-                        height: thisPanel.height
-                    });
-                } else {
-                    updateAreaMap(thisPanel);
-                }
+                eventHandler(panel);
             });
             updateAreaMap(panel);
             self.add(panel);
         }
 
-        faceid.channel.bind('portletContainer', 'panelsettings-loaded', function (data) {
+        faceid.channel.bind('portletContainer', 'panelsettings-response', function (data) {
+            var panel = data.panel;
+            var settings = data.settings;
+            panel.setPosition(settings.get('x'), settings.get('y'));
+            panel.setSize(settings.get('width'), settings.get('height'));
+        });
+
+        faceid.channel.bind('portletContainer', 'all-panelsettings-loaded', function (data) {
             Ext.Array.each(data.settings, function (bean) {
                 addPanel(bean);
             });
         });
-        faceid.channel.send('portletContainer', 'panelsettings-request', {});
+        faceid.channel.send('portletContainer', 'all-panelsettings-request', {});
     },
     initComponent: function () {
         Ext.apply(this, {
