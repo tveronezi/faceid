@@ -6,14 +6,14 @@ Ext.Loader.setConfig({
     }
 });
 
-Ext.require([
-    'faceid.i18n',
-    'faceid.channel'
-]);
-
 Ext.application({
     name: 'faceid',
     appFolder: 'app/js',
+
+    requires: [
+        'faceid.i18n',
+        'faceid.channel'
+    ],
 
     controllers: [
         'PortletContainer',
@@ -23,7 +23,7 @@ Ext.application({
         var title = Ext.get(Ext.dom.Query.selectNode('title'));
         title.update(faceid.i18n.get('application.name'));
 
-        var container = Ext.create('faceid.view.portlets.PortletContainer');
+        var container = Ext.create('faceid.view.PortletContainer');
         Ext.create('Ext.container.Viewport', {
             layout: 'fit',
             items: [container]

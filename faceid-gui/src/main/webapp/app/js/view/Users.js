@@ -6,7 +6,7 @@ Ext.define('faceid.view.Users', {
     height: 150,
     initComponent: function () {
         var grid = Ext.create('Ext.grid.Panel', {
-            store: Ext.data.StoreManager.lookup('users'),
+            store: 'Users',
             border: false,
             columns: [
                 { text: faceid.i18n.get('user.account'), dataIndex: 'account' },

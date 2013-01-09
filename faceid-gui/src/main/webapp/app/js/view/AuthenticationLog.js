@@ -7,7 +7,7 @@ Ext.define('faceid.view.AuthenticationLog', {
     initComponent: function () {
         var grid = Ext.create('Ext.grid.Panel', {
             border: false,
-            store: Ext.data.StoreManager.lookup('authenticationLog'),
+            store: 'AuthenticationLog',
             columns: [
                 {
                     text: faceid.i18n.get('authentication.date'),
