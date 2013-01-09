@@ -29,6 +29,7 @@
         width: squareUnitSize,
         x: 0,
         y: 0,
+        padding: '5 0 0 5',
         listeners: {
             resize: function (thisPanel, width, height) {
                 console.log('resizing portlet', thisPanel);
