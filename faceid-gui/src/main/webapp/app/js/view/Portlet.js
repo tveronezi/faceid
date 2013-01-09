@@ -1,18 +1,22 @@
 (function () {
     var squareUnitSize = 100;
 
-    function normalize(value) {
-        var modulus = value % squareUnitSize;
-        var newSize = value - modulus;
-        return newSize;
+    function normalizePosition(position) {
+        var modulus = position % squareUnitSize;
+        var newPosition = position - modulus;
+        return newPosition;
     }
 
     function normalizeSize(size) {
-        var newSize = normalize(size);
+        var modulus = size % squareUnitSize;
+        var newSize = size - modulus;
         if (newSize === 0) {
             return squareUnitSize;
         }
-        return newSize;
+        if (size === newSize) {
+            return size;
+        }
+        return newSize + squareUnitSize;
     }
 
     Ext.define('faceid.view.Portlet', {
@@ -35,7 +39,7 @@
             move: function (thisPanel, x, y) {
                 console.log('moving portlet', thisPanel);
                 thisPanel.suspendEvents();
-                thisPanel.setPosition(normalize(x), normalize(y));
+                thisPanel.setPosition(normalizePosition(x), normalizePosition(y));
                 thisPanel.resumeEvents();
             }
 
