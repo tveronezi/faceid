@@ -17,8 +17,6 @@
         'authentication.type.BAD_USER': 'Bad user',
         'authentication.type.BAD_PASSWORD': 'Bad password',
         'authentication.type.SUCCESS': 'Success'
-
-
     };
 
     Ext.define('faceid.i18n', {

@@ -1,4 +1,4 @@
-Ext.define('faceid.view.portlets.PortletContainer', {
+Ext.define('faceid.view.PortletContainer', {
     extend: 'Ext.panel.Panel',
     layout: 'absolute',
     autoScroll: true,

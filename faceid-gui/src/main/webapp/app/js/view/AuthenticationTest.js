@@ -1,5 +1,5 @@
 Ext.define('faceid.view.AuthenticationTest', {
-    extend: 'faceid.view.portlets.Portlet',
+    extend: 'faceid.view.Portlet',
     title: faceid.i18n.get('application.authenticationTest'),
     layout: 'fit',
     width: 100,
@@ -8,8 +8,8 @@ Ext.define('faceid.view.AuthenticationTest', {
         var form = Ext.widget({
             xtype: 'form',
             layout: 'form',
-            frame: true,
             border: false,
+            bodyPadding: 5,
             fieldDefaults: {
                 msgTarget: 'side',
                 labelWidth: 75

@@ -1,5 +1,5 @@
 Ext.define('faceid.view.AuthenticationLog', {
-    extend: 'faceid.view.portlets.Portlet',
+    extend: 'faceid.view.Portlet',
     title: faceid.i18n.get('application.log'),
     layout: 'fit',
     width: 400,

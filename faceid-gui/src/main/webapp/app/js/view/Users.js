@@ -1,5 +1,5 @@
 Ext.define('faceid.view.Users', {
-    extend: 'faceid.view.portlets.Portlet',
+    extend: 'faceid.view.Portlet',
     title: faceid.i18n.get('application.users'),
     layout: 'fit',
     width: 300,
