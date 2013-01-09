@@ -59,19 +59,17 @@ Ext.define('faceid.controller.PortletContainer', {
 
         self.control({
             'faceid-viewport faceid-application-container toolbar button[action=togglePanel]': {
-                click: this.togglePanel
+                click: self.togglePanel
             },
             'faceid-viewport faceid-application-container toolbar button[action=save-positions]': {
-                click: this.savePanelPositions
+                click: self.savePanelPositions
             },
             'faceid-portlet-logintest': {
-                login: this.loginTest
+                login: self.loginTest
             }
-
         });
 
         self.getUsersStore().load();
         self.getAuthenticationLogStore().load();
-
     }
 });

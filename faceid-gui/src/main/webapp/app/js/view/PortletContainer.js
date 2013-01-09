@@ -10,16 +10,21 @@ Ext.define('faceid.view.PortletContainer', {
         var panel = this.query(panelType);
         if (Ext.isEmpty(panel)) {
             this.add({
-                xtype: panelType,
-                x: 10,
-                y: 10,
-                height: 100,
-                width: 100
+                xtype: panelType
             });
         }
     },
     initComponent: function () {
         console.log('initComponent', 'PortletContainer');
+        var self = this;
+        var portletMatrix = [];
+        for(var i = 0; i < 100; i++) {
+            portletMatrix.push([]);
+
+        }
+        Ext.apply(self, {
+
+        });
         this.callParent(arguments);
     }
 });
