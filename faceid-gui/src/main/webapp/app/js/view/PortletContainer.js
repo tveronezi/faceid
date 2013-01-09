@@ -16,15 +16,6 @@ Ext.define('faceid.view.PortletContainer', {
     },
     initComponent: function () {
         console.log('initComponent', 'PortletContainer');
-        var self = this;
-        var portletMatrix = [];
-        for(var i = 0; i < 100; i++) {
-            portletMatrix.push([]);
-
-        }
-        Ext.apply(self, {
-
-        });
         this.callParent(arguments);
     }
 });

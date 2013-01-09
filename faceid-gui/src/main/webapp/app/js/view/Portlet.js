@@ -43,7 +43,10 @@
                 thisPanel.setPosition(normalizePosition(x), normalizePosition(y));
                 thisPanel.resumeEvents();
             }
-
+        },
+        initComponent: function () {
+            console.log('initComponent', 'Portlet');
+            this.callParent(arguments);
         }
     });
 })();
