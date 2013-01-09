@@ -1,6 +1,5 @@
 Ext.define('faceid.controller.PortletContainer', {
     extend: 'Ext.app.Controller',
-    requires: ['faceid.channel'],
 
     views: [
         'ApplicationViewport',
@@ -39,6 +38,22 @@ Ext.define('faceid.controller.PortletContainer', {
         console.log('action: savePanelPositions');
     },
 
+    loginTest: function (values) {
+        console.log('action: loginTest', values);
+        var self = this;
+        var portlets = self.getPortlets();
+
+        Ext.Ajax.request({
+            url: 'rest/authentication',
+            params: values,
+            success: function (response) {
+                var form = portlets.query('faceid-portlet-logintest form')[0];
+                form.getForm().reset();
+                self.getAuthenticationLogStore().load();
+            }
+        });
+    },
+
     init: function () {
         var self = this;
 
@@ -48,6 +63,9 @@ Ext.define('faceid.controller.PortletContainer', {
             },
             'faceid-viewport faceid-application-container toolbar button[action=save-positions]': {
                 click: this.savePanelPositions
+            },
+            'faceid-portlet-logintest': {
+                login: this.loginTest
             }
 
         });

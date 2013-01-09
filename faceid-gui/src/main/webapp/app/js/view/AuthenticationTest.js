@@ -4,6 +4,8 @@ Ext.define('faceid.view.AuthenticationTest', {
     title: faceid.i18n.get('application.authenticationTest'),
     layout: 'fit',
     initComponent: function () {
+        var self = this;
+
         var form = Ext.widget({
             xtype: 'form',
             layout: 'form',
@@ -30,10 +32,10 @@ Ext.define('faceid.view.AuthenticationTest', {
             buttons: [
                 {
                     text: faceid.i18n.get('ok'),
-                    handler: function () {
-                        faceid.channel.send('AuthenticationTest', 'authentication-request', form.getValues());
-                    },
-                    formBind: true
+                    formBind: true,
+                    handler: function() {
+                        self.fireEvent('login', form.getForm().getValues());
+                    }
                 },
                 {
                     text: faceid.i18n.get('cancel'),
@@ -46,10 +48,6 @@ Ext.define('faceid.view.AuthenticationTest', {
 
         Ext.apply(this, {
             items: [form]
-        });
-
-        faceid.channel.bind('AuthenticationTest', 'authentication-response', function (data) {
-            form.getForm().reset();
         });
 
         this.callParent(arguments);

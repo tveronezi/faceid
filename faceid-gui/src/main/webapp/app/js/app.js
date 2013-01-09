@@ -11,8 +11,7 @@ Ext.application({
     appFolder: 'app/js',
 
     requires: [
-        'faceid.i18n',
-        'faceid.channel'
+        'faceid.i18n'
     ],
 
     controllers: [
