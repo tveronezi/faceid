@@ -1,9 +1,8 @@
 Ext.define('faceid.view.AuthenticationLog', {
     extend: 'faceid.view.Portlet',
+    alias: 'widget.faceid-portlet-log',
     title: faceid.i18n.get('application.log'),
     layout: 'fit',
-    width: 400,
-    height: 150,
     initComponent: function () {
         var grid = Ext.create('Ext.grid.Panel', {
             border: false,

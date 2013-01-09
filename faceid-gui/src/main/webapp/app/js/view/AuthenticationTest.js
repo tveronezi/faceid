@@ -1,9 +1,8 @@
 Ext.define('faceid.view.AuthenticationTest', {
     extend: 'faceid.view.Portlet',
+    alias: 'widget.faceid-portlet-logintest',
     title: faceid.i18n.get('application.authenticationTest'),
     layout: 'fit',
-    width: 100,
-    height: 50,
     initComponent: function () {
         var form = Ext.widget({
             xtype: 'form',

@@ -20,13 +20,11 @@ Ext.application({
     ],
 
     launch: function () {
+        console.log('init application...');
+
         var title = Ext.get(Ext.dom.Query.selectNode('title'));
         title.update(faceid.i18n.get('application.name'));
 
-        var container = Ext.create('faceid.view.PortletContainer');
-        Ext.create('Ext.container.Viewport', {
-            layout: 'fit',
-            items: [container]
-        });
+        Ext.create('faceid.view.ApplicationViewport');
     }
 });

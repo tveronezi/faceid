@@ -1,9 +1,8 @@
 Ext.define('faceid.view.Users', {
     extend: 'faceid.view.Portlet',
+    alias: 'widget.faceid-portlet-users',
     title: faceid.i18n.get('application.users'),
     layout: 'fit',
-    width: 300,
-    height: 150,
     initComponent: function () {
         var grid = Ext.create('Ext.grid.Panel', {
             store: 'Users',
