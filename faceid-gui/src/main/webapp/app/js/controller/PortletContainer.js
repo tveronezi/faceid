@@ -59,7 +59,6 @@ Ext.define('faceid.controller.PortletContainer', {
             });
         }
 
-
         faceid.channel.bind('portletContainer', 'all-panelsettings-request', function () {
             var panels = [
                 'faceid.view.Users',
