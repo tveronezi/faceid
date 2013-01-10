@@ -38,5 +38,37 @@
     </dependencies>
     <build>
         <finalName>faceid-gui</finalName>
+        <plugins>
+            <plugin>
+                <groupId>com.github.searls</groupId>
+                <artifactId>jasmine-maven-plugin</artifactId>
+                <version>1.2.0.0</version>
+                <extensions>true</extensions>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>test</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <preloadSources>
+                        <source>http://localhost:8234/src/main/webapp/app/lib/ext-4.1.1a/ext-all.js</source>
+                        <source>http://localhost:8234/src/test/resources/start.js</source>
+                    </preloadSources>
+                    <jsSrcDir>${project.basedir}/src/main/webapp</jsSrcDir>
+                    <!-- We need to point to an empty directory, otherwise jasmine loads the test files before
+                    RequireJs finishes loading the requirements. The solution is to let RequireJs load
+                    the test files too. -->
+                    <jsTestSrcDir>${project.basedir}/src/test/javascript/empty</jsTestSrcDir>
+                    <sourceIncludes>
+                        <!-- Nothing to include. Require.js will load it for us -->
+                    </sourceIncludes>
+                    <customRunnerTemplate>src/test/resources/runner.html</customRunnerTemplate>
+                    <!-- We should skip the tests for now. -->
+                    <skipTests>true</skipTests>
+                </configuration>
+            </plugin>
+        </plugins>
     </build>
 </project>

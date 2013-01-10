@@ -17,7 +17,8 @@
         'authentication.type': 'Type',
         'authentication.type.BAD_USER': 'Bad user',
         'authentication.type.BAD_PASSWORD': 'Bad password',
-        'authentication.type.SUCCESS': 'Success'
+        'authentication.type.SUCCESS': 'Success',
+        'test.with.param': 'This is for test only. {myParam}!'
     };
 
     Ext.define('faceid.i18n', {
