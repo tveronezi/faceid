@@ -21,7 +21,7 @@ class TestUser {
         def context = this.container.context
 
         try {
-            def service = context.lookup('java:global/faceid-web/UserServiceImpl')
+            def service = context.lookup('java:global/faceid-web/faceid-UserImpl')
             service.createUser('michael', 'jackson', 'bad')
             try {
                 service.createUser('michael', 'jackson', 'bad')
