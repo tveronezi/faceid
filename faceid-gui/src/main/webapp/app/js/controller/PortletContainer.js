@@ -95,7 +95,7 @@ Ext.define('faceid.controller.PortletContainer', {
         var self = this;
         self.getPanelSettingsStore().load(function (records, operation, success) {
             if (Ext.isEmpty(records)) {
-                console.log('There is no settings. Load prepare defaults.');
+                console.log('There is no settings found... Using defaults.');
                 self.saveSettings({
                     xtype: 'faceid-portlet-users',
                     x: 2,
