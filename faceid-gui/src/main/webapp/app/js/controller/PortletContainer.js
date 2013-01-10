@@ -12,6 +12,7 @@ Ext.define('faceid.controller.PortletContainer', {
 
     stores: [
         'AuthenticationLog',
+        'PanelSettings',
         'Users'
     ],
 
@@ -28,14 +29,34 @@ Ext.define('faceid.controller.PortletContainer', {
         }
     ],
 
-    togglePanel: function (button) {
-        console.log('action: togglePanel', button);
+    showPortlet: function (xtype, settings) {
+        console.log('showPortlet', xtype, settings);
         var container = this.getPortlets();
-        container.showPortlet(button.panelType);
+        container.showPortlet(xtype, settings);
     },
 
     savePanelPositions: function () {
         console.log('action: savePanelPositions');
+        var self = this;
+        var store = self.getPanelSettingsStore();
+        var container = self.getPortlets();
+        var portlets = container.query('faceid-portlet');
+        Ext.Array.each(portlets, function (portlet) {
+            var position = portlet.getPosition();
+            var size = portlet.getSize();
+
+            var settings = Ext.create('faceid.model.PanelSettings');
+            settings.set('xtype', portlet.getXType());
+            settings.set('x', position[0]);
+            settings.set('y', position[1]);
+            settings.set('width', size.width);
+            settings.set('height', size.height);
+
+            console.log('saving portlet settings', settings);
+
+            settings.save();
+        });
+        store.commitChanges();
     },
 
     loginTest: function (values) {
@@ -59,13 +80,25 @@ Ext.define('faceid.controller.PortletContainer', {
 
         self.control({
             'faceid-viewport faceid-application-container toolbar button[action=togglePanel]': {
-                click: self.togglePanel
+                click: function (button) {
+                    self.showPortlet(button.panelType);
+                }
             },
             'faceid-viewport faceid-application-container toolbar button[action=save-positions]': {
                 click: self.savePanelPositions
             },
             'faceid-portlet-logintest': {
                 login: self.loginTest
+            },
+            'faceid-viewport faceid-application-container': {
+                render: function (thisPanel) {
+                    console.log('faceid-application-container rendered', thisPanel);
+                    self.getPanelSettingsStore().load(function (records, operation, success) {
+                        Ext.Array.each(records, function (rec) {
+                            self.showPortlet(rec.get('xtype'), rec);
+                        });
+                    });
+                }
             }
         });
 

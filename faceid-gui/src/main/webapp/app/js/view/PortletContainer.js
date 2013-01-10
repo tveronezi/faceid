@@ -6,12 +6,23 @@ Ext.define('faceid.view.PortletContainer', {
     bodyBorder: false,
     body: false,
     items: [],
-    showPortlet: function (panelType) {
+    showPortlet: function (panelType, settings) {
         var panel = this.query(panelType);
         if (Ext.isEmpty(panel)) {
-            this.add({
-                xtype: panelType
-            });
+            var params = {
+                xtype: panelType,
+                x: 0,
+                y: 0,
+                height: 100,
+                width: 100
+            };
+            if (settings) {
+                params.x = settings.get('x');
+                params.y = settings.get('y');
+                params.height = settings.get('height');
+                params.width = settings.get('width');
+            }
+            this.add(params);
         }
     },
     initComponent: function () {

@@ -21,14 +21,11 @@
 
     Ext.define('faceid.view.Portlet', {
         extend: 'Ext.Panel',
+        alias: 'widget.faceid-portlet',
         title: '-',
         draggable: true,
         resizable: true,
         closable: true,
-        height: squareUnitSize,
-        width: squareUnitSize,
-        x: 0,
-        y: 0,
         padding: '5 0 0 5',
         listeners: {
             resize: function (thisPanel, width, height) {

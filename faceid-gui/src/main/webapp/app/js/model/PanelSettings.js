@@ -1,9 +1,28 @@
 Ext.define('faceid.model.PanelSettings', {
     extend: 'Ext.data.Model',
-    fields: ['panel', 'x', 'y', 'width', 'height'],
-    idProperty: 'panel',
+    fields: [
+        {
+            name: 'xtype'
+        },
+        {
+            name: 'x',
+            type: 'int'
+        },
+        {
+            name: 'y',
+            type: 'int'
+        },
+        {
+            name: 'width',
+            type: 'int'
+        },
+        {
+            name: 'height',
+            type: 'int'
+        }
+    ],
     proxy: {
         type: 'localstorage',
-        id: 'faceid-PanelSettings'
+        id: 'faceid-p-settings'
     }
 });
