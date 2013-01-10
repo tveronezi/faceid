@@ -10,11 +10,7 @@ Ext.define('faceid.view.PortletContainer', {
         var panel = this.query(panelType);
         if (Ext.isEmpty(panel)) {
             var params = {
-                xtype: panelType,
-                x: 0,
-                y: 0,
-                height: 100,
-                width: 100
+                xtype: panelType
             };
             if (settings) {
                 params.x = settings.get('x');

@@ -39,6 +39,13 @@ Ext.define('faceid.controller.PortletContainer', {
         console.log('action: savePanelPositions');
         var self = this;
         var store = self.getPanelSettingsStore();
+        // WORKAROUND: removeAll does not work with 'localstorage'. Extjs bug?
+        store.load(function(records) {
+            Ext.Array.each(records, function(rec) {
+                rec.destroy();
+            });
+        });
+
         var container = self.getPortlets();
         var portlets = container.query('faceid-portlet');
         Ext.Array.each(portlets, function (portlet) {
@@ -46,7 +53,7 @@ Ext.define('faceid.controller.PortletContainer', {
             var size = portlet.getSize();
 
             var settings = Ext.create('faceid.model.PanelSettings');
-            settings.set('xtype', portlet.getXType());
+            settings.set('portletXtype', portlet.getXType());
             settings.set('x', position[0]);
             settings.set('y', position[1]);
             settings.set('width', size.width);
@@ -56,7 +63,6 @@ Ext.define('faceid.controller.PortletContainer', {
 
             settings.save();
         });
-        store.commitChanges();
     },
 
     loginTest: function (values) {
@@ -95,7 +101,7 @@ Ext.define('faceid.controller.PortletContainer', {
                     console.log('faceid-application-container rendered', thisPanel);
                     self.getPanelSettingsStore().load(function (records, operation, success) {
                         Ext.Array.each(records, function (rec) {
-                            self.showPortlet(rec.get('xtype'), rec);
+                            self.showPortlet(rec.get('portletXtype'), rec);
                         });
                     });
                 }

@@ -42,7 +42,23 @@
             }
         },
         initComponent: function () {
-            console.log('initComponent', 'Portlet');
+            console.log('initComponent', 'Portlet', this);
+            var self = this;
+            var defaultProps = {};
+
+            function setDefault(prop, value) {
+                if (Ext.isEmpty(self[prop])) {
+                    defaultProps[prop] = value;
+                }
+            }
+
+            setDefault('x', 0);
+            setDefault('y', 0);
+            setDefault('height', squareUnitSize);
+            setDefault('width', squareUnitSize);
+
+            Ext.apply(self, defaultProps);
+
             this.callParent(arguments);
         }
     });

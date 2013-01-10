@@ -2,7 +2,7 @@ Ext.define('faceid.model.PanelSettings', {
     extend: 'Ext.data.Model',
     fields: [
         {
-            name: 'xtype'
+            name: 'portletXtype'
         },
         {
             name: 'x',
