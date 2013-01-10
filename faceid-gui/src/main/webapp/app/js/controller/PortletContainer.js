@@ -29,10 +29,52 @@ Ext.define('faceid.controller.PortletContainer', {
         }
     ],
 
+    portletDefaults: {
+        'faceid-portlet-users': {
+            xtype: 'faceid-portlet-users',
+            x: 2,
+            y: 29,
+            width: 500,
+            height: 200
+        },
+        'faceid-portlet-logintest': {
+            xtype: 'faceid-portlet-logintest',
+            x: 502,
+            y: 29,
+            width: 300,
+            height: 200
+        },
+        'faceid-portlet-log': {
+            xtype: 'faceid-portlet-log',
+            x: 2,
+            y: 229,
+            width: 800,
+            height: 300
+        }
+    },
+
     showPortlet: function (xtype, settings) {
         console.log('showPortlet', xtype, settings);
         var container = this.getPortlets();
-        container.showPortlet(xtype, settings);
+        if (settings) {
+            container.showPortlet(xtype, settings);
+        } else {
+            var self = this;
+            var store = self.getPanelSettingsStore();
+            store.load(function (records) {
+                var mySettings = null;
+                Ext.Array.each(records, function (rec) {
+                    if (rec.get('portletXtype') === xtype) {
+                        mySettings = rec;
+                        return false; // break the loop
+                    }
+                });
+                if (!mySettings) {
+                    mySettings = self.saveSettings(self.portletDefaults[xtype]);
+                }
+                container.showPortlet(xtype, mySettings);
+            });
+        }
     },
 
     saveSettings: function (data) {
@@ -46,6 +88,7 @@ Ext.define('faceid.controller.PortletContainer', {
         console.log('saving portlet settings', settings);
 
         settings.save();
+        return settings;
     },
 
     savePanelPositions: function () {
@@ -96,28 +139,9 @@ Ext.define('faceid.controller.PortletContainer', {
         self.getPanelSettingsStore().load(function (records, operation, success) {
             if (Ext.isEmpty(records)) {
                 console.log('There is no settings found... Using defaults.');
-                self.saveSettings({
-                    xtype: 'faceid-portlet-users',
-                    x: 2,
-                    y: 29,
-                    width: 500,
-                    height: 200
-                });
-                self.saveSettings({
-                    xtype: 'faceid-portlet-logintest',
-                    x: 502,
-                    y: 29,
-                    width: 300,
-                    height: 200
-                });
-                self.saveSettings({
-                    xtype: 'faceid-portlet-log',
-                    x: 2,
-                    y: 229,
-                    width: 800,
-                    height: 300
-                });
-                self.loadPortlets();
+                self.saveSettings(self.portletDefaults['faceid-portlet-users']);
+                self.saveSettings(self.portletDefaults['faceid-portlet-logintest']);
+                self.saveSettings(self.portletDefaults['faceid-portlet-log']);
             } else {
                 Ext.Array.each(records, function (rec) {
                     self.showPortlet(rec.get('portletXtype'), rec);
