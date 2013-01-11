@@ -142,6 +142,7 @@ Ext.define('faceid.controller.PortletContainer', {
                 self.saveSettings(self.portletDefaults['faceid-portlet-users']);
                 self.saveSettings(self.portletDefaults['faceid-portlet-logintest']);
                 self.saveSettings(self.portletDefaults['faceid-portlet-log']);
+                self.loadPortlets();
             } else {
                 Ext.Array.each(records, function (rec) {
                     self.showPortlet(rec.get('portletXtype'), rec);

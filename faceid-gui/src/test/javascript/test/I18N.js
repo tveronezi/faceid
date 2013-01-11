@@ -13,7 +13,6 @@ Ext.define('test.I18N', {
                 });
                 expect(str).toEqual('This is for test only. Yeah!');
             });
-
         });
     }
 });
