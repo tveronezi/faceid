@@ -3,8 +3,9 @@ Ext.define('faceid.view.AuthenticationLog', {
     alias: 'widget.faceid-portlet-log',
     title: faceid.i18n.get('application.log'),
     layout: 'fit',
-    initComponent: function () {
-        var grid = Ext.create('Ext.grid.Panel', {
+    items: [
+        {
+            xtype: 'grid',
             border: false,
             store: 'AuthenticationLog',
             columns: [
@@ -31,12 +32,15 @@ Ext.define('faceid.view.AuthenticationLog', {
                     }
                 }
             ]
-        });
-
-        Ext.apply(this, {
-            items: [grid]
-        });
-
-        this.callParent(arguments);
-    }
+        }
+    ],
+    tools: [
+        {
+            itemId: 'refresh',
+            type: 'refresh',
+            handler: function (event, target, owner) {
+                owner.ownerCt.fireEvent('refreshpanel');
+            }
+        }
+    ]
 });

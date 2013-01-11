@@ -16,6 +16,9 @@ Ext.application({
 
     controllers: [
         'PortletContainer',
+        'AuthenticationTest',
+        'AuthenticationLog',
+        'Users'
     ],
 
     launch: function () {

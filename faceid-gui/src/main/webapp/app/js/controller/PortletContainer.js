@@ -11,15 +11,11 @@ Ext.define('faceid.controller.PortletContainer', {
     ],
 
     stores: [
-        'AuthenticationLog',
-        'PanelSettings',
-        'Users'
+        'PanelSettings'
     ],
 
     models: [
-        'AuthenticationLog',
-        'PanelSettings',
-        'User'
+        'PanelSettings'
     ],
 
     refs: [
@@ -121,23 +117,6 @@ Ext.define('faceid.controller.PortletContainer', {
         });
     },
 
-    loginTest: function (values) {
-        console.log('action: loginTest', values);
-        var self = this;
-        var portlets = self.getPortlets();
-
-        Ext.Ajax.request({
-            url: 'rest/authentication',
-            params: values,
-            success: function (response) {
-                var form = portlets.query('faceid-portlet-logintest form')[0];
-                form.getForm().reset();
-                portlets.query('faceid-portlet-logintest')[0].enable();
-                self.getAuthenticationLogStore().load();
-            }
-        });
-    },
-
     loadPortlets: function () {
         var self = this;
         self.getPanelSettingsStore().load(function (records, operation, success) {
@@ -167,9 +146,6 @@ Ext.define('faceid.controller.PortletContainer', {
             'faceid-viewport faceid-application-container toolbar button[action=save-positions]': {
                 click: self.savePanelPositions
             },
-            'faceid-portlet-logintest': {
-                login: self.loginTest
-            },
             'faceid-viewport faceid-application-container': {
                 render: function (thisPanel) {
                     console.log('faceid-application-container rendered', thisPanel);
@@ -177,8 +153,5 @@ Ext.define('faceid.controller.PortletContainer', {
                 }
             }
         });
-
-        self.getUsersStore().load();
-        self.getAuthenticationLogStore().load();
     }
 });
