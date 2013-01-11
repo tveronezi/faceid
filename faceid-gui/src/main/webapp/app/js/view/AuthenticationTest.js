@@ -33,8 +33,9 @@ Ext.define('faceid.view.AuthenticationTest', {
                 {
                     text: faceid.i18n.get('ok'),
                     formBind: true,
-                    handler: function() {
+                    handler: function(thisBtn) {
                         self.fireEvent('login', form.getForm().getValues());
+                        self.disable();
                     }
                 },
                 {

@@ -15,9 +15,9 @@
         if (newSize === 0) {
             result = squareUnitSize;
         } else if (size === newSize) {
-            result =  size;
+            result = size;
         } else {
-            result =  newSize + squareUnitSize;
+            result = newSize + squareUnitSize;
         }
         return result - padding;
     }
@@ -26,6 +26,7 @@
         extend: 'Ext.window.Window',
         alias: 'widget.faceid-portlet',
         title: '-',
+        closable: false,
         closeAction: 'hide',
         listeners: {
             resize: function (thisPanel, width, height) {

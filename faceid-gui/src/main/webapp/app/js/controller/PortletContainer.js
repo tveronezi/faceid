@@ -94,9 +94,10 @@ Ext.define('faceid.controller.PortletContainer', {
     savePanelPositions: function () {
         console.log('action: savePanelPositions');
         var self = this;
-        var store = self.getPanelSettingsStore();
-        // WORKAROUND: removeAll does not work with 'localstorage'. Extjs bug?
-        store.load(function (records) {
+
+        // WORKAROUND: removeAll does not work with 'localstorage'.
+        // Extjs bug or am I doing something wrong [most likely :O)]?
+        self.getPanelSettingsStore().load(function (records) {
             Ext.Array.each(records, function (rec) {
                 rec.destroy();
             });
@@ -105,16 +106,18 @@ Ext.define('faceid.controller.PortletContainer', {
         var container = self.getPortlets();
         var portlets = container.query('faceid-portlet');
         Ext.Array.each(portlets, function (portlet) {
-            var position = portlet.getPosition();
-            var size = portlet.getSize();
+            if (portlet.isVisible()) {
+                var position = portlet.getPosition();
+                var size = portlet.getSize();
 
-            self.saveSettings({
-                xtype: portlet.getXType(),
-                x: position[0],
-                y: position[1],
-                width: size.width,
-                height: size.height
-            });
+                self.saveSettings({
+                    xtype: portlet.getXType(),
+                    x: position[0],
+                    y: position[1],
+                    width: size.width,
+                    height: size.height
+                });
+            }
         });
     },
 
@@ -129,6 +132,7 @@ Ext.define('faceid.controller.PortletContainer', {
             success: function (response) {
                 var form = portlets.query('faceid-portlet-logintest form')[0];
                 form.getForm().reset();
+                portlets.query('faceid-portlet-logintest')[0].enable();
                 self.getAuthenticationLogStore().load();
             }
         });
@@ -137,17 +141,17 @@ Ext.define('faceid.controller.PortletContainer', {
     loadPortlets: function () {
         var self = this;
         self.getPanelSettingsStore().load(function (records, operation, success) {
-            if (Ext.isEmpty(records)) {
+            var panelSettings = records;
+            if (Ext.isEmpty(panelSettings)) {
+                panelSettings = [];
                 console.log('There is no settings found... Using defaults.');
-                self.saveSettings(self.portletDefaults['faceid-portlet-users']);
-                self.saveSettings(self.portletDefaults['faceid-portlet-logintest']);
-                self.saveSettings(self.portletDefaults['faceid-portlet-log']);
-                self.loadPortlets();
-            } else {
-                Ext.Array.each(records, function (rec) {
-                    self.showPortlet(rec.get('portletXtype'), rec);
-                });
+                panelSettings.push(self.saveSettings(self.portletDefaults['faceid-portlet-users']));
+                panelSettings.push(self.saveSettings(self.portletDefaults['faceid-portlet-logintest']));
+                panelSettings.push(self.saveSettings(self.portletDefaults['faceid-portlet-log']));
             }
+            Ext.Array.each(panelSettings, function (rec) {
+                self.showPortlet(rec.get('portletXtype'), rec);
+            });
         });
     },
 
