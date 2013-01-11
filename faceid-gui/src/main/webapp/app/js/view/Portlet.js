@@ -1,32 +1,32 @@
 (function () {
     var squareUnitSize = 100;
+    var padding = 5;
 
     function normalizePosition(position) {
         var modulus = position % squareUnitSize;
         var newPosition = position - modulus;
-        return newPosition;
+        return newPosition + padding;
     }
 
     function normalizeSize(size) {
         var modulus = size % squareUnitSize;
         var newSize = size - modulus;
+        var result;
         if (newSize === 0) {
-            return squareUnitSize;
+            result = squareUnitSize;
+        } else if (size === newSize) {
+            result =  size;
+        } else {
+            result =  newSize + squareUnitSize;
         }
-        if (size === newSize) {
-            return size;
-        }
-        return newSize + squareUnitSize;
+        return result - padding;
     }
 
     Ext.define('faceid.view.Portlet', {
-        extend: 'Ext.Panel',
+        extend: 'Ext.window.Window',
         alias: 'widget.faceid-portlet',
         title: '-',
-        draggable: true,
-        resizable: true,
-        closable: true,
-        padding: '5 0 0 5',
+        closeAction: 'hide',
         listeners: {
             resize: function (thisPanel, width, height) {
                 console.log('resizing portlet', thisPanel);
