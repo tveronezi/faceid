@@ -2,15 +2,22 @@ Ext.define('faceid.controller.Users', {
     extend: 'Ext.app.Controller',
 
     views: [
-        'Users'
+        'Users',
+        'UserView'
     ],
 
     stores: [
         'Users'
     ],
 
+    models: [
+        'User'
+    ],
+
     addUser: function () {
         console.log('addUser event');
+        var window = Ext.create('widget.faceid-userview', {});
+        window.show();
     },
 
     editUser: function () {
