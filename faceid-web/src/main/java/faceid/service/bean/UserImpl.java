@@ -32,18 +32,30 @@ public class UserImpl {
         }
         user.setName(name);
         user.setAccount(account);
-        user.setPassword(password);
+
+        if (!"".equals(password)) {
+            user.setPassword(password);
+        }
+
         return user;
     }
 
     public User getUser(String name) {
-        final FindByStringField<User> find = new FindByStringField<User>(User.class, "name");
+        final FindByStringField<User> find = new FindByStringField<User>(User.class, "account");
         find.value = name;
         return this.baseEAO.execute(find);
     }
 
     public User getUserById(Long id) {
         return this.baseEAO.find(User.class, id);
+    }
+
+    public void deleteUser(Long id) {
+        final User user = getUserById(id);
+        if(user == null) {
+            return;
+        }
+        this.baseEAO.delete(user);
     }
 
     public List<User> listAll() {

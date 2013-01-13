@@ -41,11 +41,7 @@ Ext.define('faceid.view.UserView', {
         {
             text: faceid.i18n.get('ok'),
             formBind: true,
-            handler: function (thisBtn) {
-                var self = thisBtn.up('faceid-userview');
-                self.fireEvent('saveUser', self.down('form').getForm().getValues());
-                self.close();
-            }
+            action: 'saveUser'
         },
         {
             text: faceid.i18n.get('cancel'),

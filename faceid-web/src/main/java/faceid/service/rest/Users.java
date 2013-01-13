@@ -32,10 +32,31 @@ public class Users {
         return result;
     }
 
+    @DELETE
+    @Path("/{id}")
+    @Produces("application/json")
+    public Boolean deleteUser(@PathParam("id") Long id) {
+        userService.deleteUser(id);
+        return Boolean.TRUE;
+    }
+
     @POST
     @Produces("application/json")
     @Consumes("application/json")
-    public UserDto saveUser(UserDto userDto) {
+    public UserDto postUser(UserDto userDto) {
+        return saveUser(userDto);
+    }
+
+    @PUT
+    @Path("/{id}")
+    @Produces("application/json")
+    @Consumes("application/json")
+    public UserDto putUser(UserDto userDto) {
+        return saveUser(userDto);
+    }
+
+
+    private UserDto saveUser(UserDto userDto) {
         final User user = userService.saveUser(
                 userDto.getId(),
                 userDto.getName(),
