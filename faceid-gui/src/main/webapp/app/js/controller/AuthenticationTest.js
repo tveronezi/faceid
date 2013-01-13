@@ -16,7 +16,6 @@
  *  limitations under the License.
  */
 
-
 Ext.define('faceid.controller.AuthenticationTest', {
     extend: 'Ext.app.Controller',
 
