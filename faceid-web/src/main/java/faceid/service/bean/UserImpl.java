@@ -22,6 +22,20 @@ public class UserImpl {
         return this.baseEAO.execute(cmd);
     }
 
+    public User saveUser(Long id, String name, String account, String password) {
+        if (id == null) {
+            return createUser(name, account, password);
+        }
+        final User user = getUserById(id);
+        if (user == null) {
+            return null;
+        }
+        user.setName(name);
+        user.setAccount(account);
+        user.setPassword(password);
+        return user;
+    }
+
     public User getUser(String name) {
         final FindByStringField<User> find = new FindByStringField<User>(User.class, "name");
         find.value = name;

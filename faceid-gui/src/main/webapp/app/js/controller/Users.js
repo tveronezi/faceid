@@ -14,9 +14,12 @@ Ext.define('faceid.controller.Users', {
         'User'
     ],
 
-    saveUser: function (ev) {
-        console.log('saveUser event', ev);
+    saveUser: function (data) {
+        console.log('saveUser event', data);
 
+        var user = Ext.create('faceid.model.User', data);
+        user.save();
+        return user;
     },
 
     addUser: function () {

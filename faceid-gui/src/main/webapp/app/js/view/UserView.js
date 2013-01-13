@@ -17,19 +17,19 @@ Ext.define('faceid.view.UserView', {
             items: [
                 {
                     xtype: 'textfield',
-                    name: 'userName',
+                    name: 'name',
                     fieldLabel: faceid.i18n.get('user.name'),
                     allowBlank: false
                 },
                 {
                     xtype: 'textfield',
-                    name: 'userAccount',
+                    name: 'account',
                     fieldLabel: faceid.i18n.get('user.account'),
                     allowBlank: false
                 },
                 {
                     xtype: 'textfield',
-                    name: 'userPassword',
+                    name: 'password',
                     fieldLabel: faceid.i18n.get('user.password'),
                     inputType: 'password',
                     allowBlank: false

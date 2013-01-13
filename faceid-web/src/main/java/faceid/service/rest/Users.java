@@ -7,10 +7,7 @@ import faceid.service.bean.UserImpl;
 
 import javax.ejb.EJB;
 import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +30,19 @@ public class Users {
             result = dtoBuilder.buildUser(user);
         }
         return result;
+    }
+
+    @POST
+    @Produces("application/json")
+    @Consumes("application/json")
+    public UserDto saveUser(UserDto userDto) {
+        final User user = userService.saveUser(
+                userDto.getId(),
+                userDto.getName(),
+                userDto.getAccount(),
+                userDto.getPassword()
+        );
+        return dtoBuilder.buildUser(user);
     }
 
     @GET
