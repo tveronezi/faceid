@@ -5,7 +5,7 @@ Ext.define('test.I18N', {
         describe('I18N test', function () {
             it('should show the application name', function () {
                 var str = faceid.i18n.get('application.name');
-                expect(str).toEqual('faceid');
+                expect(str).toEqual('FaceID');
             });
             it('should show the parameterized message', function () {
                 var str = faceid.i18n.get('test.with.param', {
