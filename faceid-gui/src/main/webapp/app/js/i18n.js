@@ -12,6 +12,7 @@
         'application.authenticationTest': 'Authentication Test',
         'user.name': 'Name',
         'user.account': 'Account',
+        'user.password': 'Password',
         'authentication.date': 'Date',
         'authentication.account': 'Account',
         'authentication.password': 'Password',

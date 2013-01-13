@@ -2,34 +2,57 @@ Ext.define('faceid.view.UserView', {
     extend: 'Ext.window.Window',
     alias: 'widget.faceid-userview',
     title: faceid.i18n.get('application.user.edit'),
-    height: 200,
+    height: 150,
     width: 400,
-    bodyPadding: 5,
-    layout: 'form',
+    layout: 'fit',
     modal: true,
+    border: false,
     items: [
         {
-            xtype: 'textfield',
-            name: 'username',
-            fieldLabel: 'User Name',
-            allowBlank: false,
-            minLength: 6
+            xtype: 'form',
+            frame: true,
+            defaults: {
+                anchor: '100%'
+            },
+            items: [
+                {
+                    xtype: 'textfield',
+                    name: 'userName',
+                    fieldLabel: faceid.i18n.get('user.name'),
+                    allowBlank: false
+                },
+                {
+                    xtype: 'textfield',
+                    name: 'userAccount',
+                    fieldLabel: faceid.i18n.get('user.account'),
+                    allowBlank: false
+                },
+                {
+                    xtype: 'textfield',
+                    name: 'userPassword',
+                    fieldLabel: faceid.i18n.get('user.password'),
+                    inputType: 'password',
+                    allowBlank: false
+                }
+            ]
+        }
+    ],
+    buttons: [
+        {
+            text: faceid.i18n.get('ok'),
+            formBind: true,
+            handler: function (thisBtn) {
+                var self = thisBtn.up('faceid-userview');
+                self.fireEvent('saveUser', self.down('form').getForm().getValues());
+                self.close();
+            }
         },
         {
-            xtype: 'textfield',
-            name: 'email',
-            fieldLabel: 'Email Address',
-            vtype: 'email',
-            allowBlank: false
-        },
-        {
-            xtype: 'textfield',
-            name: 'password1',
-            fieldLabel: 'Password',
-            inputType: 'password',
-            style: 'margin-top:15px',
-            allowBlank: false,
-            minLength: 8
+            text: faceid.i18n.get('cancel'),
+            handler: function (thisBtn) {
+                var self = thisBtn.up('faceid-userview');
+                self.close();
+            }
         }
     ]
 });

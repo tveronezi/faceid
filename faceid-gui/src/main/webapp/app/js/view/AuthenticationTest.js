@@ -31,17 +31,18 @@ Ext.define('faceid.view.AuthenticationTest', {
                 text: faceid.i18n.get('ok'),
                 formBind: true,
                 handler: function(thisBtn) {
-                    self.fireEvent('login', form.getForm().getValues());
+                    var self = thisBtn.up('faceid-portlet-logintest');
+                    self.fireEvent('login', thisBtn.up('form').getForm().getValues());
                     self.disable();
                 }
             },
             {
                 text: faceid.i18n.get('cancel'),
                 handler: function (thisBtn) {
-                    thisBtn.up('form').getForm().reset();
+                    var self = thisBtn.up('faceid-portlet-logintest');
+                    self.down('form').getForm().reset();
                 }
             }
         ]
     }]
-
 });

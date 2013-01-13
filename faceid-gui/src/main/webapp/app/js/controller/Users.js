@@ -14,6 +14,11 @@ Ext.define('faceid.controller.Users', {
         'User'
     ],
 
+    saveUser: function (ev) {
+        console.log('saveUser event', ev);
+
+    },
+
     addUser: function () {
         console.log('addUser event');
         var window = Ext.create('widget.faceid-userview', {});
@@ -32,6 +37,9 @@ Ext.define('faceid.controller.Users', {
         var self = this;
 
         self.control({
+            'faceid-userview': {
+                saveUser: self.saveUser
+            },
             'faceid-portlet-users button[action=addUser]': {
                 click: self.addUser
             },

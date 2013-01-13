@@ -3,8 +3,6 @@ Ext.define('faceid.view.PortletContainer', {
     alias: 'widget.faceid-portlet-container',
     layout: 'absolute',
     autoScroll: true,
-    bodyBorder: false,
-    body: false,
     items: [],
     showPortlet: function (panelType, settings) {
         var panelArr = this.query(panelType);
