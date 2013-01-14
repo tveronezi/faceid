@@ -65,4 +65,4 @@
             this.missing = new Ext.Template('[!{key}!]');
         }
     });
-})();
+}());

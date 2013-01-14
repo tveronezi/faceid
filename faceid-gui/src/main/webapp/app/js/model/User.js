@@ -30,6 +30,6 @@ Ext.define('faceid.model.User', {
             type: 'json',
             root: 'userDto'
         },
-        url : 'rest/users'
+        url: 'rest/users'
     }
 });

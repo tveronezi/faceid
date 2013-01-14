@@ -15,4 +15,7 @@
 run-jasmine:
 	cd ./faceid-gui/ && mvn jasmine:bdd
 
+run-lint:
+	cd ./faceid-gui/ && mvn jslint4java:lint
+
 .PHONY: run-jasmine

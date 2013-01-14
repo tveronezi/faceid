@@ -69,6 +69,23 @@
                     <skipTests>true</skipTests>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>com.googlecode.jslint4java</groupId>
+                <artifactId>jslint4java-maven-plugin</artifactId>
+                <version>2.0.0</version>
+                <configuration>
+                    <failOnError>true</failOnError>
+                    <options>
+                        <vars>true</vars>
+                        <predef>Ext,faceid,console</predef>
+                        <indent>4</indent>
+                        <sloppy>true</sloppy> <!-- Unfortunately ExtJs DOES NOT support the use of "use strict" -->
+                    </options>
+                    <sourceFolders>
+                        <sourceFolder>${basedir}/src/main/webapp/app/js</sourceFolder>
+                    </sourceFolders>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 </project>

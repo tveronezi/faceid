@@ -112,7 +112,7 @@ Ext.define('faceid.controller.Users', {
         }
 
         selected.destroy({
-            success: function() {
+            success: function () {
                 console.log('user removed', selected);
                 self.getUsersStore().load();
             }
@@ -124,12 +124,12 @@ Ext.define('faceid.controller.Users', {
 
         self.control({
             'faceid-userview button[action=saveUser]': {
-                click: function(theButton) {
+                click: function (theButton) {
                     var window = theButton.up('window');
                     var form = window.down('form');
                     var rec = form.getRecord();
                     var values = form.getValues();
-                    Ext.Object.each(values, function(key, value) {
+                    Ext.Object.each(values, function (key, value) {
                         rec.set(key, value);
                     });
                     self.saveUser(rec);
