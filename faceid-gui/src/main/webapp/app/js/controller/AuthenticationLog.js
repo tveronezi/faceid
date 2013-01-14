@@ -16,43 +16,48 @@
  *  limitations under the License.
  */
 
-Ext.define('faceid.controller.AuthenticationLog', {
-    extend: 'Ext.app.Controller',
+(function () {
+    'use strict';
 
-    views: [
-        'AuthenticationLog'
-    ],
+    Ext.define('faceid.controller.AuthenticationLog', {
+        extend: 'Ext.app.Controller',
 
-    stores: [
-        'AuthenticationLog'
-    ],
+        views: [
+            'AuthenticationLog'
+        ],
 
-    refs: [
-        {
-            ref: 'logPanel',
-            selector: 'faceid-portlet-log'
-        }
-    ],
+        stores: [
+            'AuthenticationLog'
+        ],
 
-    refreshPanel: function () {
-        console.log('action: refreshPanel');
-        this.getAuthenticationLogStore().load();
-    },
-
-    init: function () {
-        var self = this;
-
-        self.control({
-            'faceid-portlet-log button[action=refreshPanel]': {
-                click: self.refreshPanel
-            },
-            'faceid-portlet-log': {
-                refreshpanel: function () {
-                    self.getAuthenticationLogStore().load();
-                }
+        refs: [
+            {
+                ref: 'logPanel',
+                selector: 'faceid-portlet-log'
             }
-        });
+        ],
 
-        self.getAuthenticationLogStore().load();
-    }
-});
+        refreshPanel: function () {
+            console.log('action: refreshPanel');
+            this.getAuthenticationLogStore().load();
+        },
+
+        init: function () {
+            var self = this;
+
+            self.control({
+                'faceid-portlet-log button[action=refreshPanel]': {
+                    click: self.refreshPanel
+                },
+                'faceid-portlet-log': {
+                    refreshpanel: function () {
+                        self.getAuthenticationLogStore().load();
+                    }
+                }
+            });
+
+            self.getAuthenticationLogStore().load();
+        }
+    });
+
+}());

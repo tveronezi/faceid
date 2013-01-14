@@ -17,6 +17,8 @@
  */
 
 (function () {
+    'use strict';
+
     // Add your messages to this list.
     // This is a list of extjs Templates, therefore you can use parameters in it.
     var messages = {
