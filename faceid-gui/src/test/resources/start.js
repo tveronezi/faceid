@@ -39,6 +39,12 @@ var classDefinitions = {
         'test.PortletContainerController'
     ];
 
+    // EXTJS testing TRICK!
+    // We dont need to start the entire application to run our tests. There are unit tests, so we only target units
+    // of code. ExtJs uses config objects to define classes, so we can call the functions defined in these
+    // config objects directly. We replace the original "Ext.define" function by our own, where we can keep
+    // tracking of the definitions we created.
+    // See an example of usage in "test/javascript/test/PortletContainerController.js".
     var originalDefineFn = Ext.define;
     Ext.define = function(className, data, createdFn) {
         // keep tracking of all the classes definitions (test purposes only)
