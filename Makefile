@@ -18,4 +18,4 @@ run-jasmine:
 run-lint:
 	cd ./faceid-gui/ && mvn jslint4java:lint
 
-.PHONY: run-jasmine
+.PHONY: run-jasmine run-lint
