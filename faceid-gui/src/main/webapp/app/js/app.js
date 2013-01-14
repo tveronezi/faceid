@@ -16,35 +16,39 @@
  *  limitations under the License.
  */
 
-Ext.Loader.setConfig({
-    enabled: true,
-    disableCaching: false,
-    paths: {
-        'faceid': 'app/js'
-    }
-});
+(function () {
+    'use strict';
 
-Ext.application({
-    name: 'faceid',
-    appFolder: 'app/js',
+    Ext.Loader.setConfig({
+        enabled: true,
+        disableCaching: false,
+        paths: {
+            'faceid': 'app/js'
+        }
+    });
 
-    requires: [
-        'faceid.i18n'
-    ],
+    Ext.application({
+        name: 'faceid',
+        appFolder: 'app/js',
 
-    controllers: [
-        'PortletContainer',
-        'AuthenticationTest',
-        'AuthenticationLog',
-        'Users'
-    ],
+        requires: [
+            'faceid.i18n'
+        ],
 
-    launch: function () {
-        console.log('init application...');
+        controllers: [
+            'PortletContainer',
+            'AuthenticationTest',
+            'AuthenticationLog',
+            'Users'
+        ],
 
-        var title = Ext.get(Ext.dom.Query.selectNode('title'));
-        title.update(faceid.i18n.get('application.name'));
+        launch: function () {
+            console.log('init application...');
 
-        Ext.create('faceid.view.ApplicationViewport');
-    }
-});
+            var title = Ext.get(Ext.dom.Query.selectNode('title'));
+            title.update(faceid.i18n.get('application.name'));
+
+            Ext.create('faceid.view.ApplicationViewport');
+        }
+    });
+}());

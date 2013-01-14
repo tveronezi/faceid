@@ -17,6 +17,8 @@
  */
 
 (function () {
+    'use strict';
+
     var squareUnitSize = 100;
     var padding = 5;
 
@@ -46,6 +48,11 @@
         title: '-',
         closable: false,
         closeAction: 'hide',
+        x: 0,
+        y: 0,
+        height: squareUnitSize,
+        width: squareUnitSize,
+
         listeners: {
             resize: function (thisPanel, width, height) {
                 console.log('resizing portlet', thisPanel);
@@ -59,26 +66,6 @@
                 thisPanel.setPosition(normalizePosition(x), normalizePosition(y));
                 thisPanel.resumeEvents();
             }
-        },
-        initComponent: function () {
-            console.log('initComponent', 'Portlet', this);
-            var self = this;
-            var defaultProps = {};
-
-            function setDefault(prop, value) {
-                if (Ext.isEmpty(self[prop])) {
-                    defaultProps[prop] = value;
-                }
-            }
-
-            setDefault('x', 0);
-            setDefault('y', 0);
-            setDefault('height', squareUnitSize);
-            setDefault('width', squareUnitSize);
-
-            Ext.apply(self, defaultProps);
-
-            this.callParent(arguments);
         }
     });
 }());
