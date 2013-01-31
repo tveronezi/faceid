@@ -53,8 +53,8 @@
                 </executions>
                 <configuration>
                     <preloadSources>
-                        <source>http://localhost:8234/src/main/webapp/app/lib/ext-4.1.1a/ext-all.js</source>
-                        <source>http://localhost:8234/src/test/resources/start.js</source>
+                        <source>${project.basedir}/src/main/webapp/app/lib/ext-4.1.1a/ext-all-debug.js</source>
+                        <source>${project.basedir}/src/test/resources/start.js</source>
                     </preloadSources>
                     <jsSrcDir>${project.basedir}/src/main/webapp</jsSrcDir>
                     <!-- We need to point to an empty directory, otherwise jasmine loads the test files before
@@ -66,7 +66,7 @@
                     </sourceIncludes>
                     <customRunnerTemplate>src/test/resources/runner.html</customRunnerTemplate>
                     <!-- We should skip the tests for now. -->
-                    <skipTests>true</skipTests>
+                    <skipTests>false</skipTests>
                 </configuration>
             </plugin>
             <plugin>

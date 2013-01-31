@@ -12,10 +12,16 @@
 #  limitations under the License.
 #
 
+clean-install:
+	mvn clean install -DskipTests=true
+
+run-headless-jasmine:
+	cd ./faceid-gui/ && mvn test
+
 run-jasmine:
 	cd ./faceid-gui/ && mvn jasmine:bdd
 
 run-lint:
 	cd ./faceid-gui/ && mvn jslint4java:lint
 
-.PHONY: run-jasmine run-lint
+.PHONY: clean-install run-headless-jasmine run-jasmine run-lint
