@@ -12,16 +12,44 @@
 #  limitations under the License.
 #
 
-clean-install:
+PROJECT_NAME=faceid
+
+up-static:
+	rm -rf ./$(PROJECT_NAME)-gui/target/tomee-runtime/webapps/$(PROJECT_NAME)/app
+	cp -r $(PROJECT_NAME)-gui/src/main/webapp/app ./$(PROJECT_NAME)-gui/target/tomee-runtime/webapps/$(PROJECT_NAME)/
+	cp -r $(PROJECT_NAME)-gui/src/main/webapp/index.html ./$(PROJECT_NAME)-gui/target/tomee-runtime/webapps/$(PROJECT_NAME)/index.html
+
+clean-start: clean-install start-tomee
+
+clean-install: kill-tomee
 	mvn clean install -DskipTests=true
 
-run-headless-jasmine:
-	cd ./faceid-gui/ && mvn test
+unzip-tomee: kill-tomee
+	cd ./$(PROJECT_NAME)-gui/target/ && \
+	rm -f tomee-runtime && \
+	tar -xzf tomee-runtime.tar.gz && \
+	mv apache-tomee-plus-1.5.2-SNAPSHOT tomee-runtime
+	cp ./$(PROJECT_NAME)-gui/target/$(PROJECT_NAME).war ./$(PROJECT_NAME)-gui/target/tomee-runtime/webapps
+
+kill-tomee:
+	@if test -f $(shell pwd)/tomee-pid.txt; then \
+		kill -9 `cat $(shell pwd)/tomee-pid.txt`; \
+		rm $(shell pwd)/tomee-pid.txt; \
+	fi
+
+start-tomee: unzip-tomee restart-tomee
+
+restart-tomee: kill-tomee
+	cd ./$(PROJECT_NAME)-gui/target/ && \
+	export JPDA_SUSPEND=n && \
+	export CATALINA_PID=$(shell pwd)/tomee-pid.txt && \
+	./tomee-runtime/bin/catalina.sh jpda start
 
 run-jasmine:
-	cd ./faceid-gui/ && mvn jasmine:bdd
+	cd ./$(PROJECT_NAME)-gui/ && mvn jasmine:bdd
 
 run-lint:
-	cd ./faceid-gui/ && mvn jslint4java:lint
+	cd ./$(PROJECT_NAME)-gui/ && mvn jslint4java:lint
 
-.PHONY: clean-install run-headless-jasmine run-jasmine run-lint
+.PHONY: up-static clean-start clean-install unzip-tomee kill-tomee start-tomee restart-tomee \
+		run-jasmine run-lint
