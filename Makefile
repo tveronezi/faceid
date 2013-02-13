@@ -12,6 +12,7 @@
 #  limitations under the License.
 #
 
+HOME_DIR=$(shell cd && pwd)
 PROJECT_NAME=faceid
 
 up-static:
@@ -32,17 +33,20 @@ unzip-tomee: kill-tomee
 	cp ./$(PROJECT_NAME)-gui/target/$(PROJECT_NAME).war ./$(PROJECT_NAME)-gui/target/tomee-runtime/webapps
 
 kill-tomee:
-	@if test -f $(shell pwd)/tomee-pid.txt; then \
-		kill -9 `cat $(shell pwd)/tomee-pid.txt`; \
-		rm $(shell pwd)/tomee-pid.txt; \
+	@if test -f $(HOME_DIR)/tomee-pid.txt; then \
+		kill -9 `cat $(HOME_DIR)/tomee-pid.txt`; \
+		rm $(HOME_DIR)/tomee-pid.txt; \
 	fi
 
 start-tomee: unzip-tomee restart-tomee
 
+tail:
+	tail -f ./$(PROJECT_NAME)-gui/target/tomee-runtime/logs/catalina.out
+
 restart-tomee: kill-tomee
 	cd ./$(PROJECT_NAME)-gui/target/ && \
 	export JPDA_SUSPEND=n && \
-	export CATALINA_PID=$(shell pwd)/tomee-pid.txt && \
+	export CATALINA_PID=$(HOME_DIR)/tomee-pid.txt && \
 	./tomee-runtime/bin/catalina.sh jpda start
 
 run-jasmine:
@@ -52,4 +56,5 @@ run-lint:
 	cd ./$(PROJECT_NAME)-gui/ && mvn jslint4java:lint
 
 .PHONY: up-static clean-start clean-install unzip-tomee kill-tomee start-tomee restart-tomee \
-		run-jasmine run-lint
+		run-jasmine run-lint tail
+
