@@ -24,4 +24,3 @@ If you use a Unix-like OS with Makefile support, you can run the application by 
 * make tail #It tails the catalina.out file
 * make run-jasmine
 * make run-lint
-
