@@ -20,8 +20,12 @@ up-static:
 	cp -r $(PROJECT_NAME)-gui/src/main/webapp/app $(HOME_DIR)/tomee-runtime/webapps/$(PROJECT_NAME)/
 	cp -r $(PROJECT_NAME)-gui/src/main/webapp/index.html $(HOME_DIR)/tomee-runtime/webapps/$(PROJECT_NAME)/index.html
 
-up-war: clean-install
-	cp -r ./$(PROJECT_NAME)-gui/target/$(PROJECT_NAME).war $(HOME_DIR)/tomee-runtime/webapps/
+up-war: kill-tomee clean-install
+	rm -f $(HOME_DIR)/tomee-runtime/webapps/$(PROJECT_NAME).war
+	rm -Rf $(HOME_DIR)/tomee-runtime/webapps/$(PROJECT_NAME)
+	cp ./$(PROJECT_NAME)-gui/target/$(PROJECT_NAME).war $(HOME_DIR)/tomee-runtime/webapps/
+
+up-war-restart: up-war restart-tomee
 
 clean-start: clean-install start-tomee
 
@@ -60,6 +64,6 @@ run-jasmine:
 run-lint:
 	cd ./$(PROJECT_NAME)-gui/ && mvn jslint4java:lint
 
-.PHONY: up-war up-static clean-start clean-install unzip-tomee kill-tomee start-tomee restart-tomee \
+.PHONY: up-war up-war-restart up-static clean-start clean-install unzip-tomee kill-tomee start-tomee restart-tomee \
 		run-jasmine run-lint tail
 
