@@ -33,6 +33,7 @@
         'user.name': 'Name',
         'user.account': 'Account',
         'user.password': 'Password',
+        'user.groups': 'Groups',
         'authentication.date': 'Date',
         'authentication.account': 'Account',
         'authentication.password': 'Password',

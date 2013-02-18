@@ -26,23 +26,35 @@ import faceid.data.execution.command.FindByStringField;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import java.util.List;
+import java.util.Set;
 
 @Stateless(name = "faceid-UserImpl")
 public class UserImpl {
     @EJB
     private BaseEAO baseEAO;
 
-    public User createUser(String name, String account, String password) {
+    @EJB
+    private StringEncryptImpl encrypt;
+
+    public User createUser(String name, String account, String password, Set<String> groups) {
         final CreateUser cmd = new CreateUser();
         cmd.name = name;
         cmd.account = account;
-        cmd.password = password;
+
+        cmd.salt = this.encrypt.generateSalt();
+        if (password == null) {
+            cmd.password = this.encrypt.encryptString("", cmd.salt);
+        } else {
+            cmd.password = this.encrypt.encryptString(password, cmd.salt);
+        }
+
+        cmd.groups = groups;
         return this.baseEAO.execute(cmd);
     }
 
-    public User saveUser(Long id, String name, String account, String password) {
+    public User saveUser(Long id, String name, String account, String password, Set<String> groups) {
         if (id == null) {
-            return createUser(name, account, password);
+            return createUser(name, account, password, groups);
         }
         final User user = getUserById(id);
         if (user == null) {
@@ -50,11 +62,15 @@ public class UserImpl {
         }
         user.setName(name);
         user.setAccount(account);
-
-        if (!"".equals(password)) {
-            user.setPassword(password);
+        user.getSecurityGroups().clear();
+        if (groups != null) {
+            user.getSecurityGroups().addAll(groups);
         }
-
+        if (!"".equals(password)) {
+            final byte[] salt = this.encrypt.generateSalt();
+            user.setSalt(salt);
+            user.setPassword(this.encrypt.encryptString(password, salt));
+        }
         return user;
     }
 
@@ -70,7 +86,7 @@ public class UserImpl {
 
     public void deleteUser(Long id) {
         final User user = getUserById(id);
-        if(user == null) {
+        if (user == null) {
             return;
         }
         this.baseEAO.delete(user);

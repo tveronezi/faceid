@@ -18,7 +18,6 @@
 
 package faceid.service;
 
-import faceid.data.entity.User;
 import faceid.service.bean.UserImpl;
 
 import javax.annotation.PostConstruct;
@@ -34,17 +33,6 @@ public class ApplicationStartup {
 
     @PostConstruct
     public void applicationStartup() {
-        createUser("michael", "michael", "bad");
-        createUser("eddie", "eddie", "jump");
-        createUser("paul", "paul", "michelle");
-        createUser("andreas", "andreas", "roots");
-    }
-
-    private void createUser(String name, String account, String pass) {
-        User usr = this.userService.getUser(name);
-        if (usr != null) {
-            return;
-        }
-        this.userService.createUser(name, account, pass);
+        // placeholder
     }
 }

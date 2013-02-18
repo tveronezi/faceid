@@ -27,7 +27,9 @@ import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Path("/users")
 public class Users {
@@ -75,11 +77,25 @@ public class Users {
 
 
     private UserDto saveUser(UserDto userDto) {
+        String strGroups = userDto.getGroups();
+        if (strGroups == null) {
+            strGroups = "";
+        }
+        final String[] arrGroups = strGroups.split(",");
+        final Set<String> groups = new HashSet<String>();
+        for (String group : arrGroups) {
+            String trimmed = group.trim();
+            if (!"".equals(trimmed)) {
+                groups.add(trimmed);
+            }
+        }
+
         final User user = userService.saveUser(
                 userDto.getId(),
                 userDto.getName(),
                 userDto.getAccount(),
-                userDto.getPassword()
+                userDto.getPassword(),
+                groups
         );
         return dtoBuilder.buildUser(user);
     }

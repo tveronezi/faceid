@@ -27,7 +27,9 @@ import faceid.data.execution.command.FindAllAuthenticationLog;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Stateless
 public class AuthenticationImpl {
@@ -37,21 +39,30 @@ public class AuthenticationImpl {
     @EJB
     private UserImpl userSrv;
 
-    public Boolean authenticate(String account, String password) {
+    @EJB
+    private StringEncryptImpl encrypt;
+
+    public Set<String> authenticate(String account, String password) {
         final AuthenticationLog log = new AuthenticationLog();
         log.setAccount(account);
         log.setDate(new Date());
         log.setLogType(AuthenticationLogType.SUCCESS);
 
         final User user = this.userSrv.getUser(account);
+        Set<String> groups = null; // null means "bad user or password"
         if (user == null) {
             log.setLogType(AuthenticationLogType.BAD_USER);
-        } else if (!user.getPassword().equals(password)) {
+        } else if (!this.encrypt.areEquivalent(password, user.getPassword(), user.getSalt())) {
             log.setLogType(AuthenticationLogType.BAD_PASSWORD);
+        } else {
+            groups = user.getSecurityGroups();
+            if (groups == null) {
+                groups = new HashSet<String>();
+            }
         }
 
         this.baseEAO.create(log);
-        return AuthenticationLogType.SUCCESS.equals(log.getLogType());
+        return groups;
     }
 
     public List<AuthenticationLog> getLog() {

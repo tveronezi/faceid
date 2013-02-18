@@ -16,20 +16,14 @@
  *  limitations under the License.
  */
 
-Ext.define('faceid.model.User', {
-    extend: 'Ext.data.Model',
-    fields: ['id', 'name', 'account', 'password', 'groups'],
+package faceid.service;
 
-    proxy: {
-        type: 'rest',
-        reader: {
-            type: 'json',
-            root: 'userDto'
-        },
-        writer: {
-            type: 'json',
-            root: 'userDto'
-        },
-        url: 'rest/users'
+public class ApplicationException extends RuntimeException {
+    public ApplicationException(String message) {
+        super(message);
     }
-});
+
+    public ApplicationException(Throwable cause) {
+        super(cause);
+    }
+}

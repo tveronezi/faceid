@@ -23,9 +23,10 @@ import faceid.data.dto.UserDto;
 import faceid.data.entity.AuthenticationLog;
 import faceid.data.entity.User;
 
-import javax.ejb.Singleton;
+import javax.ejb.Stateless;
+import java.util.Set;
 
-@Singleton(name = "faceid-DtoBuilderImpl")
+@Stateless(name = "faceid-DtoBuilderImpl")
 public class DtoBuilderImpl {
 
     public UserDto buildUser(User user) {
@@ -36,6 +37,16 @@ public class DtoBuilderImpl {
         result.setId(user.getUid());
         result.setName(user.getName());
         result.setAccount(user.getAccount());
+
+        final Set<String> groups = user.getSecurityGroups();
+        if (groups == null) {
+            result.setGroups("");
+        } else {
+            String groupsStr = groups.toString();
+            groupsStr = groupsStr.substring(1, groupsStr.length() - 1);
+            groupsStr.replaceAll("\\s", "");
+            result.setGroups(groupsStr);
+        }
         return result;
     }
 

@@ -23,7 +23,7 @@
         extend: 'Ext.window.Window',
         alias: 'widget.faceid-userview',
         title: faceid.i18n.get('application.user.edit'),
-        height: 150,
+        height: 180,
         width: 400,
         layout: 'fit',
         modal: true,
@@ -52,8 +52,13 @@
                         xtype: 'textfield',
                         name: 'password',
                         fieldLabel: faceid.i18n.get('user.password'),
-                        inputType: 'password',
-                        allowBlank: false
+                        inputType: 'password'
+                    },
+                    {
+                        xtype: 'textfield',
+                        name: 'groups',
+                        fieldLabel: faceid.i18n.get('user.groups'),
+                        allowBlank: true
                     }
                 ]
             }

@@ -30,8 +30,21 @@
                 store: 'Users',
                 border: false,
                 columns: [
-                    { text: faceid.i18n.get('user.account'), dataIndex: 'account' },
-                    { text: faceid.i18n.get('user.name'), dataIndex: 'name', flex: 1 }
+                    {
+                        text: faceid.i18n.get('user.account'),
+                        dataIndex: 'account',
+                        width: '100px'
+                    },
+                    {
+                        text: faceid.i18n.get('user.name'),
+                        dataIndex: 'name',
+                        width: '100px'
+                    },
+                    {
+                        text: faceid.i18n.get('user.groups'),
+                        dataIndex: 'groups',
+                        flex: 1
+                    }
                 ]
             }
         ],

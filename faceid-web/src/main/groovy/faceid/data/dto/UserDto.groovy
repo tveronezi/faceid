@@ -38,4 +38,7 @@ class UserDto implements Serializable {
 
     @XmlElement
     String password
+
+    @XmlElement
+    String groups;
 }

@@ -22,11 +22,15 @@ import faceid.data.entity.User;
 import faceid.data.execution.BaseEAO;
 import faceid.data.execution.DbCommand;
 
+import java.util.Set;
+
 public class CreateUser implements DbCommand<User> {
 
     public String name;
     public String account;
-    public String password;
+    public byte[] password;
+    public byte[] salt;
+    public Set<String> groups;
 
     @Override
     public User execute(BaseEAO eao) {
@@ -34,10 +38,10 @@ public class CreateUser implements DbCommand<User> {
         user.setName(this.name);
         user.setAccount(this.account);
 
-        if (this.password == null) {
-            user.setPassword("");
-        } else {
-            user.setPassword(this.password);
+        user.setPassword(this.password);
+        user.setSalt(this.salt);
+        if (this.groups != null) {
+            user.getSecurityGroups().addAll(this.groups);
         }
         user = eao.create(user);
         return user;

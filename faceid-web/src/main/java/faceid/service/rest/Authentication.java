@@ -20,6 +20,7 @@ package faceid.service.rest;
 
 import faceid.data.dto.AuthenticationDto;
 import faceid.data.entity.AuthenticationLog;
+import faceid.service.ApplicationException;
 import faceid.service.bean.AuthenticationImpl;
 import faceid.service.bean.DtoBuilderImpl;
 
@@ -28,6 +29,7 @@ import javax.inject.Inject;
 import javax.ws.rs.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Path("/authentication")
 public class Authentication {
@@ -39,9 +41,15 @@ public class Authentication {
     private DtoBuilderImpl dtoBuilder;
 
     @POST
-    @Produces("application/json")
-    public Boolean authenticate(@FormParam("account") String account, @FormParam("password") String password) {
-        return this.authSrv.authenticate(account, password);
+    @Produces("plain/text")
+    public String authenticate(@FormParam("account") String account, @FormParam("password") String password) {
+        final Set<String> groups = this.authSrv.authenticate(account, password);
+        if (groups == null) {
+            throw new ApplicationException("Bad user or password");
+        }
+        String result = groups.toString();
+        result = result.substring(1, result.length() -1);
+        return result.replaceAll("\\s", "");
     }
 
     @GET

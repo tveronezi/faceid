@@ -46,7 +46,7 @@
             Ext.Ajax.request({
                 url: 'rest/authentication',
                 params: values,
-                success: function (response) {
+                callback: function () {
                     var form = panel.query('form')[0];
                     form.getForm().reset();
                     panel.enable();

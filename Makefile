@@ -16,9 +16,12 @@ HOME_DIR=$(shell cd && pwd)
 PROJECT_NAME=faceid
 
 up-static:
-	rm -rf ./$(PROJECT_NAME)-gui/target/tomee-runtime/webapps/$(PROJECT_NAME)/app
-	cp -r $(PROJECT_NAME)-gui/src/main/webapp/app ./$(PROJECT_NAME)-gui/target/tomee-runtime/webapps/$(PROJECT_NAME)/
-	cp -r $(PROJECT_NAME)-gui/src/main/webapp/index.html ./$(PROJECT_NAME)-gui/target/tomee-runtime/webapps/$(PROJECT_NAME)/index.html
+	rm -rf $(HOME_DIR)/tomee-runtime/webapps/$(PROJECT_NAME)/app
+	cp -r $(PROJECT_NAME)-gui/src/main/webapp/app $(HOME_DIR)/tomee-runtime/webapps/$(PROJECT_NAME)/
+	cp -r $(PROJECT_NAME)-gui/src/main/webapp/index.html $(HOME_DIR)/tomee-runtime/webapps/$(PROJECT_NAME)/index.html
+
+up-war: clean-install
+	cp -r ./$(PROJECT_NAME)-gui/target/$(PROJECT_NAME).war $(HOME_DIR)/tomee-runtime/webapps/
 
 clean-start: clean-install start-tomee
 
@@ -31,6 +34,8 @@ unzip-tomee: kill-tomee
 	tar -xzf tomee-runtime.tar.gz && \
 	mv apache-tomee-plus-1.5.2-SNAPSHOT tomee-runtime
 	cp ./$(PROJECT_NAME)-gui/target/$(PROJECT_NAME).war ./$(PROJECT_NAME)-gui/target/tomee-runtime/webapps
+	rm -Rf $(HOME_DIR)/tomee-runtime
+	mv ./$(PROJECT_NAME)-gui/target/tomee-runtime $(HOME_DIR)
 
 kill-tomee:
 	@if test -f $(HOME_DIR)/tomee-pid.txt; then \
@@ -41,13 +46,13 @@ kill-tomee:
 start-tomee: unzip-tomee restart-tomee
 
 tail:
-	tail -f ./$(PROJECT_NAME)-gui/target/tomee-runtime/logs/catalina.out
+	tail -f $(HOME_DIR)/tomee-runtime/logs/catalina.out
 
 restart-tomee: kill-tomee
-	cd ./$(PROJECT_NAME)-gui/target/ && \
+	cd $(HOME_DIR)/tomee-runtime/ && \
 	export JPDA_SUSPEND=n && \
 	export CATALINA_PID=$(HOME_DIR)/tomee-pid.txt && \
-	./tomee-runtime/bin/catalina.sh jpda start
+	./bin/catalina.sh jpda start
 
 run-jasmine:
 	cd ./$(PROJECT_NAME)-gui/ && mvn jasmine:bdd
@@ -55,6 +60,6 @@ run-jasmine:
 run-lint:
 	cd ./$(PROJECT_NAME)-gui/ && mvn jslint4java:lint
 
-.PHONY: up-static clean-start clean-install unzip-tomee kill-tomee start-tomee restart-tomee \
+.PHONY: up-war up-static clean-start clean-install unzip-tomee kill-tomee start-tomee restart-tomee \
 		run-jasmine run-lint tail
 
