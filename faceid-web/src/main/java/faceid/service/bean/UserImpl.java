@@ -23,12 +23,14 @@ import faceid.data.execution.BaseEAO;
 import faceid.data.execution.command.CreateUser;
 import faceid.data.execution.command.FindByStringField;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import java.util.List;
 import java.util.Set;
 
 @Stateless(name = "faceid-UserImpl")
+@RolesAllowed(value = {"faceid-admin"})
 public class UserImpl {
     @EJB
     private BaseEAO baseEAO;

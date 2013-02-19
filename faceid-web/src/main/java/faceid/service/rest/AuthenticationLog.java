@@ -18,24 +18,20 @@
 
 package faceid.service.rest;
 
-import faceid.service.ApplicationException;
+import faceid.data.dto.AuthenticationDto;
 import faceid.service.bean.AuthenticationImpl;
 import faceid.service.bean.DtoBuilderImpl;
 
-import javax.annotation.security.RunAs;
 import javax.ejb.EJB;
-import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.ws.rs.FormParam;
-import javax.ws.rs.POST;
+import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
-@Path("/authentication")
-@RunAs("faceid-admin")
-@Stateless
-public class Authentication {
+@Path("/authentication-log")
+public class AuthenticationLog {
 
     @EJB
     private AuthenticationImpl authSrv;
@@ -43,16 +39,14 @@ public class Authentication {
     @Inject
     private DtoBuilderImpl dtoBuilder;
 
-    @POST
-    @Produces("plain/text")
-    public String authenticate(@FormParam("account") String account, @FormParam("password") String password) {
-        final Set<String> groups = this.authSrv.authenticate(account, password);
-        if (groups == null) {
-            throw new ApplicationException("Bad user or password");
+    @GET
+    @Produces("application/json")
+    public List<AuthenticationDto> listLog() {
+        final List<AuthenticationDto> result = new ArrayList<AuthenticationDto>();
+        final List<faceid.data.entity.AuthenticationLog> log = this.authSrv.getLog();
+        for (faceid.data.entity.AuthenticationLog entry : log) {
+            result.add(this.dtoBuilder.buildAuthenticationLog(entry));
         }
-        String result = groups.toString();
-        result = result.substring(1, result.length() - 1);
-        return result.replaceAll("\\s", "");
+        return result;
     }
-
 }

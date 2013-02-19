@@ -29,6 +29,6 @@ Ext.define('faceid.model.AuthenticationLog', {
             type: 'json',
             root: 'authenticationDto'
         },
-        url: 'rest/authentication'
+        url: 'rest/authentication-log'
     }
 });

@@ -24,6 +24,7 @@ import faceid.data.entity.User;
 import faceid.data.execution.BaseEAO;
 import faceid.data.execution.command.FindAllAuthenticationLog;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import java.util.Date;
@@ -32,6 +33,7 @@ import java.util.List;
 import java.util.Set;
 
 @Stateless
+@RolesAllowed(value = {"faceid-admin"})
 public class AuthenticationImpl {
     @EJB
     private BaseEAO baseEAO;
