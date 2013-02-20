@@ -35,9 +35,7 @@ clean-install: kill-tomee
 	mvn clean install -DskipTests=true
 
 unzip-tomee: kill-tomee clean-install
-	cd ./$(PROJECT_NAME)-resources/ && \
-	mvn clean install -DskipTests=true && \
-	cd target && \
+	cd ./$(PROJECT_NAME)-resources/target && \
 	rm -Rf tomee-runtime && \
 	tar -xzf tomee-runtime.tar.gz && \
 	mv apache-tomee-plus-1.5.2-SNAPSHOT tomee-runtime
