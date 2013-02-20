@@ -30,7 +30,7 @@ import java.util.List;
 import java.util.Set;
 
 @Stateless(name = "faceid-UserImpl")
-@RolesAllowed(value = {"faceid-admin"})
+@RolesAllowed(value = {"solution-admin"})
 public class UserImpl {
     @EJB
     private BaseEAO baseEAO;

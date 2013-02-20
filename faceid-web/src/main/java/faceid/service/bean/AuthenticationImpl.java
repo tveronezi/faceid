@@ -33,7 +33,7 @@ import java.util.List;
 import java.util.Set;
 
 @Stateless
-@RolesAllowed(value = {"faceid-admin"})
+@RolesAllowed(value = {"solution-admin"})
 public class AuthenticationImpl {
     @EJB
     private BaseEAO baseEAO;

@@ -16,7 +16,7 @@
   limitations under the License.
 -->
 <tomcat-users>
-  <role rolename="faceid-admin" />
-  <user username="faceid" password="faceid" roles="faceid-admin" />
+    <role rolename="solution-admin" />
+    <user username="admin" password="admin" roles="solution-admin" />
 </tomcat-users>
 

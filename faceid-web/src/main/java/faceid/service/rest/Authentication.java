@@ -33,7 +33,7 @@ import javax.ws.rs.Produces;
 import java.util.Set;
 
 @Path("/authentication")
-@RunAs("faceid-admin")
+@RunAs("solution-admin")
 @Stateless
 public class Authentication {
 
