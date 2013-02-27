@@ -21,7 +21,7 @@ package faceid.data.entity
 import javax.persistence.*
 
 @Entity
-@Table(name = 'auth_log_tbl')
+@Table(name = 'faceid_auth_log_tbl')
 class AuthenticationLog extends BaseEntity {
 
     @Column(name = 'usr_account', nullable = false)

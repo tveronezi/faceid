@@ -21,7 +21,7 @@ package faceid.data.entity
 import javax.persistence.*
 
 @Entity
-@Table(name = 'user_tbl', uniqueConstraints = @UniqueConstraint(columnNames = ['usr_account']))
+@Table(name = 'faceid_user_tbl', uniqueConstraints = @UniqueConstraint(columnNames = ['usr_account']))
 class User extends BaseEntity {
 
     @Column(name = 'usr_name', nullable = false)

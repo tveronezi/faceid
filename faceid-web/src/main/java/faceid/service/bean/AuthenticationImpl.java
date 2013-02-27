@@ -27,6 +27,8 @@ import faceid.data.execution.command.FindAllAuthenticationLog;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -44,6 +46,7 @@ public class AuthenticationImpl {
     @EJB
     private StringEncryptImpl encrypt;
 
+    @TransactionAttribute(TransactionAttributeType.SUPPORTS)
     public Set<String> authenticate(String account, String password) {
         final AuthenticationLog log = new AuthenticationLog();
         log.setAccount(account);

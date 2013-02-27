@@ -24,9 +24,12 @@ import faceid.data.entity.AuthenticationLog;
 import faceid.data.entity.User;
 
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import java.util.Set;
 
 @Stateless(name = "faceid-DtoBuilderImpl")
+@TransactionAttribute(TransactionAttributeType.SUPPORTS)
 public class DtoBuilderImpl {
 
     public UserDto buildUser(User user) {

@@ -23,6 +23,8 @@ import faceid.service.ApplicationException;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
@@ -31,6 +33,7 @@ import java.util.Arrays;
 
 // Credits to http://www.javacodegeeks.com/2012/05/secure-password-storage-donts-dos-and.html
 @Stateless(name = "faceid-StringEncryptImpl")
+@TransactionAttribute(TransactionAttributeType.SUPPORTS)
 public class StringEncryptImpl {
 
     public boolean areEquivalent(String attemptedPassword, byte[] encryptedPassword, byte[] salt) {
