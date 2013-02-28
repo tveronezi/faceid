@@ -18,9 +18,9 @@
 
 package faceid.service.rest;
 
+import faceid.cdi.util.DtoBuilder;
 import faceid.data.dto.UserDto;
 import faceid.data.entity.User;
-import faceid.service.bean.DtoBuilderImpl;
 import faceid.service.bean.UserImpl;
 
 import javax.ejb.EJB;
@@ -38,7 +38,7 @@ public class Users {
     private UserImpl userService;
 
     @Inject
-    private DtoBuilderImpl dtoBuilder;
+    private DtoBuilder dtoBuilder;
 
     @GET
     @Path("/{id}")

@@ -18,9 +18,9 @@
 
 package faceid.service.rest;
 
+import faceid.cdi.util.DtoBuilder;
 import faceid.data.dto.AuthenticationDto;
 import faceid.service.bean.AuthenticationImpl;
-import faceid.service.bean.DtoBuilderImpl;
 
 import javax.ejb.EJB;
 import javax.inject.Inject;
@@ -37,7 +37,7 @@ public class AuthenticationLog {
     private AuthenticationImpl authSrv;
 
     @Inject
-    private DtoBuilderImpl dtoBuilder;
+    private DtoBuilder dtoBuilder;
 
     @GET
     @Produces("application/json")

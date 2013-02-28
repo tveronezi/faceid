@@ -18,6 +18,7 @@
 
 package faceid.service.bean;
 
+import faceid.cdi.util.StringEncrypt;
 import faceid.data.entity.User;
 import faceid.data.execution.BaseEAO;
 import faceid.data.execution.command.CreateUser;
@@ -28,6 +29,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
+import javax.inject.Inject;
 import java.util.List;
 import java.util.Set;
 
@@ -37,8 +39,8 @@ public class UserImpl {
     @EJB
     private BaseEAO baseEAO;
 
-    @EJB
-    private StringEncryptImpl encrypt;
+    @Inject
+    private StringEncrypt encrypt;
 
     public User createUser(String name, String account, String password, Set<String> groups) {
         final CreateUser cmd = new CreateUser();

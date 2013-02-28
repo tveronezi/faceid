@@ -18,9 +18,9 @@
 
 package faceid.service.rest;
 
+import faceid.cdi.util.DtoBuilder;
 import faceid.service.ApplicationException;
 import faceid.service.bean.AuthenticationImpl;
-import faceid.service.bean.DtoBuilderImpl;
 
 import javax.annotation.security.RunAs;
 import javax.ejb.EJB;
@@ -44,7 +44,7 @@ public class Authentication {
     private AuthenticationImpl authSrv;
 
     @Inject
-    private DtoBuilderImpl dtoBuilder;
+    private DtoBuilder dtoBuilder;
 
     @POST
     @Produces("plain/text")

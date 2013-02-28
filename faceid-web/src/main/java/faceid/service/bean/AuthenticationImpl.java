@@ -18,6 +18,7 @@
 
 package faceid.service.bean;
 
+import faceid.cdi.util.StringEncrypt;
 import faceid.data.entity.AuthenticationLog;
 import faceid.data.entity.AuthenticationLogType;
 import faceid.data.entity.User;
@@ -29,6 +30,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
+import javax.inject.Inject;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -43,8 +45,8 @@ public class AuthenticationImpl {
     @EJB
     private UserImpl userSrv;
 
-    @EJB
-    private StringEncryptImpl encrypt;
+    @Inject
+    private StringEncrypt encrypt;
 
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
     public Set<String> authenticate(String account, String password) {
