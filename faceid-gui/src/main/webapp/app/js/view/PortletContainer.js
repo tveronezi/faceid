@@ -22,23 +22,19 @@
     Ext.define('faceid.view.PortletContainer', {
         extend: 'Ext.panel.Panel',
         alias: 'widget.faceid-portlet-container',
-        layout: 'absolute',
-        autoScroll: true,
-        items: [],
-        showPortlet: function (panelType, settings) {
-            var panelArr = this.query(panelType);
-            if (Ext.isEmpty(panelArr)) {
-                var portlet = Ext.create('widget.' + panelType, {
-                    x: settings.get('x'),
-                    y: settings.get('y'),
-                    height: settings.get('height'),
-                    width: settings.get('width')
-                });
-                this.add(portlet);
-                portlet.show();
-            } else {
-                panelArr[0].show();
-            }
-        }
+        layout: {
+            type: 'vbox',
+            align: 'center'
+        },
+        border: false,
+        items: [{
+            xtype: 'faceid-portlet-log',
+            width: '100%',
+            flex: 1
+        },{
+            xtype: 'faceid-portlet-users',
+            width: '100%',
+            flex: 1
+        }]
     });
 }());

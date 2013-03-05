@@ -23,19 +23,6 @@
         extend: 'Ext.panel.Panel',
         alias: 'widget.faceid-application-container',
         layout: 'fit',
-        tbar: [
-            '->',
-            '-',
-            {
-                action: 'save-positions',
-                text: faceid.i18n.get('application.save.positions')
-            },
-            '-',
-            {
-                xtype: 'tbtext',
-                text: USER_NAME
-            }
-        ],
         items: [
             {
                 xtype: 'faceid-portlet-container'

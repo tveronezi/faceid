@@ -20,10 +20,11 @@
     'use strict';
 
     Ext.define('faceid.view.Users', {
-        extend: 'faceid.view.Portlet',
+        extend: 'Ext.panel.Panel',
         alias: 'widget.faceid-portlet-users',
         title: faceid.i18n.get('application.users'),
         layout: 'fit',
+        closable: false,
         items: [
             {
                 xtype: 'grid',

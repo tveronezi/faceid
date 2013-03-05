@@ -20,7 +20,7 @@
     'use strict';
 
     Ext.define('faceid.view.AuthenticationLog', {
-        extend: 'faceid.view.Portlet',
+        extend: 'Ext.panel.Panel',
         alias: 'widget.faceid-portlet-log',
         title: faceid.i18n.get('application.log'),
         layout: 'fit',
