@@ -102,4 +102,16 @@ public class UserImpl {
     public List<User> listAll() {
         return this.baseEAO.findAll(User.class);
     }
+
+    public void addGroupToUser(String userAccount, String userPassword, String group) {
+        final User user = this.getUser(userAccount);
+        if (user == null) {
+            // no-op
+            return;
+        }
+        if (this.encrypt.areEquivalent(userPassword, user.getPassword(), user.getSalt())) {
+            final Set<String> groups = user.getSecurityGroups();
+            groups.add(group);
+        }
+    }
 }

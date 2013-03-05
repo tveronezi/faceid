@@ -18,21 +18,29 @@
 
 package faceid.service.mdb;
 
-import faceid.service.Sudo;
+import faceid.service.bean.Sudo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.ejb.EJB;
 import javax.ejb.MessageDriven;
 import javax.jms.Message;
 import javax.jms.MessageListener;
 
-@MessageDriven(mappedName = "IncomingEmailQueue")
-public class CommandMessage implements MessageListener {
+@MessageDriven(mappedName = "CreateUpdateUserQueue")
+public class CreateUpdateUser implements MessageListener {
+
+    private static final Logger LOG = LoggerFactory.getLogger(CreateUpdateUser.class);
 
     @EJB
     private Sudo sudo;
 
     @Override
     public void onMessage(Message message) {
-        this.sudo.createUserFromMessage(message);
+        try {
+            this.sudo.createUserFromMessage(message);
+        } catch (Exception e) {
+            LOG.error("Error while processing 'add user' message", e);
+        }
     }
 }
