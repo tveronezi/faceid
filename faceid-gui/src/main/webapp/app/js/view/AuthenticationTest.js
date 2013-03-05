@@ -27,6 +27,7 @@
         height: 180,
         width: 400,
         closable: false,
+        resizable: false,
         items: [
             {
                 xtype: 'form',
