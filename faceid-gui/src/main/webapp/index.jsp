@@ -22,6 +22,7 @@
     <meta charset="utf-8">
     <title>faceid</title>
     <link rel="stylesheet" type="text/css" href="<c:url value='/app/lib/ext-4.1.1a/resources/css/ext-all.css'/>">
+    <link rel="stylesheet" type="text/css" href="<c:url value='/app/app.css'/>">
     <script type="text/javascript" src="<c:url value='/app/lib/ext-4.1.1a/ext-all-debug.js'/>"></script>
     <script type="text/javascript">
         // Save the path to the application. Case the application is not the root context, we should now that.

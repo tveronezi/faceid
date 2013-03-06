@@ -59,6 +59,7 @@
                             {
                                 title: faceid.i18n.get('application.about'),
                                 xtype: 'panel',
+                                autoScroll: true,
                                 loader: {
                                     url: 'app/js/view/about.html',
                                     autoLoad: true
