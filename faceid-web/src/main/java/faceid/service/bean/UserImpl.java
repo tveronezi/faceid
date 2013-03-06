@@ -188,7 +188,7 @@ public class UserImpl {
         }
     }
 
-    public void confirmUser(String content) {
+    public void confirmUser(String from, String content) {
         final Matcher matcher = USER_CONFIRMATION_PATTERN.matcher(content);
         final String confirmationText;
         if (matcher.find()) {
@@ -207,9 +207,14 @@ public class UserImpl {
             LOG.warn("Confirmation record not found. ConfirmationText: " + confirmationText);
             return;
         }
-        confirmation.getUser().setEnabled(Boolean.TRUE);
-        if(LOG.isInfoEnabled()) {
-            LOG.info("User confirmed. Account: " + confirmation.getUser().getAccount());
+        if (from.equals(confirmation.getUser().getAccount())) {
+            confirmation.getUser().setEnabled(Boolean.TRUE);
+            if (LOG.isInfoEnabled()) {
+                LOG.info("User confirmed. Account: " + confirmation.getUser().getAccount());
+            }
+        } else {
+            LOG.warn("\"from\" does not match account. Account: " + confirmation.getUser().getAccount() + ". from: "
+                    + from);
         }
     }
 }

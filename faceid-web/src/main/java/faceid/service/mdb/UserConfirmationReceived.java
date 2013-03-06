@@ -44,8 +44,9 @@ public class UserConfirmationReceived implements MessageListener {
 
         try {
             final TextMessage txtMsg = (TextMessage) message;
+            final String from = txtMsg.getStringProperty("from");
             final String content = txtMsg.getText();
-            this.sudo.confirmUser(content);
+            this.sudo.confirmUser(from, content);
         } catch (Exception e) {
             LOG.error("Error while processing 'add user' message", e);
         }

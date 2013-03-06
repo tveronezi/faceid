@@ -53,7 +53,7 @@ public class Sudo {
         }
     }
 
-    public void confirmUser(String content) {
-        this.userSrv.confirmUser(content);
+    public void confirmUser(String from, String content) {
+        this.userSrv.confirmUser(from ,content);
     }
 }
