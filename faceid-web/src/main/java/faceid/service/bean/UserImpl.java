@@ -55,9 +55,6 @@ public class UserImpl {
     @Resource(name = "SendEmailQueue")
     private Queue sendEmailQueue;
 
-    //TODO -> resource
-    private String emailSessionName = "test";
-
     @EJB
     private BaseEAO baseEAO;
 
@@ -81,7 +78,6 @@ public class UserImpl {
 
             // Create a message
             Message message = session.createMessage();
-            message.setStringProperty("sessionName", this.emailSessionName);
             message.setStringProperty("to", userAccount);
             message.setStringProperty("subject", "Did you asked for a new user?");
             message.setStringProperty("text", "If you did, simply reply to this email to get it activated.\n" +
