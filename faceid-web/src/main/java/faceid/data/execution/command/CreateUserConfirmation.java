@@ -19,33 +19,22 @@
 package faceid.data.execution.command;
 
 import faceid.data.entity.User;
+import faceid.data.entity.UserConfirmation;
 import faceid.data.execution.BaseEAO;
 import faceid.data.execution.DbCommand;
 
-import java.util.Set;
+import java.io.UnsupportedEncodingException;
 
-public class CreateUser implements DbCommand<User> {
+public class CreateUserConfirmation implements DbCommand<UserConfirmation> {
 
-    public String name;
-    public String account;
-    public byte[] password;
-    public byte[] salt;
-    public Set<String> groups;
-    public Boolean enabled;
+    public User user;
+    public String key;
 
     @Override
-    public User execute(BaseEAO eao) {
-        User user = new User();
-        user.setName(this.name);
-        user.setAccount(this.account);
-
-        user.setPassword(this.password);
-        user.setSalt(this.salt);
-        if (this.groups != null) {
-            user.getSecurityGroups().addAll(this.groups);
-        }
-        user.setEnabled(this.enabled);
-        user = eao.create(user);
-        return user;
+    public UserConfirmation execute(BaseEAO eao) {
+        UserConfirmation confirmation = new UserConfirmation();
+        confirmation.setUser(this.user);
+        confirmation.setKey(this.key);
+        return eao.create(confirmation);
     }
 }

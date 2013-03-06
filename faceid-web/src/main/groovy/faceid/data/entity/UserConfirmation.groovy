@@ -16,35 +16,20 @@
  *  limitations under the License.
  */
 
-package faceid.service.mdb;
+package faceid.data.entity
 
-import faceid.service.bean.Sudo;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import javax.persistence.*
 
-import javax.ejb.EJB;
-import javax.ejb.MessageDriven;
-import javax.jms.Message;
-import javax.jms.MessageListener;
+@Entity
+@Table(name = 'faceid_user_confirm_tbl')
+class UserConfirmation extends BaseEntity {
 
-@MessageDriven(mappedName = "CreateUpdateUserQueue")
-public class CreateUpdateUser implements MessageListener {
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "user_id", nullable = false, updatable = false)
+    User user
 
-    private static final Logger LOG = LoggerFactory.getLogger(CreateUpdateUser.class);
+    @Lob
+    @Column(name = 'confirm_key', nullable = false)
+    String key
 
-    @EJB
-    private Sudo sudo;
-
-    @Override
-    public void onMessage(Message message) {
-        if (LOG.isInfoEnabled()) {
-            LOG.info("New user request received");
-        }
-
-        try {
-            this.sudo.createUserFromMessage(message);
-        } catch (Exception e) {
-            LOG.error("Error while processing 'add user' message", e);
-        }
-    }
 }

@@ -32,6 +32,8 @@ import java.security.spec.KeySpec
 class StringEncrypt {
     // Credits to http://www.javacodegeeks.com/2012/05/secure-password-storage-donts-dos-and.html
 
+    private SecureRandom random = new SecureRandom()
+
     private static final String ALGORITHM = 'PBKDF2WithHmacSHA1'
     private static final Integer DERIVED_KEY_LENGTH = 160
     private static final Integer ITERATIONS = 20000
@@ -65,5 +67,9 @@ class StringEncrypt {
         byte[] salt = new byte[8]
         random.nextBytes(salt)
         return salt
+    }
+
+    String getRandomString() {
+        return new BigInteger(130, random).toString(32);
     }
 }

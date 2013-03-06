@@ -28,7 +28,7 @@ import javax.jms.Message;
 import java.util.HashSet;
 import java.util.Set;
 
-@Stateless
+@Stateless(name = "FaceIdSudo")
 @RunAs("solution-admin")
 public class Sudo {
 
@@ -47,7 +47,7 @@ public class Sudo {
             final Set<String> groups = new HashSet<String>();
             groups.add(group);
 
-            this.userSrv.createUser(userName, userAccount, userPassword, groups);
+            this.userSrv.createUser(userName, userAccount, userPassword, groups, false);
         } else {
             this.userSrv.addGroupToUser(userAccount, userPassword, group);
         }

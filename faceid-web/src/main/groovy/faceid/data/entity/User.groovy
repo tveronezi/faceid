@@ -37,6 +37,9 @@ class User extends BaseEntity {
     byte[] salt
 
     @ElementCollection(fetch = FetchType.EAGER)
-    Set<String> securityGroups = new HashSet();
+    Set<String> securityGroups = new HashSet()
+
+    @Column(name = 'usr_enabled', nullable = false)
+    Boolean enabled
 
 }

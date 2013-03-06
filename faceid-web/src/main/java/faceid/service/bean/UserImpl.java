@@ -20,47 +20,115 @@ package faceid.service.bean;
 
 import faceid.cdi.util.StringEncrypt;
 import faceid.data.entity.User;
+import faceid.data.entity.UserConfirmation;
 import faceid.data.execution.BaseEAO;
 import faceid.data.execution.command.CreateUser;
+import faceid.data.execution.command.CreateUserConfirmation;
 import faceid.data.execution.command.FindByStringField;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import javax.annotation.Resource;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
+import javax.jms.*;
 import java.util.List;
 import java.util.Set;
 
 @Stateless(name = "faceid-UserImpl")
 @RolesAllowed(value = {"solution-admin"})
 public class UserImpl {
+    private static final Logger LOG = LoggerFactory.getLogger(UserImpl.class);
+
+    @Resource
+    private ConnectionFactory factory;
+
+    @Resource(name = "SendEmailQueue")
+    private Queue sendEmailQueue;
+
+    //TODO -> resource
+    private String emailSessionName = "test";
+
     @EJB
     private BaseEAO baseEAO;
 
     @Inject
     private StringEncrypt encrypt;
 
-    public User createUser(String name, String account, String password, Set<String> groups) {
-        final CreateUser cmd = new CreateUser();
-        cmd.name = name;
-        cmd.account = account;
+    private void sendConfirmationEmail(String userAccount, String key) throws JMSException {
+        Connection connection = null;
+        javax.jms.Session session = null;
 
-        cmd.salt = this.encrypt.generateSalt();
-        if (password == null) {
-            cmd.password = this.encrypt.encryptString("", cmd.salt);
-        } else {
-            cmd.password = this.encrypt.encryptString(password, cmd.salt);
+        try {
+            connection = this.factory.createConnection();
+            connection.start();
+
+            // Create a Session
+            session = connection.createSession(false, javax.jms.Session.AUTO_ACKNOWLEDGE);
+
+            // Create a MessageProducer from the Session to the Topic or Queue
+            MessageProducer producer = session.createProducer(this.sendEmailQueue);
+            producer.setDeliveryMode(DeliveryMode.NON_PERSISTENT);
+
+            // Create a message
+            Message message = session.createMessage();
+            message.setStringProperty("sessionName", this.emailSessionName);
+            message.setStringProperty("to", userAccount);
+            message.setStringProperty("subject", "Did you asked for a new user?");
+            message.setStringProperty("text", "If you did, simply reply to this email to get it activated.\n" +
+                    "Do not change the text below.\n" +
+                    "{activateUser:" + userAccount + ":" + key + "}");
+
+            // Tell the producer to send the message
+            producer.send(message);
+        } finally {
+            // Clean up
+            if (session != null) {
+                session.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
         }
+    }
 
-        cmd.groups = groups;
-        return this.baseEAO.execute(cmd);
+    public User createUser(String name, String account, String password, Set<String> groups, Boolean enabled) {
+        final CreateUser createUser = new CreateUser();
+        createUser.name = name;
+        createUser.account = account;
+
+        createUser.salt = this.encrypt.generateSalt();
+        if (password == null) {
+            createUser.password = this.encrypt.encryptString("", createUser.salt);
+        } else {
+            createUser.password = this.encrypt.encryptString(password, createUser.salt);
+        }
+        createUser.enabled = enabled;
+        createUser.groups = groups;
+
+        final User user = this.baseEAO.execute(createUser);
+        if (!user.getEnabled()) {
+            final CreateUserConfirmation createConfirmation = new CreateUserConfirmation();
+            createConfirmation.key = this.encrypt.getRandomString();
+            createConfirmation.user = user;
+            final UserConfirmation confirmation = this.baseEAO.execute(createConfirmation);
+
+            try {
+                sendConfirmationEmail(user.getAccount(), confirmation.getKey());
+            } catch (Exception e) {
+                LOG.error("Impossible to send email to confirm new user account", e);
+            }
+        }
+        return user;
     }
 
     public User saveUser(Long id, String name, String account, String password, Set<String> groups) {
         if (id == null) {
-            return createUser(name, account, password, groups);
+            return createUser(name, account, password, groups, true);
         }
         final User user = getUserById(id);
         if (user == null) {
