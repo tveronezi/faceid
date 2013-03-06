@@ -43,8 +43,40 @@
                         flex: 1
                     },
                     {
-                        xtype: 'faceid-portlet-logintest',
-                        width: 300
+                        border: false,
+                        xtype: 'panel',
+                        width: 300,
+                        layout: {
+                            type: 'vbox',
+                            align: 'center'
+                        },
+                        items: [
+                            {
+                                xtype: 'faceid-portlet-logintest',
+                                width: '100%',
+                                height: 130
+                            },
+                            {
+                                title: faceid.i18n.get('application.about'),
+                                xtype: 'panel',
+                                loader: {
+                                    url: 'app/js/view/about.html',
+                                    autoLoad: true
+                                },
+                                bbar: [
+                                    {
+                                        xtype: 'box',
+                                        autoEl: {
+                                            tag: 'a',
+                                            href: 'http://tomee.apache.org/',
+                                            cn: 'Apache TomEE'
+                                        }
+                                    }
+                                ],
+                                width: '100%',
+                                flex: 1
+                            }
+                        ]
                     }
                 ]
             },

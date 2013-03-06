@@ -24,6 +24,7 @@
     var messages = {
         'ok': 'Ok',
         'cancel': 'Cancel',
+        'application.about': 'About',
         'application.save.positions': 'Save positions',
         'application.name': 'FaceID',
         'application.users': 'Users',
