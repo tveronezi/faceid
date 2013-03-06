@@ -41,6 +41,7 @@
         'authentication.type.BAD_USER': 'Bad user',
         'authentication.type.BAD_PASSWORD': 'Bad password',
         'authentication.type.SUCCESS': 'Success',
+        'authentication.type.USER_DISABLED': 'User is disabled',
         'test.with.param': 'This is for test only. {myParam}!'
     };
 
