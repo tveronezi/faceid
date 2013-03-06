@@ -23,7 +23,6 @@
         extend: 'Ext.app.Controller',
 
         views: [
-
             'AuthenticationTest'
         ],
 

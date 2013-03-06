@@ -27,14 +27,32 @@
             align: 'center'
         },
         border: false,
-        items: [{
-            xtype: 'faceid-portlet-log',
-            width: '100%',
-            flex: 1
-        },{
-            xtype: 'faceid-portlet-users',
-            width: '100%',
-            flex: 1
-        }]
+        items: [
+            {
+                width: '100%',
+                flex: 1,
+                border: false,
+                layout: {
+                    type: 'hbox',
+                    pack: 'start',
+                    align: 'stretch'
+                },
+                items: [
+                    {
+                        xtype: 'faceid-portlet-log',
+                        flex: 1
+                    },
+                    {
+                        xtype: 'faceid-portlet-logintest',
+                        width: 300
+                    }
+                ]
+            },
+            {
+                xtype: 'faceid-portlet-users',
+                width: '100%',
+                flex: 1
+            }
+        ]
     });
 }());

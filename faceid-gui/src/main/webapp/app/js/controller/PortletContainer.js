@@ -23,25 +23,12 @@
         extend: 'Ext.app.Controller',
 
         views: [
-            'ApplicationViewport',
-            'ApplicationContainer',
-            'PortletContainer',
             'AuthenticationLog',
             'AuthenticationTest',
-            'Users'
-        ],
-
-        init: function () {
-            var self = this;
-
-            self.control({
-                'faceid-portlet-container': {
-                    render: function () {
-                        var window = Ext.create('widget.faceid-portlet-logintest', {});
-                        window.show();
-                    }
-                }
-            });
-        }
+            'Users',
+            'ApplicationViewport',
+            'ApplicationContainer',
+            'PortletContainer'
+        ]
     });
 }());

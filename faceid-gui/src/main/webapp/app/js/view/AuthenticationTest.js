@@ -20,14 +20,10 @@
     'use strict';
 
     Ext.define('faceid.view.AuthenticationTest', {
-        extend: 'Ext.window.Window',
+        extend: 'Ext.panel.Panel',
         alias: 'widget.faceid-portlet-logintest',
         title: faceid.i18n.get('application.authenticationTest'),
         layout: 'fit',
-        height: 180,
-        width: 400,
-        closable: false,
-        resizable: false,
         items: [
             {
                 xtype: 'form',
