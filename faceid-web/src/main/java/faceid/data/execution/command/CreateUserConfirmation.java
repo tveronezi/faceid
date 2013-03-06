@@ -23,8 +23,6 @@ import faceid.data.entity.UserConfirmation;
 import faceid.data.execution.BaseEAO;
 import faceid.data.execution.DbCommand;
 
-import java.io.UnsupportedEncodingException;
-
 public class CreateUserConfirmation implements DbCommand<UserConfirmation> {
 
     public User user;

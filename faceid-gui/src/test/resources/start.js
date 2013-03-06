@@ -46,7 +46,7 @@ var classDefinitions = {
     // tracking of the definitions we created.
     // See an example of usage in "test/javascript/test/PortletContainerController.js".
     var originalDefineFn = Ext.define;
-    Ext.define = function(className, data, createdFn) {
+    Ext.define = function (className, data, createdFn) {
         // keep tracking of all the classes definitions (test purposes only)
         classDefinitions[className] = data;
         return originalDefineFn(className, data, createdFn);
