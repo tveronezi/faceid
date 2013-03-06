@@ -40,6 +40,6 @@ class User extends BaseEntity {
     Set<String> securityGroups = new HashSet()
 
     @Column(name = 'usr_enabled', nullable = false)
-    Boolean enabled
+    Boolean enabled = Boolean.FALSE
 
 }

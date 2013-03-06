@@ -21,14 +21,13 @@ package faceid.data.entity
 import javax.persistence.*
 
 @Entity
-@Table(name = 'faceid_user_confirm_tbl')
+@Table(name = 'faceid_user_confirm_tbl', uniqueConstraints = @UniqueConstraint(columnNames = ['user_id', 'confirm_key']))
 class UserConfirmation extends BaseEntity {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "user_id", nullable = false, updatable = false)
     User user
 
-    @Lob
     @Column(name = 'confirm_key', nullable = false)
     String key
 

@@ -61,6 +61,8 @@ public class AuthenticationImpl {
             log.setLogType(AuthenticationLogType.BAD_USER);
         } else if (!this.encrypt.areEquivalent(password, user.getPassword(), user.getSalt())) {
             log.setLogType(AuthenticationLogType.BAD_PASSWORD);
+        } else if (!user.getEnabled()) {
+            log.setLogType(AuthenticationLogType.USER_DISABLED);
         } else {
             groups = user.getSecurityGroups();
             if (groups == null) {

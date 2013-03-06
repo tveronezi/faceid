@@ -53,4 +53,7 @@ public class Sudo {
         }
     }
 
+    public void confirmUser(String content) {
+        this.userSrv.confirmUser(content);
+    }
 }

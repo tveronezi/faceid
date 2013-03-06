@@ -24,6 +24,7 @@ import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -40,6 +41,11 @@ public class BaseEAOImpl implements BaseEAO {
     @Override
     public CriteriaBuilder getCriteriaBuilder() {
         return this.em.getCriteriaBuilder();
+    }
+
+    @Override
+    public Query createQuery(String strQuery) {
+        return this.em.createQuery(strQuery);
     }
 
     @Override

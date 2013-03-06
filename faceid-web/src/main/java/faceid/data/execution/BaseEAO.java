@@ -20,6 +20,7 @@ package faceid.data.execution;
 
 import faceid.data.entity.BaseEntity;
 
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -27,6 +28,8 @@ import java.util.List;
 
 public interface BaseEAO {
     CriteriaBuilder getCriteriaBuilder();
+
+    Query createQuery(String strQuery);
 
     <T> TypedQuery<T> createQuery(CriteriaQuery<T> cq);
 

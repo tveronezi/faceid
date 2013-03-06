@@ -25,6 +25,7 @@ import faceid.data.execution.BaseEAO;
 import faceid.data.execution.command.CreateUser;
 import faceid.data.execution.command.CreateUserConfirmation;
 import faceid.data.execution.command.FindByStringField;
+import faceid.data.execution.command.FindConfirmation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,11 +39,15 @@ import javax.inject.Inject;
 import javax.jms.*;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Stateless(name = "faceid-UserImpl")
 @RolesAllowed(value = {"solution-admin"})
 public class UserImpl {
     private static final Logger LOG = LoggerFactory.getLogger(UserImpl.class);
+
+    private static final Pattern USER_CONFIRMATION_PATTERN = Pattern.compile("\\{activateUser:.*:.*\\}");
 
     @Resource
     private ConnectionFactory factory;
@@ -180,6 +185,31 @@ public class UserImpl {
         if (this.encrypt.areEquivalent(userPassword, user.getPassword(), user.getSalt())) {
             final Set<String> groups = user.getSecurityGroups();
             groups.add(group);
+        }
+    }
+
+    public void confirmUser(String content) {
+        final Matcher matcher = USER_CONFIRMATION_PATTERN.matcher(content);
+        final String confirmationText;
+        if (matcher.find()) {
+            confirmationText = matcher.group();
+        } else {
+            LOG.warn("Confirmation text not found in message. Content: " + content);
+            // no-op
+            return;
+        }
+        final String[] values = confirmationText.split(":");
+        final UserConfirmation confirmation = this.baseEAO.execute(new FindConfirmation(
+                values[1], //username
+                values[2].substring(0, values[2].length() - 1)) //key
+        );
+        if (confirmation == null) {
+            LOG.warn("Confirmation record not found. ConfirmationText: " + confirmationText);
+            return;
+        }
+        confirmation.getUser().setEnabled(Boolean.TRUE);
+        if(LOG.isInfoEnabled()) {
+            LOG.info("User confirmed. Account: " + confirmation.getUser().getAccount());
         }
     }
 }
