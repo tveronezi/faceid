@@ -35,8 +35,7 @@ var classDefinitions = {
 
     // Don't forget to put a new entry here whenever you add a new test file.
     var tests = [
-        'test.I18N',
-        'test.PortletContainerController'
+        'test.I18N'
     ];
 
     // EXTJS testing TRICK!
