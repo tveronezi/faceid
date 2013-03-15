@@ -54,7 +54,7 @@
                             {
                                 xtype: 'faceid-portlet-logintest',
                                 width: '100%',
-                                height: 130
+                                height: 145
                             },
                             {
                                 title: faceid.i18n.get('application.about'),
@@ -64,16 +64,6 @@
                                     url: 'app/js/view/about.html',
                                     autoLoad: true
                                 },
-                                bbar: [
-                                    {
-                                        xtype: 'box',
-                                        autoEl: {
-                                            tag: 'a',
-                                            href: 'http://tomee.apache.org/',
-                                            cn: 'Apache TomEE'
-                                        }
-                                    }
-                                ],
                                 width: '100%',
                                 flex: 1
                             }

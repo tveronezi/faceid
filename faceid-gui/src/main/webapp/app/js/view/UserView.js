@@ -23,7 +23,7 @@
         extend: 'Ext.window.Window',
         alias: 'widget.faceid-userview',
         title: faceid.i18n.get('application.user.edit'),
-        height: 180,
+        height: 200,
         width: 400,
         layout: 'fit',
         modal: true,
@@ -31,10 +31,11 @@
         items: [
             {
                 xtype: 'form',
-                frame: true,
+                frame: false,
                 defaults: {
                     anchor: '100%'
                 },
+                bodyPadding: '5 5 5 5 ',
                 items: [
                     {
                         xtype: 'textfield',
