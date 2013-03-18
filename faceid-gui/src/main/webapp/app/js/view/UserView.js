@@ -35,7 +35,7 @@
                 defaults: {
                     anchor: '100%'
                 },
-                bodyPadding: '5 5 5 5 ',
+                bodyPadding: '5 5 5 5',
                 items: [
                     {
                         xtype: 'textfield',

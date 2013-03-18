@@ -39,10 +39,12 @@
                 },
                 items: [
                     {
+                        padding: '5 5 5 5',
                         xtype: 'faceid-portlet-log',
                         flex: 1
                     },
                     {
+                        padding: '5 5 5 0',
                         border: false,
                         xtype: 'panel',
                         width: 300,
@@ -57,6 +59,7 @@
                                 height: 145
                             },
                             {
+                                padding: '5 0 0 0',
                                 title: faceid.i18n.get('application.about'),
                                 xtype: 'panel',
                                 autoScroll: true,
@@ -72,6 +75,7 @@
                 ]
             },
             {
+                padding: '0 5 5 5',
                 xtype: 'faceid-portlet-users',
                 width: '100%',
                 flex: 1
