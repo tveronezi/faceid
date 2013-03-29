@@ -62,15 +62,11 @@ function authenticate() {
     if (hasValues) {
         return lines.join('');
     } else {
-        return null;
+        return '';
     }
 }
 
 function getGroupsList(authenticationResult) {
-    if (!authenticationResult) {
-        throw 'Bad user or password. The groups list is null.';
-    }
-
     var result = new java.util.ArrayList();
     loop(authenticationResult.split(','), function (grp) {
         result.add(grp);
