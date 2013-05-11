@@ -18,7 +18,7 @@
 
 package faceid.cdi.util
 
-import faceid.service.ApplicationException
+import faceid.ApplicationException
 
 import javax.crypto.SecretKeyFactory
 import javax.crypto.spec.PBEKeySpec

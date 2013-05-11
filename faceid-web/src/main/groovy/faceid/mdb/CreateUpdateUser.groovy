@@ -16,24 +16,34 @@
  *  limitations under the License.
  */
 
-package faceid.service;
+package faceid.mdb
 
-import faceid.service.rest.Authentication;
-import faceid.service.rest.AuthenticationLog;
-import faceid.service.rest.Users;
+import faceid.service.Sudo
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 
-import javax.ws.rs.ApplicationPath;
-import javax.ws.rs.core.Application;
-import java.util.HashSet;
-import java.util.Set;
+import javax.ejb.EJB
+import javax.ejb.MessageDriven
+import javax.jms.Message
+import javax.jms.MessageListener
 
-@ApplicationPath("/rest")
-public class ApplicationConfig extends Application {
-    public Set<Class<?>> getClasses() {
-        final Set<Class<?>> classSet = new HashSet<Class<?>>();
-        classSet.add(Users.class);
-        classSet.add(Authentication.class);
-        classSet.add(AuthenticationLog.class);
-        return classSet;
+@MessageDriven(mappedName = 'CreateUpdateUserQueue', messageListenerInterface = MessageListener)
+class CreateUpdateUser implements MessageListener {
+    private static final Logger LOG = LoggerFactory.getLogger(CreateUpdateUser)
+
+    @EJB
+    private Sudo sudo
+
+    @Override
+    public void onMessage(Message message) {
+        if (LOG.isInfoEnabled()) {
+            LOG.info("New user request received")
+        }
+
+        try {
+            sudo.createUserFromMessage(message)
+        } catch (Exception e) {
+            LOG.error("Error while processing 'add user' message", e)
+        }
     }
 }

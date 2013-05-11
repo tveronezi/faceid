@@ -16,37 +16,33 @@
  *  limitations under the License.
  */
 
-package faceid.service.rest;
+package faceid.rest
 
-import faceid.cdi.util.DtoBuilder;
-import faceid.data.dto.AuthenticationDto;
-import faceid.service.bean.AuthenticationImpl;
+import faceid.cdi.util.DtoBuilder
+import faceid.data.dto.AuthenticationDto
+import faceid.service.AuthenticationImpl
 
-import javax.ejb.EJB;
-import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import java.util.ArrayList;
-import java.util.List;
+import javax.ejb.EJB
+import javax.inject.Inject
+import javax.ws.rs.GET
+import javax.ws.rs.Path
+import javax.ws.rs.Produces
 
 @Path("/authentication-log")
-public class AuthenticationLog {
+class AuthenticationLog {
 
     @EJB
-    private AuthenticationImpl authSrv;
+    private AuthenticationImpl authSrv
 
     @Inject
-    private DtoBuilder dtoBuilder;
+    private DtoBuilder dtoBuilder
 
     @GET
     @Produces("application/json")
-    public List<AuthenticationDto> listLog() {
-        final List<AuthenticationDto> result = new ArrayList<AuthenticationDto>();
-        final List<faceid.data.entity.AuthenticationLog> log = this.authSrv.getLog();
-        for (faceid.data.entity.AuthenticationLog entry : log) {
-            result.add(this.dtoBuilder.buildAuthenticationLog(entry));
+    List<AuthenticationDto> listLog() {
+        def log = this.authSrv.getLog()
+        return log.collect {
+            dtoBuilder.buildAuthenticationLog(it)
         }
-        return result;
     }
 }

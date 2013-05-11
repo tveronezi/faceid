@@ -16,14 +16,14 @@
  *  limitations under the License.
  */
 
-package faceid.service;
+package faceid.rest
 
-public class ApplicationException extends RuntimeException {
-    public ApplicationException(String message) {
-        super(message);
-    }
+import javax.ws.rs.ApplicationPath
+import javax.ws.rs.core.Application
 
-    public ApplicationException(Throwable cause) {
-        super(cause);
+@ApplicationPath("/rest")
+class ApplicationConfig extends Application {
+    public Set<Class<?>> getClasses() {
+        return [Users, Authentication, AuthenticationLog]
     }
 }

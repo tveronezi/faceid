@@ -16,23 +16,14 @@
  *  limitations under the License.
  */
 
-package faceid.service;
+package faceid
 
-import faceid.service.bean.UserImpl;
+class ApplicationException extends RuntimeException {
+    ApplicationException(String s) {
+        super(s)
+    }
 
-import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
-import javax.ejb.Singleton;
-import javax.ejb.Startup;
-
-@Singleton
-@Startup
-public class ApplicationStartup {
-    @EJB
-    private UserImpl userService;
-
-    @PostConstruct
-    public void applicationStartup() {
-        // placeholder
+    ApplicationException(Throwable throwable) {
+        super(throwable)
     }
 }

@@ -16,36 +16,22 @@
  *  limitations under the License.
  */
 
-package faceid.data.execution.command;
+package faceid
 
-import faceid.data.entity.User;
-import faceid.data.execution.BaseEAO;
-import faceid.data.execution.DbCommand;
+import faceid.service.UserImpl
 
-import java.util.Set;
+import javax.annotation.PostConstruct
+import javax.ejb.EJB
+import javax.ejb.Startup
 
-public class CreateUser implements DbCommand<User> {
+@javax.ejb.Singleton
+@Startup
+class ApplicationStartup {
+    @EJB
+    private UserImpl userService
 
-    public String name;
-    public String account;
-    public byte[] password;
-    public byte[] salt;
-    public Set<String> groups;
-    public Boolean enabled;
-
-    @Override
-    public User execute(BaseEAO eao) {
-        User user = new User();
-        user.setName(this.name);
-        user.setAccount(this.account);
-
-        user.setPassword(this.password);
-        user.setSalt(this.salt);
-        if (this.groups != null) {
-            user.getSecurityGroups().addAll(this.groups);
-        }
-        user.setEnabled(this.enabled);
-        user = eao.create(user);
-        return user;
+    @PostConstruct
+    void applicationStartup() {
+        // placeholder
     }
 }

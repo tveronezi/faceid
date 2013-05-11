@@ -16,39 +16,40 @@
  *  limitations under the License.
  */
 
-package faceid.service.mdb;
+package faceid.mdb
 
-import faceid.service.bean.Sudo;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import faceid.service.Sudo
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 
-import javax.ejb.EJB;
-import javax.ejb.MessageDriven;
-import javax.jms.Message;
-import javax.jms.MessageListener;
-import javax.jms.TextMessage;
+import javax.ejb.EJB
+import javax.ejb.MessageDriven
+import javax.jms.Message
+import javax.jms.MessageListener
+import javax.jms.TextMessage
 
-@MessageDriven(mappedName = "IncomingEmailQueue")
-public class UserConfirmationReceived implements MessageListener {
+@MessageDriven(mappedName = 'IncomingEmailQueue', messageListenerInterface = MessageListener)
+class UserConfirmationReceived implements MessageListener {
 
-    private static final Logger LOG = LoggerFactory.getLogger(UserConfirmationReceived.class);
+    private static final Logger LOG = LoggerFactory.getLogger(UserConfirmationReceived)
 
     @EJB
-    private Sudo sudo;
+    private Sudo sudo
 
     @Override
     public void onMessage(Message message) {
         if (LOG.isInfoEnabled()) {
-            LOG.info("User confirmation received");
+            LOG.info("User confirmation received")
         }
 
         try {
-            final TextMessage txtMsg = (TextMessage) message;
-            final String from = txtMsg.getStringProperty("from");
-            final String content = txtMsg.getText();
-            this.sudo.confirmUser(from, content);
+            TextMessage txtMsg = (TextMessage) message
+            String from = txtMsg.getStringProperty("from")
+            String content = txtMsg.getText()
+            sudo.confirmUser(from, content)
         } catch (Exception e) {
-            LOG.error("Error while processing 'add user' message", e);
+            LOG.error("Error while processing 'add user' message", e)
         }
     }
 }
+
