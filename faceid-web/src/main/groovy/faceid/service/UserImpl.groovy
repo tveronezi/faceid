@@ -32,7 +32,7 @@ import javax.jms.*
 import javax.persistence.Query
 import java.util.regex.Pattern
 
-@Stateless
+@Stateless(name = 'FaceID-UserImpl')
 class UserImpl {
     private static Logger LOG = LoggerFactory.getLogger(UserImpl)
 

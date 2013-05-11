@@ -24,7 +24,7 @@ import javax.ejb.Stateless
 import javax.jms.JMSException
 import javax.jms.Message
 
-@Stateless(name = 'FaceIdSudo')
+@Stateless(name = 'FaceID-Sudo')
 @RunAs('solution-admin')
 class Sudo {
 
