@@ -44,7 +44,7 @@ class BaseEAO {
         def result
         try {
             result = query.singleResult
-        } catch (NoResultException e) {
+        } catch (NoResultException ignored) {
             result = null
         }
         return result
