@@ -43,7 +43,7 @@ class Authentication {
 
     @POST
     @Produces("plain/text")
-    public String authenticate(@FormParam("account") String account, @FormParam("password") String password) {
+    String authenticate(@FormParam("account") String account, @FormParam("password") String password) {
         def groups = authSrv.authenticate(account, password)
         if (!groups) {
             throw new AuthenticationException()

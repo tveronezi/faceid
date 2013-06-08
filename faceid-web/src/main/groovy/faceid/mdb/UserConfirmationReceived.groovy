@@ -18,35 +18,38 @@
 
 package faceid.mdb
 
-import faceid.service.Sudo
+import faceid.service.UserImpl
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
+import javax.annotation.security.RunAs
 import javax.ejb.EJB
 import javax.ejb.MessageDriven
 import javax.jms.Message
 import javax.jms.MessageListener
-import javax.jms.TextMessage
 
 @MessageDriven(mappedName = 'IncomingEmailQueue', messageListenerInterface = MessageListener)
+@RunAs('solution-admin')
 class UserConfirmationReceived implements MessageListener {
 
     private static final Logger LOG = LoggerFactory.getLogger(UserConfirmationReceived)
 
     @EJB
-    private Sudo sudo
+    private UserImpl userSrv
+
+    private void confirmUser(String from, String content) {
+        this.userSrv.confirmUser(from, content)
+    }
 
     @Override
-    public void onMessage(Message message) {
+    void onMessage(Message txtMsg) {
         if (LOG.isInfoEnabled()) {
             LOG.info("User confirmation received")
         }
-
         try {
-            TextMessage txtMsg = (TextMessage) message
             String from = txtMsg.getStringProperty("from")
-            String content = txtMsg.getText()
-            sudo.confirmUser(from, content)
+            String content = txtMsg.getStringProperty("content")
+            confirmUser(from, content)
         } catch (Exception e) {
             LOG.error("Error while processing 'add user' message", e)
         }

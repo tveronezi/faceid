@@ -18,13 +18,15 @@
 
 package faceid.service
 
+import javax.annotation.security.RolesAllowed
 import javax.ejb.Stateless
 import javax.persistence.EntityManager
 import javax.persistence.NoResultException
 import javax.persistence.PersistenceContext
 import javax.persistence.Query
 
-@Stateless
+@Stateless(name = "faceid-BaseEAO")
+@RolesAllowed(value = 'solution-admin')
 class BaseEAO {
 
     @PersistenceContext(unitName = "userPU")

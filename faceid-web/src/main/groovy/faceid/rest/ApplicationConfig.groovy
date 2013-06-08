@@ -23,7 +23,7 @@ import javax.ws.rs.core.Application
 
 @ApplicationPath("/rest")
 class ApplicationConfig extends Application {
-    public Set<Class<?>> getClasses() {
+    Set<Class<?>> getClasses() {
         return [Users, Authentication, AuthenticationLog]
     }
 }

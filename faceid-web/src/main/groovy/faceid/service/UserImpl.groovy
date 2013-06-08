@@ -25,6 +25,7 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
 import javax.annotation.Resource
+import javax.annotation.security.RolesAllowed
 import javax.ejb.EJB
 import javax.ejb.Stateless
 import javax.inject.Inject
@@ -33,6 +34,7 @@ import javax.persistence.Query
 import java.util.regex.Pattern
 
 @Stateless(name = 'FaceID-UserImpl')
+@RolesAllowed(value = 'solution-admin')
 class UserImpl {
     private static Logger LOG = LoggerFactory.getLogger(UserImpl)
 
@@ -86,7 +88,7 @@ class UserImpl {
         }
     }
 
-    public User createUser(String name, String account, String password, Set<String> groups, Boolean enabled) {
+    User createUser(String name, String account, String password, Set<String> groups, Boolean enabled) {
         def user = new User(
                 name: name,
                 account: account,
@@ -121,7 +123,7 @@ class UserImpl {
         return user
     }
 
-    public User saveUser(Long id, String name, String account, String password, Set<String> groups) {
+    User saveUser(Long id, String name, String account, String password, Set<String> groups) {
         if (id == null) {
             return createUser(name, account, password, groups, true)
         }
@@ -143,7 +145,7 @@ class UserImpl {
         return user
     }
 
-    public User getUser(String name) {
+    User getUser(String name) {
         return baseEAO.findUnique({ em ->
             def query = em.createQuery("SELECT e from ${User.class.name} e WHERE e.name = :pname")
             query.setParameter('pname', name)
@@ -151,11 +153,11 @@ class UserImpl {
         }) as User
     }
 
-    public User getUserById(Long id) {
+    User getUserById(Long id) {
         return baseEAO.findById(User, id) as User
     }
 
-    public void deleteUser(Long id) {
+    void deleteUser(Long id) {
         User user = getUserById(id)
         if (user == null) {
             return
@@ -165,11 +167,11 @@ class UserImpl {
         })
     }
 
-    public List<User> listAll() {
+    List<User> listAll() {
         return baseEAO.findAll(User.class)
     }
 
-    public void addGroupToUser(String userAccount, String userPassword, String group) {
+    void addGroupToUser(String userAccount, String userPassword, String group) {
         User user = getUser(userAccount)
         if (user == null) {
             // no-op
@@ -180,7 +182,7 @@ class UserImpl {
         }
     }
 
-    public void confirmUser(String from, String content) {
+    void confirmUser(String from, String content) {
         def matcher = USER_CONFIRMATION_PATTERN.matcher(content)
         def confirmationText
         if (matcher.find()) {

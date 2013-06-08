@@ -20,18 +20,17 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>faceid</groupId>
+        <groupId>buildnplay</groupId>
         <artifactId>faceid</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <groupId>faceid</groupId>
     <artifactId>faceid-gui</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
     <name>faceid-gui</name>
     <dependencies>
         <dependency>
-            <groupId>faceid</groupId>
+            <groupId>buildnplay</groupId>
             <artifactId>faceid-web</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>

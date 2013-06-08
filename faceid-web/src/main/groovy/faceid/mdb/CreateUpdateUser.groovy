@@ -18,30 +18,48 @@
 
 package faceid.mdb
 
-import faceid.service.Sudo
+import faceid.service.UserImpl
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
+import javax.annotation.security.RunAs
 import javax.ejb.EJB
 import javax.ejb.MessageDriven
+import javax.jms.JMSException
 import javax.jms.Message
 import javax.jms.MessageListener
 
 @MessageDriven(mappedName = 'CreateUpdateUserQueue', messageListenerInterface = MessageListener)
+@RunAs('solution-admin')
 class CreateUpdateUser implements MessageListener {
     private static final Logger LOG = LoggerFactory.getLogger(CreateUpdateUser)
 
     @EJB
-    private Sudo sudo
+    private UserImpl userSrv
+
+    private void createUserFromMessage(Message message) throws JMSException {
+        def userAccount = message.getStringProperty('userAccount')
+        def userPassword = message.getStringProperty('userPassword')
+        def group = message.getStringProperty('userGroup')
+        def existing = this.userSrv.getUser(userAccount)
+        if (existing) {
+            this.userSrv.addGroupToUser(userAccount, userPassword, group)
+        } else {
+            String userName = message.getStringProperty('userName')
+            Set<String> groups = []
+            groups.add(group)
+            this.userSrv.createUser(userName, userAccount, userPassword, groups, false)
+        }
+    }
 
     @Override
-    public void onMessage(Message message) {
+    void onMessage(Message message) {
         if (LOG.isInfoEnabled()) {
             LOG.info("New user request received")
         }
 
         try {
-            sudo.createUserFromMessage(message)
+            createUserFromMessage(message)
         } catch (Exception e) {
             LOG.error("Error while processing 'add user' message", e)
         }

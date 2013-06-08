@@ -18,37 +18,21 @@
 
 package faceid
 
-import junit.framework.Assert
-import org.junit.Before
+import faceid.runners.AdminRunner
+import faceid.service.UserImpl
 import org.junit.Test
 
-import javax.ejb.EJBException
-import javax.ejb.embeddable.EJBContainer
+import javax.inject.Inject
 
-class TestUser {
-    private EJBContainer container
+class TestUser extends BaseTest {
 
-    @Before
-    public void setUp() throws Exception {
-        def p = [:] as Properties
-        this.container = EJBContainer.createEJBContainer(p)
-    }
+    @Inject AdminRunner adminRunner
+    @Inject UserImpl service
 
     @Test
     void testCreateUser() {
-        def context = this.container.context
-
-        try {
-            def service = context.lookup('java:global/faceid-web/faceid-UserImpl')
-            service.createUser('michael', 'jackson', 'bad')
-            try {
-                service.createUser('michael', 'jackson', 'bad')
-                Assert.fail()
-            } catch (EJBException e) {
-                // expected
-            }
-        } finally {
-            context.close()
+        adminRunner.run {
+            service.saveUser(null, 'Michael Jackson', 'michael', 'bad', ['photo-user'] as Set<String>)
         }
     }
 }

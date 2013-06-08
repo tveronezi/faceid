@@ -19,10 +19,6 @@
 package faceid
 
 class ApplicationException extends RuntimeException {
-    ApplicationException(String s) {
-        super(s)
-    }
-
     ApplicationException(Throwable throwable) {
         super(throwable)
     }
