@@ -194,7 +194,7 @@ class UserImpl {
         }
         def values = confirmationText.split(":")
         def confirmation = baseEAO.findUnique({ em ->
-            Query query = eao.createQuery("SELECT c FROM UserConfirmation c WHERE c.user.account = :pUserName AND c.key = :pKey");
+            Query query = em.createQuery("SELECT c FROM UserConfirmation c WHERE c.user.account = :pUserName AND c.key = :pKey");
             query.setParameter("pUserName", values[1]);
             query.setParameter("pKey", values[2].substring(0, values[2].length() - 1));
             return query
