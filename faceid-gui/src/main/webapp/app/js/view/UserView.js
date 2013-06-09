@@ -73,8 +73,8 @@
             {
                 text: faceid.i18n.get('cancel'),
                 handler: function (thisBtn) {
-                    var self = thisBtn.up('faceid-userview');
-                    self.close();
+                    var me = thisBtn.up('faceid-userview');
+                    me.close();
                 }
             }
         ]

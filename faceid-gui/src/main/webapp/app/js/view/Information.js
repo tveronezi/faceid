@@ -19,19 +19,22 @@
 (function () {
     'use strict';
 
-    Ext.define('faceid.view.ApplicationContainer', {
-        extend: 'Ext.panel.Panel',
-        alias: 'widget.faceid-application-container',
+    Ext.define('faceid.view.Information', {
+        extend: 'Ext.window.Window',
+        alias: 'widget.faceid-information-window',
+        title: faceid.i18n.get('application.about'),
+        height: 200,
+        width: 500,
         layout: 'fit',
-        title: faceid.i18n.get('application.name'),
-        tools: [{
-            type: 'help',
-            action: 'showInfo'
-        }],
-        items: [
-            {
-                xtype: 'faceid-portlet-container'
+        modal: true,
+        items: {
+            xtype: 'panel',
+            border: false,
+            autoScroll: true,
+            loader: {
+                url: 'app/js/view/about.html',
+                autoLoad: true
             }
-        ]
+        }
     });
 }());

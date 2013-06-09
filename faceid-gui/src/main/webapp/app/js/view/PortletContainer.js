@@ -57,18 +57,6 @@
                                 xtype: 'faceid-portlet-logintest',
                                 width: '100%',
                                 height: 145
-                            },
-                            {
-                                padding: '5 0 0 0',
-                                title: faceid.i18n.get('application.about'),
-                                xtype: 'panel',
-                                autoScroll: true,
-                                loader: {
-                                    url: 'app/js/view/about.html',
-                                    autoLoad: true
-                                },
-                                width: '100%',
-                                flex: 1
                             }
                         ]
                     }

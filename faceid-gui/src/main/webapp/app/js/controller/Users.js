@@ -49,12 +49,12 @@
         saveUser: function (user) {
             console.log('saveUser event', user);
 
-            var self = this;
+            var me = this;
             user.save({
                 success: function () {
                     console.log('user persisted', user);
-                    self.getUsersStore().load();
-                    self.getUserView().close();
+                    me.getUsersStore().load();
+                    me.getUserView().close();
                 }
             });
             return user;
@@ -79,8 +79,8 @@
         },
 
         getSelectedUser: function () {
-            var self = this;
-            var grid = self.getUsersList().down('grid');
+            var me = this;
+            var grid = me.getUsersList().down('grid');
             var sm = grid.getSelectionModel();
             if (sm.getCount() < 1) {
                 return;
@@ -91,25 +91,25 @@
 
         addUser: function () {
             console.log('addUser event');
-            var self = this;
-            self.showUser(null);
+            var me = this;
+            me.showUser(null);
         },
 
         editUser: function () {
             console.log('editUser event');
-            var self = this;
-            var selected = self.getSelectedUser();
+            var me = this;
+            var selected = me.getSelectedUser();
             if (!selected) {
                 return;
             }
-            self.showUser(selected);
+            me.showUser(selected);
         },
 
         deleteUser: function () {
             console.log('deleteUser event');
 
-            var self = this;
-            var selected = self.getSelectedUser();
+            var me = this;
+            var selected = me.getSelectedUser();
             if (!selected) {
                 return;
             }
@@ -117,15 +117,15 @@
             selected.destroy({
                 success: function () {
                     console.log('user removed', selected);
-                    self.getUsersStore().load();
+                    me.getUsersStore().load();
                 }
             });
         },
 
         init: function () {
-            var self = this;
+            var me = this;
 
-            self.control({
+            me.control({
                 'faceid-userview button[action=saveUser]': {
                     click: function (theButton) {
                         var window = theButton.up('window');
@@ -135,26 +135,26 @@
                         Ext.Object.each(values, function (key, value) {
                             rec.set(key, value);
                         });
-                        self.saveUser(rec);
+                        me.saveUser(rec);
                     }
                 },
                 'faceid-portlet-users button[action=addUser]': {
-                    click: self.addUser
+                    click: me.addUser
                 },
                 'faceid-portlet-users button[action=editUser]': {
-                    click: self.editUser
+                    click: me.editUser
                 },
                 'faceid-portlet-users button[action=deleteUser]': {
-                    click: self.deleteUser
+                    click: me.deleteUser
                 },
                 'faceid-portlet-users': {
                     refreshpanel: function () {
-                        self.getUsersStore().load();
+                        me.getUsersStore().load();
                     }
                 }
             });
 
-            self.getUsersStore().load();
+            me.getUsersStore().load();
         }
     });
 }());

@@ -76,7 +76,7 @@
                     <failOnError>true</failOnError>
                     <options>
                         <vars>true</vars>
-                        <predef>Ext,faceid,console</predef>
+                        <predef>Ext,faceid,console,window</predef>
                         <indent>4</indent>
                     </options>
                     <sourceFolders>

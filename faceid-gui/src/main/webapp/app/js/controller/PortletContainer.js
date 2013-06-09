@@ -29,6 +29,19 @@
             'ApplicationViewport',
             'ApplicationContainer',
             'PortletContainer'
-        ]
+        ],
+
+        init: function () {
+            var me = this;
+
+            me.control({
+                'tool[action=showInfo]': {
+                    click: function () {
+                        Ext.create('faceid.view.Information', {
+                        }).show();
+                    }
+                }
+            });
+        }
     });
 }());

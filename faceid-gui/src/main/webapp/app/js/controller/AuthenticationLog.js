@@ -43,20 +43,20 @@
         },
 
         init: function () {
-            var self = this;
+            var me = this;
 
-            self.control({
+            me.control({
                 'faceid-portlet-log button[action=refreshPanel]': {
-                    click: self.refreshPanel
+                    click: me.refreshPanel
                 },
                 'faceid-portlet-log': {
                     refreshpanel: function () {
-                        self.getAuthenticationLogStore().load();
+                        me.getAuthenticationLogStore().load();
                     }
                 }
             });
 
-            self.getAuthenticationLogStore().load();
+            me.getAuthenticationLogStore().load();
         }
     });
 

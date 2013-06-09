@@ -39,8 +39,8 @@
 
         loginTest: function (values) {
             console.log('action: loginTest', values);
-            var self = this;
-            var panel = self.getLoginPanel();
+            var me = this;
+            var panel = me.getLoginPanel();
 
             Ext.Ajax.request({
                 url: 'rest/authentication',
@@ -49,17 +49,17 @@
                     var form = panel.query('form')[0];
                     form.getForm().reset();
                     panel.enable();
-                    self.getAuthenticationLogStore().load();
+                    me.getAuthenticationLogStore().load();
                 }
             });
         },
 
         init: function () {
-            var self = this;
+            var me = this;
 
-            self.control({
+            me.control({
                 'faceid-portlet-logintest': {
-                    login: self.loginTest
+                    login: me.loginTest
                 }
             });
         }

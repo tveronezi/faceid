@@ -53,16 +53,16 @@
                         text: faceid.i18n.get('ok'),
                         formBind: true,
                         handler: function (thisBtn) {
-                            var self = thisBtn.up('faceid-portlet-logintest');
-                            self.fireEvent('login', thisBtn.up('form').getForm().getValues());
-                            self.disable();
+                            var me = thisBtn.up('faceid-portlet-logintest');
+                            me.fireEvent('login', thisBtn.up('form').getForm().getValues());
+                            me.disable();
                         }
                     },
                     {
                         text: faceid.i18n.get('cancel'),
                         handler: function (thisBtn) {
-                            var self = thisBtn.up('faceid-portlet-logintest');
-                            self.down('form').getForm().reset();
+                            var me = thisBtn.up('faceid-portlet-logintest');
+                            me.down('form').getForm().reset();
                         }
                     }
                 ]

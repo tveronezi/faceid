@@ -36,6 +36,7 @@
         ],
 
         controllers: [
+            'KeepAlive',
             'PortletContainer',
             'AuthenticationTest',
             'AuthenticationLog',

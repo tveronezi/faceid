@@ -21,6 +21,11 @@
          version="3.0" metadata-complete="false">
 
     <display-name>faceid</display-name>
+
+    <session-config>
+        <session-timeout>5</session-timeout>
+    </session-config>
+
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
