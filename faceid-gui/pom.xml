@@ -83,6 +83,14 @@
                         <sourceFolder>${basedir}/src/main/webapp/app/js</sourceFolder>
                     </sourceFolders>
                 </configuration>
+                <executions>
+                    <execution>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>lint</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
