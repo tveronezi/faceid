@@ -20,7 +20,6 @@ package faceid.rest
 
 import faceid.cdi.util.DtoBuilder
 import faceid.data.dto.UserDto
-import faceid.data.entity.User
 import faceid.service.UserImpl
 
 import javax.ejb.EJB
@@ -40,11 +39,10 @@ class Users {
     @Path("/{id}")
     @Produces("application/json")
     UserDto getUser(@PathParam("id") Long id) {
-        User user = userService.getUserById(id)
+        def user = userService.getUserById(id)
         if (user) {
-            return dtoBuilder.buildUser(user)
+            dtoBuilder.buildUser(user)
         }
-        return null
     }
 
     @DELETE
@@ -52,14 +50,14 @@ class Users {
     @Produces("application/json")
     Boolean deleteUser(@PathParam("id") Long id) {
         userService.deleteUser(id)
-        return Boolean.TRUE
+        Boolean.TRUE
     }
 
     @POST
     @Produces("application/json")
     @Consumes("application/json")
     UserDto postUser(UserDto userDto) {
-        return saveUser(userDto)
+        saveUser(userDto)
     }
 
     @PUT
@@ -67,7 +65,7 @@ class Users {
     @Produces("application/json")
     @Consumes("application/json")
     UserDto putUser(UserDto userDto) {
-        return saveUser(userDto)
+        saveUser(userDto)
     }
 
     private UserDto saveUser(UserDto userDto) {
@@ -75,8 +73,8 @@ class Users {
         def arrGroups = strGroups.split(",")
         def groups = new HashSet<String>()
         arrGroups.each {
-            String trimmed = it.trim()
-            if (!"".equals(trimmed)) {
+            def trimmed = it.trim()
+            if ("" != trimmed) {
                 groups << trimmed
             }
         }
@@ -87,15 +85,13 @@ class Users {
                 userDto.password,
                 groups
         )
-        return dtoBuilder.buildUser(user)
+        dtoBuilder.buildUser(user)
     }
 
     @GET
     @Produces("application/json")
     List<UserDto> list() {
         def users = userService.listAll()
-        return users.collect {
-            dtoBuilder.buildUser(it)
-        }
+        users.collect { dtoBuilder.buildUser(it) }
     }
 }

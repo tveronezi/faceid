@@ -19,7 +19,6 @@
 package faceid.mdb
 
 import faceid.service.UserImpl
-import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
 import javax.annotation.security.RunAs
@@ -32,13 +31,13 @@ import javax.jms.MessageListener
 @RunAs('solution-admin')
 class UserConfirmationReceived implements MessageListener {
 
-    private static final Logger LOG = LoggerFactory.getLogger(UserConfirmationReceived)
+    private static final def LOG = LoggerFactory.getLogger(UserConfirmationReceived)
 
     @EJB
     private UserImpl userSrv
 
     private void confirmUser(String from, String content) {
-        this.userSrv.confirmUser(from, content)
+        userSrv.confirmUser(from, content)
     }
 
     @Override
@@ -47,8 +46,8 @@ class UserConfirmationReceived implements MessageListener {
             LOG.info("User confirmation received")
         }
         try {
-            String from = txtMsg.getStringProperty("from")
-            String content = txtMsg.getStringProperty("content")
+            def from = txtMsg.getStringProperty("from")
+            def content = txtMsg.getStringProperty("content")
             confirmUser(from, content)
         } catch (Exception e) {
             LOG.error("Error while processing 'add user' message", e)

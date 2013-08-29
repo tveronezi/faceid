@@ -33,13 +33,13 @@ class BaseEAO {
     private EntityManager em
 
     def execute(def closure) {
-        return closure(em)
+        closure(em)
     }
 
     List findAll(Class beanCls) {
         def str = "SELECT e FROM ${beanCls.name} e"
         def query = em.createQuery(str)
-        return query.resultList
+        query.resultList
     }
 
     private static def getSingleResult(Query query) {
@@ -49,19 +49,19 @@ class BaseEAO {
         } catch (NoResultException ignored) {
             result = null
         }
-        return result
+        result
     }
 
     def findUnique(def closure) {
-        Query query = closure(em)
-        return getSingleResult(query)
+        def query = closure(em)
+        getSingleResult(query as Query)
     }
 
     def findById(Class beanCls, Long uid) {
         def str = "SELECT e FROM ${beanCls.simpleName} e WHERE e.uid = :puid"
         def query = em.createQuery(str)
         query.setParameter('puid', uid)
-        return getSingleResult(query)
+        getSingleResult(query)
     }
 
 }

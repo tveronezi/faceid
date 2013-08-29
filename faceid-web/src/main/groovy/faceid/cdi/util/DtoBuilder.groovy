@@ -29,36 +29,36 @@ import javax.enterprise.context.ApplicationScoped
 class DtoBuilder {
 
     UserDto buildUser(User user) {
-        if (user == null) {
+        if (!user) {
             return null
         }
-        UserDto result = new UserDto()
-        result.setId(user.getUid())
-        result.setName(user.getName())
-        result.setAccount(user.getAccount())
-
-        Set<String> groups = user.getSecurityGroups()
-        if (groups == null) {
-            result.setGroups("")
+        def result = new UserDto(
+                id: user.uid,
+                name: user.name,
+                account: user.account
+        )
+        def groups = user.getSecurityGroups()
+        if (!groups) {
+            result.groups = ""
         } else {
-            String groupsStr = groups.toString()
+            def groupsStr = groups.toString()
             groupsStr = groupsStr.substring(1, groupsStr.length() - 1)
             groupsStr.replaceAll("\\s", "")
-            result.setGroups(groupsStr)
+            result.groups = groupsStr
         }
-        return result
+        result
     }
 
     AuthenticationDto buildAuthenticationLog(AuthenticationLog log) {
-        if (log == null) {
+        if (!log) {
             return null
         }
-        AuthenticationDto result = new AuthenticationDto()
-        result.setId(log.getUid())
-        result.setAccount(log.getAccount())
-        result.setTimestamp(log.getDate().getTime())
-        result.setType(log.getLogType().name())
-        return result
+        new AuthenticationDto(
+                id: log.uid,
+                account: log.account,
+                timestamp: log.date.time,
+                type: log.logType.name()
+        )
     }
 
 }

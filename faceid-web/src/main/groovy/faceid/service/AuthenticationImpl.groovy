@@ -40,33 +40,32 @@ class AuthenticationImpl {
     private StringEncrypt encrypt
 
     Set<String> authenticate(String account, String password) {
-        def log = new AuthenticationLog()
-        log.account = account
-        log.date = new Date()
-        log.logType = AuthenticationLogType.SUCCESS
-
-        def user = this.userSrv.getUser(account)
-        Set<String> groups = null // null means "bad user or password"
-        if (user == null) {
+        def log = new AuthenticationLog(
+                account: account,
+                date: new Date(),
+                logType: AuthenticationLogType.SUCCESS
+        )
+        def user = userSrv.getUser(account)
+        def groups = null // null means "bad user or password"
+        if (!user) {
             log.logType = AuthenticationLogType.BAD_USER
-        } else if (!this.encrypt.areEquivalent(password, user.password, user.salt)) {
+        } else if (!encrypt.areEquivalent(password, user.password, user.salt)) {
             log.logType = AuthenticationLogType.BAD_PASSWORD
         } else if (!user.enabled) {
             log.logType = AuthenticationLogType.USER_DISABLED
         } else {
             groups = user.getSecurityGroups()
-            if (groups == null) {
-                groups = []
+            if (!groups) {
+                groups = [] as Set
             }
         }
-
-        this.baseEAO.execute({ em ->
+        baseEAO.execute({ em ->
             em.persist(log)
         })
-        return groups
+        groups
     }
 
     List<AuthenticationLog> getLog() {
-        return this.baseEAO.findAll(AuthenticationLog)
+        baseEAO.findAll(AuthenticationLog)
     }
 }

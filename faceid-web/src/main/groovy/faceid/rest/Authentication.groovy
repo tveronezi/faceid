@@ -50,6 +50,7 @@ class Authentication {
         }
         def result = groups.toString()
         result = result.substring(1, result.length() - 1)
-        return result.replaceAll("\\s", "")
+        result = result.replaceAll("\\s", "")
+        result
     }
 }

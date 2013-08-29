@@ -18,17 +18,12 @@
 
 package faceid
 
-import faceid.service.UserImpl
-
 import javax.annotation.PostConstruct
-import javax.ejb.EJB
 import javax.ejb.Startup
 
 @javax.ejb.Singleton
 @Startup
 class ApplicationStartup {
-    @EJB
-    private UserImpl userService
 
     @PostConstruct
     void applicationStartup() {

@@ -41,8 +41,6 @@ class AuthenticationLog {
     @Produces("application/json")
     List<AuthenticationDto> listLog() {
         def log = this.authSrv.getLog()
-        return log.collect {
-            dtoBuilder.buildAuthenticationLog(it)
-        }
+        log.collect { dtoBuilder.buildAuthenticationLog(it) }
     }
 }

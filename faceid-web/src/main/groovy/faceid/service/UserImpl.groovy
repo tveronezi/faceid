@@ -21,7 +21,6 @@ package faceid.service
 import faceid.cdi.util.StringEncrypt
 import faceid.data.entity.User
 import faceid.data.entity.UserConfirmation
-import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
 import javax.annotation.Resource
@@ -29,16 +28,17 @@ import javax.annotation.security.RolesAllowed
 import javax.ejb.EJB
 import javax.ejb.Stateless
 import javax.inject.Inject
-import javax.jms.*
-import javax.persistence.Query
+import javax.jms.ConnectionFactory
+import javax.jms.DeliveryMode
+import javax.jms.Queue
+import javax.jms.Session
 import java.util.regex.Pattern
 
 @Stateless(name = 'FaceID-UserImpl')
 @RolesAllowed(value = 'solution-admin')
 class UserImpl {
-    private static Logger LOG = LoggerFactory.getLogger(UserImpl)
-
-    private static Pattern USER_CONFIRMATION_PATTERN = Pattern.compile("\\{activateUser:.*:.*\\}")
+    private static def LOG = LoggerFactory.getLogger(UserImpl)
+    private static def USER_CONFIRMATION_PATTERN = Pattern.compile("\\{activateUser:.*:.*\\}")
 
     @Resource
     private ConnectionFactory factory
@@ -52,10 +52,9 @@ class UserImpl {
     @Inject
     private StringEncrypt encrypt
 
-    private void sendConfirmationEmail(String userAccount, String key) throws JMSException {
-        Connection connection = null
-        Session session = null
-
+    private void sendConfirmationEmail(String userAccount, String key) {
+        def connection = null
+        def session = null
         try {
             connection = factory.createConnection()
             connection.start()
@@ -64,11 +63,11 @@ class UserImpl {
             session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE)
 
             // Create a MessageProducer from the Session to the Topic or Queue
-            MessageProducer producer = session.createProducer(sendEmailQueue)
+            def producer = session.createProducer(sendEmailQueue)
             producer.setDeliveryMode(DeliveryMode.NON_PERSISTENT)
 
             // Create a message
-            Message message = session.createMessage()
+            def message = session.createMessage()
             message.setStringProperty("to", userAccount)
             message.setStringProperty("subject", "Did you asked for a new user?")
             message.setStringProperty("text", "If you did, simply reply to this email to get it activated.\n" +
@@ -79,12 +78,8 @@ class UserImpl {
             producer.send(message)
         } finally {
             // Clean up
-            if (session != null) {
-                session.close()
-            }
-            if (connection != null) {
-                connection.close()
-            }
+            session?.close()
+            connection?.close()
         }
     }
 
@@ -96,16 +91,14 @@ class UserImpl {
                 enabled: enabled,
                 securityGroups: groups
         )
-        if (password == null) {
+        if (!password) {
             user.password = encrypt.encryptString("", user.salt)
         } else {
             user.password = encrypt.encryptString(password, user.salt)
         }
-
         baseEAO.execute({ em ->
             em.persist(user)
         })
-
         if (!user.enabled) {
             def confirmation = new UserConfirmation(
                     key: encrypt.getRandomString(),
@@ -120,65 +113,62 @@ class UserImpl {
                 LOG.error("Impossible to send email to confirm new user account", e)
             }
         }
-        return user
+        user
     }
 
     User saveUser(Long id, String name, String account, String password, Set<String> groups) {
-        if (id == null) {
-            return createUser(name, account, password, groups, true)
+        if (id == null) { // id=0 can happen
+            createUser(name, account, password, groups, true)
+        } else {
+            def user = getUserById(id)
+            if (user) {
+                user.name = name
+                user.account = account
+                user.securityGroups.clear()
+                if (groups) {
+                    user.securityGroups.addAll(groups)
+                }
+                if ("" != password) {
+                    byte[] salt = encrypt.generateSalt()
+                    user.salt = salt
+                    user.password = encrypt.encryptString(password, salt)
+                }
+            }
+            user
         }
-        User user = getUserById(id)
-        if (user == null) {
-            return null
-        }
-        user.name = name
-        user.account = account
-        user.securityGroups.clear()
-        if (groups != null) {
-            user.securityGroups.addAll(groups)
-        }
-        if (!"".equals(password)) {
-            byte[] salt = encrypt.generateSalt()
-            user.salt = salt
-            user.password = encrypt.encryptString(password, salt)
-        }
-        return user
     }
 
-    User getUser(String name) {
-        return baseEAO.findUnique({ em ->
-            def query = em.createQuery("SELECT e from ${User.class.name} e WHERE e.name = :pname")
-            query.setParameter('pname', name)
-            return query
+    User getUser(String account) {
+        baseEAO.findUnique({ em ->
+            def query = em.createQuery("SELECT e from ${User.class.name} e WHERE e.account = :pname")
+            query.setParameter('pname', account)
+            query
         }) as User
     }
 
     User getUserById(Long id) {
-        return baseEAO.findById(User, id) as User
+        baseEAO.findById(User, id) as User
     }
 
     void deleteUser(Long id) {
-        User user = getUserById(id)
-        if (user == null) {
-            return
+        def user = getUserById(id)
+        if (user) {
+            baseEAO.execute({ em ->
+                em.remove(user)
+            })
         }
-        baseEAO.execute({ em ->
-            em.remove(user)
-        })
     }
 
     List<User> listAll() {
-        return baseEAO.findAll(User.class)
+        baseEAO.findAll(User.class)
     }
 
     void addGroupToUser(String userAccount, String userPassword, String group) {
-        User user = getUser(userAccount)
-        if (user == null) {
-            // no-op
-            return
-        }
-        if (encrypt.areEquivalent(userPassword, user.password, user.salt)) {
-            user.securityGroups << group
+        def user = getUser(userAccount)
+        if (user) {
+            if (encrypt.areEquivalent(userPassword, user.password, user.salt)) {
+                user.securityGroups << group
+            }
         }
     }
 
@@ -194,23 +184,20 @@ class UserImpl {
         }
         def values = confirmationText.split(":")
         def confirmation = baseEAO.findUnique({ em ->
-            Query query = em.createQuery("SELECT c FROM UserConfirmation c WHERE c.user.account = :pUserName AND c.key = :pKey");
+            def query = em.createQuery("SELECT c FROM UserConfirmation c WHERE c.user.account = :pUserName AND c.key = :pKey");
             query.setParameter("pUserName", values[1]);
             query.setParameter("pKey", values[2].substring(0, values[2].length() - 1));
-            return query
+            query
         }) as UserConfirmation
-
         if (!confirmation) {
             LOG.warn("Confirmation record not found. ConfirmationText: ${confirmationText}")
-            return
-        }
-        if (from == confirmation.user.account) {
+        } else if (from == confirmation.user.account) {
             confirmation.user.enabled = Boolean.TRUE
             if (LOG.isInfoEnabled()) {
                 LOG.info("User confirmed. Account: ${confirmation.user.account}")
             }
         } else {
-            LOG.warn("\"from\" does not match account. Account: ${confirmation.user.account}. from: ${from}")
+            LOG.warn("'from' does not match account. Account: ${confirmation.user.account}. from: ${from}")
         }
     }
 }

@@ -24,6 +24,6 @@ import javax.ws.rs.core.Application
 @ApplicationPath("/rest")
 class ApplicationConfig extends Application {
     Set<Class<?>> getClasses() {
-        return [Users, Authentication, AuthenticationLog, KeepAlive]
+        [Users, Authentication, AuthenticationLog, KeepAlive]
     }
 }

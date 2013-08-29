@@ -18,29 +18,26 @@
 
 package faceid.rest
 
-import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
 import javax.servlet.http.HttpServletRequest
-import javax.servlet.http.HttpSession
 import javax.ws.rs.GET
 import javax.ws.rs.Path
 import javax.ws.rs.core.Context
-import java.security.Principal
 
 @Path("/keep-alive")
 class KeepAlive {
-    private static final Logger LOG = LoggerFactory.getLogger(KeepAlive)
+    private static final def LOG = LoggerFactory.getLogger(KeepAlive)
 
     @GET
-    public void ping(@Context HttpServletRequest request) {
-        final HttpSession session = request.getSession()
-        final Principal principal = request.getUserPrincipal()
-        final String userName
-        if (principal == null) {
-            userName = "guest"
-        } else {
+    void ping(@Context HttpServletRequest request) {
+        def session = request.getSession()
+        def principal = request.getUserPrincipal()
+        def userName
+        if (principal) {
             userName = principal.getName()
+        } else {
+            userName = "guest"
         }
         LOG.info("'keepAlive' event triggered. sessionID: '{}' user: '{}'.", session.getId(), userName)
     }

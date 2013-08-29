@@ -19,7 +19,6 @@
 package faceid.mdb
 
 import faceid.service.UserImpl
-import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
 import javax.annotation.security.RunAs
@@ -32,7 +31,7 @@ import javax.jms.MessageListener
 @MessageDriven(mappedName = 'CreateUpdateUserQueue', messageListenerInterface = MessageListener)
 @RunAs('solution-admin')
 class CreateUpdateUser implements MessageListener {
-    private static final Logger LOG = LoggerFactory.getLogger(CreateUpdateUser)
+    private static final def LOG = LoggerFactory.getLogger(CreateUpdateUser)
 
     @EJB
     private UserImpl userSrv
@@ -41,14 +40,14 @@ class CreateUpdateUser implements MessageListener {
         def userAccount = message.getStringProperty('userAccount')
         def userPassword = message.getStringProperty('userPassword')
         def group = message.getStringProperty('userGroup')
-        def existing = this.userSrv.getUser(userAccount)
+        def existing = userSrv.getUser(userAccount)
         if (existing) {
-            this.userSrv.addGroupToUser(userAccount, userPassword, group)
+            userSrv.addGroupToUser(userAccount, userPassword, group)
         } else {
-            String userName = message.getStringProperty('userName')
-            Set<String> groups = []
-            groups.add(group)
-            this.userSrv.createUser(userName, userAccount, userPassword, groups, false)
+            def userName = message.getStringProperty('userName')
+            def groups = [] as Set
+            groups << group
+            userSrv.createUser(userName, userAccount, userPassword, groups, false)
         }
     }
 
@@ -57,7 +56,6 @@ class CreateUpdateUser implements MessageListener {
         if (LOG.isInfoEnabled()) {
             LOG.info("New user request received")
         }
-
         try {
             createUserFromMessage(message)
         } catch (Exception e) {
