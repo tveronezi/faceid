@@ -26,7 +26,7 @@ import javax.persistence.PersistenceContext
 import javax.persistence.Query
 
 @Stateless(name = "faceid-BaseEAO")
-@RolesAllowed(value = 'solution-admin')
+@RolesAllowed(value = 'tomee-admin')
 class BaseEAO {
 
     @PersistenceContext(unitName = "userPU")

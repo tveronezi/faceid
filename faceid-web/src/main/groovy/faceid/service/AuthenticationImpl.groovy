@@ -28,7 +28,7 @@ import javax.ejb.Stateless
 import javax.inject.Inject
 
 @Stateless
-@RolesAllowed(value = 'solution-admin')
+@RolesAllowed(value = 'tomee-admin')
 class AuthenticationImpl {
     @EJB
     private BaseEAO baseEAO

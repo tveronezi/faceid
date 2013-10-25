@@ -29,7 +29,7 @@ import javax.jms.Message
 import javax.jms.MessageListener
 
 @MessageDriven(mappedName = 'CreateUpdateUserQueue', messageListenerInterface = MessageListener)
-@RunAs('solution-admin')
+@RunAs('tomee-admin')
 class CreateUpdateUser implements MessageListener {
     private static final def LOG = LoggerFactory.getLogger(CreateUpdateUser)
 

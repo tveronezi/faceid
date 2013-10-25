@@ -22,7 +22,7 @@ import javax.annotation.security.RunAs
 import javax.ejb.Stateless
 
 @Stateless
-@RunAs("solution-admin")
+@RunAs("tomee-admin")
 class AdminRunner {
     def run(callback) {
         callback()
