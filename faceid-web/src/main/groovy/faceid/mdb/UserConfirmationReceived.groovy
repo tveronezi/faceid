@@ -40,6 +40,7 @@ class UserConfirmationReceived implements MessageListener {
         userSrv.confirmUser(from, content)
     }
 
+    @SuppressWarnings('CatchException')
     @Override
     void onMessage(Message txtMsg) {
         if (LOG.isInfoEnabled()) {

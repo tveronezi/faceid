@@ -83,6 +83,7 @@ class UserImpl {
         }
     }
 
+    @SuppressWarnings('CatchException')
     User createUser(String name, String account, String password, Set<String> groups, Boolean enabled) {
         def user = new User(
                 name: name,

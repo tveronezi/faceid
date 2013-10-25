@@ -50,6 +50,25 @@
     </dependencies>
     <build>
         <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>codenarc-maven-plugin</artifactId>
+            <version>0.18-1</version>
+            <configuration>
+              <sourceDirectory>${project.basedir}/src/main/groovy</sourceDirectory>
+              <maxPriority1Violations>1</maxPriority1Violations>
+              <maxPriority2Violations>1</maxPriority2Violations>
+              <maxPriority3Violations>1</maxPriority3Violations>
+            </configuration>
+            <executions>
+              <execution>
+                <phase>prepare-package</phase>
+                <goals>
+                  <goal>codenarc</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
             <plugin>
                 <groupId>org.codehaus.gmaven</groupId>
                 <artifactId>gmaven-plugin</artifactId>
