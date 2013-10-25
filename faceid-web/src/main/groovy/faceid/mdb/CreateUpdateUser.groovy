@@ -51,6 +51,7 @@ class CreateUpdateUser implements MessageListener {
         }
     }
 
+    @SuppressWarnings('CatchException')
     @Override
     void onMessage(Message message) {
         if (LOG.isInfoEnabled()) {

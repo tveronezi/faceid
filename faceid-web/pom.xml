@@ -56,10 +56,10 @@
         <version>0.18-1</version>
         <configuration>
           <sourceDirectory>${project.basedir}/src/main/groovy</sourceDirectory>
-          <maxPriority1Violations>1</maxPriority1Violations>
-          <maxPriority2Violations>1</maxPriority2Violations>
-          <maxPriority3Violations>1</maxPriority3Violations>
-          <rulesetfiles></rulesetfiles>
+          <groovyVersion>2.0.0</groovyVersion>
+          <maxPriority1Violations>0</maxPriority1Violations>
+          <maxPriority2Violations>0</maxPriority2Violations>
+          <maxPriority3Violations>0</maxPriority3Violations>
         </configuration>
         <executions>
           <execution>
