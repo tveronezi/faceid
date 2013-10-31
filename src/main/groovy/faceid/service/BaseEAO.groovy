@@ -25,8 +25,8 @@ import javax.persistence.NoResultException
 import javax.persistence.PersistenceContext
 import javax.persistence.Query
 
-@Stateless(name = "faceid-BaseEAO")
-@RolesAllowed(value = 'tomee-admin')
+@Stateless
+@RolesAllowed(value = 'solution-admin')
 class BaseEAO {
 
     @PersistenceContext(unitName = "userPU")

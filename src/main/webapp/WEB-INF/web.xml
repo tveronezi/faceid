@@ -43,7 +43,7 @@
             <url-pattern>/*</url-pattern>
         </web-resource-collection>
         <auth-constraint>
-            <role-name>tomee-admin</role-name>
+            <role-name>solution-admin</role-name>
         </auth-constraint>
     </security-constraint>
     <!-- ... -->
@@ -52,7 +52,7 @@
     </login-config>
     <!-- ... -->
     <security-role>
-        <role-name>tomee-admin</role-name>
+        <role-name>solution-admin</role-name>
     </security-role>
 
 </web-app>

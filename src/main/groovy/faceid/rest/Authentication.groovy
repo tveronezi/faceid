@@ -32,7 +32,7 @@ import javax.ws.rs.Path
 import javax.ws.rs.Produces
 
 @Path("/authentication")
-@RunAs("tomee-admin")
+@RunAs("solution-admin")
 @Stateless
 class Authentication {
     @EJB

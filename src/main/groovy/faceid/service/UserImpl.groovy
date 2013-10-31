@@ -34,8 +34,8 @@ import javax.jms.Queue
 import javax.jms.Session
 import java.util.regex.Pattern
 
-@Stateless(name = 'FaceID-UserImpl')
-@RolesAllowed(value = 'tomee-admin')
+@Stateless
+@RolesAllowed(value = 'solution-admin')
 class UserImpl {
     private static def LOG = LoggerFactory.getLogger(UserImpl)
     private static def USER_CONFIRMATION_PATTERN = Pattern.compile("\\{activateUser:.*:.*\\}")

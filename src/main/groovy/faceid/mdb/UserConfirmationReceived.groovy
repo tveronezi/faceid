@@ -28,7 +28,7 @@ import javax.jms.Message
 import javax.jms.MessageListener
 
 @MessageDriven(mappedName = 'IncomingEmailQueue', messageListenerInterface = MessageListener)
-@RunAs('tomee-admin')
+@RunAs('solution-admin')
 class UserConfirmationReceived implements MessageListener {
 
     private static final def LOG = LoggerFactory.getLogger(UserConfirmationReceived)
