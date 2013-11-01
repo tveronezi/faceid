@@ -38,7 +38,7 @@
       </activation>
     </profile>
     <profile>
-      <id>network</id>
+      <id>solution</id>
       <properties>
         <tomee.config.dir>${project.basedir}/src/main/tomee/network/conf</tomee.config.dir>
       </properties>
