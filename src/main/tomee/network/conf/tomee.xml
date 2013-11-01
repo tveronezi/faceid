@@ -39,7 +39,4 @@
     ResourceAdapter = MyJmsResourceAdapter
   </Container>
 
-  <Resource id="CreateUpdateUserQueue" type="javax.jms.Queue"/>
-  <Resource id="SendEmailQueue" type="javax.jms.Queue"/>
-
 </tomee>
