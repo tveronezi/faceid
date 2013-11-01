@@ -160,12 +160,12 @@
         <configuration>
           <context>faceid</context>
           <config>${tomee.config.dir}</config>
+          <args>-Xmx512m -XX:PermSize=256m</args>
           <tomeeClassifier>plus</tomeeClassifier>
           <debugPort>5015</debugPort>
           <tomeeAjpPort>8019</tomeeAjpPort>
           <tomeeHttpPort>8081</tomeeHttpPort>
           <tomeeShutdownPort>8015</tomeeShutdownPort>
-          <args>-Xmx512m -XX:PermSize=256m</args>
           <debug>false</debug>
         </configuration>
       </plugin>
