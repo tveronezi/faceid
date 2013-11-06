@@ -21,9 +21,9 @@
 <head>
     <meta charset="utf-8">
     <title>faceid</title>
-    <link rel="stylesheet" type="text/css" href="http://cdn.sencha.io/ext-4.2.0-gpl/resources/ext-theme-neptune/ext-theme-neptune-all.css">
+    <link rel="stylesheet" type="text/css" href="<c:url value='/webjars/extjs/4.2.1.883/resources/ext-theme-neptune/ext-theme-neptune-all.css'/>">
     <link rel="stylesheet" type="text/css" href="<c:url value='/app/app.css'/>">
-    <script type="text/javascript" src="http://cdn.sencha.io/ext-4.2.0-gpl/ext-all.js"></script>
+    <script type="text/javascript" src="<c:url value='/webjars/extjs/4.2.1.883/ext-all.js'/>"></script>
     <script type="text/javascript">
         // Save the path to the application. Case the application is not the root context, we should now that.
         // The "c:url" is able to figure it out since forever.
