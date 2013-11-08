@@ -68,6 +68,7 @@ class UserImpl {
 
             // Create a message
             def message = session.createMessage()
+            message.setStringProperty("sessionName", "user-request")
             message.setStringProperty("to", userAccount)
             message.setStringProperty("subject", "Did you asked for a new user?")
             message.setStringProperty("text", "If you did, simply reply to this email to get it activated.\n" +
