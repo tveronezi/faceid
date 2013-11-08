@@ -39,6 +39,7 @@ import java.util.regex.Pattern
 class UserImpl {
     private static def LOG = LoggerFactory.getLogger(UserImpl)
     private static def USER_CONFIRMATION_PATTERN = Pattern.compile("\\{activateUser:.*:.*\\}")
+    private static def MAIL_SESSION_TO_USE = "user-request"
 
     @Resource
     private ConnectionFactory factory
@@ -68,7 +69,7 @@ class UserImpl {
 
             // Create a message
             def message = session.createMessage()
-            message.setStringProperty("sessionName", "user-request")
+            message.setStringProperty("sessionName", MAIL_SESSION_TO_USE)
             message.setStringProperty("to", userAccount)
             message.setStringProperty("subject", "Did you asked for a new user?")
             message.setStringProperty("text", "If you did, simply reply to this email to get it activated.\n" +
