@@ -26,17 +26,9 @@
     <tomee.version>1.6.0-SNAPSHOT</tomee.version>
     <openejb.version>4.6.0-SNAPSHOT</openejb.version>
     <groovy.version>2.0.0</groovy.version>
+    <tomee.config.dir>${project.basedir}/src/main/tomee/standalone/conf</tomee.config.dir>
   </properties>
   <profiles>
-    <profile>
-      <id>standalone</id>
-      <properties>
-        <tomee.config.dir>${project.basedir}/src/main/tomee/standalone/conf</tomee.config.dir>
-      </properties>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
-    </profile>
     <profile>
       <id>solution</id>
       <properties>
