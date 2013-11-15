@@ -46,24 +46,22 @@ class CreateUpdateUser implements MessageListener {
         def group = message.getStringProperty('userGroup')
         def existing = userSrv.getUser(userAccount)
 
-        connections.sendToAll("User requested: '${userAccount}'")
-
         if (existing) {
             userSrv.addGroupToUser(userAccount, userPassword, group)
+            connections.sendToAll('update-user', [userName: userAccount])
         } else {
             def userName = message.getStringProperty('userName')
             def groups = [] as Set
             groups << group
             userSrv.createUser(userName, userAccount, userPassword, groups, false)
+            connections.sendToAll('new-user', [userName: userAccount])
         }
     }
 
     @SuppressWarnings('CatchException')
     @Override
     void onMessage(Message message) {
-        if (LOG.isInfoEnabled()) {
-            LOG.info("New user request received")
-        }
+        LOG.debug("New user request received")
         try {
             createUserFromMessage(message)
         } catch (Exception e) {

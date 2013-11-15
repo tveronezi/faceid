@@ -202,7 +202,7 @@ class UserImpl {
             if (LOG.isInfoEnabled()) {
                 LOG.info("User confirmed. Account: ${confirmation.user.account}")
             }
-            connections.sendToAll("User confirmed: '${confirmation.user.account}'")
+            connections.sendToAll('confirmed-user', [userName: confirmation.user.account])
         } else {
             LOG.warn("'from' does not match account. Account: ${confirmation.user.account}. from: ${from}")
         }

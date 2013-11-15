@@ -18,6 +18,8 @@
 
 package faceid.service
 
+import groovy.json.JsonOutput
+
 import javax.ejb.Lock
 import javax.ejb.LockType
 import javax.websocket.Session
@@ -38,9 +40,13 @@ class Connections {
     }
 
     @Lock(LockType.READ)
-    void sendToAll(String message) {
+    void sendToAll(String typeName, def data) {
+        String messageJson = JsonOutput.toJson([
+                type: typeName,
+                data: data
+        ])
         sessions.each { session ->
-            session.basicRemote.sendText(message)
+            session.basicRemote.sendText(messageJson)
         }
     }
 

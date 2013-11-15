@@ -36,6 +36,9 @@ class AuthenticationImpl {
     @EJB
     private UserImpl userSrv
 
+    @EJB
+    private Connections connections
+
     @Inject
     private StringEncrypt encrypt
 
@@ -62,6 +65,7 @@ class AuthenticationImpl {
         baseEAO.execute({ em ->
             em.persist(log)
         })
+        connections.sendToAll('authentication-log', [type: log.logType, account: account])
         groups
     }
 

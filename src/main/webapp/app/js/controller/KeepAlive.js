@@ -51,25 +51,32 @@
         window.console.log('keep-alive callback created.', timeoutKey);
     }
 
-    function connectSocket() {
-        var location = window.location;
-        var wsPath = 'ws://' + location.hostname + ':' + location.port + window.ROOT_URL + 'ws/connection';
-        var connection = new window.WebSocket(wsPath);
-        connection.onopen = function () {
-            window.console.log('WebSocket: connection started.');
-        };
-        connection.onerror = function (error) {
-            window.console.log('WebSocket: Error ' + error);
-        };
-        connection.onmessage = function (e) {
-            window.console.log('WebSocket: message -> ' + e.data);
-        };
-    }
-
     Ext.define('faceid.controller.KeepAlive', {
         extend: 'Ext.app.Controller',
+        connectSocket: function () {
+            var me = this;
+            var location = window.location;
+            var wsPath = 'ws://' + location.hostname + ':' + location.port + window.ROOT_URL + 'ws/connection';
+            var connection = new window.WebSocket(wsPath);
+            connection.onopen = function () {
+                window.console.log('WebSocket: connection started.');
+            };
+            connection.onerror = function (error) {
+                window.location.reload(); // reload application
+            };
+            connection.onmessage = function (e) {
+                try {
+                    var evtData = Ext.JSON.decode(e.data);
+                    me.getApplication().fireEvent(evtData.type, evtData.data);
+                } catch (ex) {
+                    window.console.error('WebSocket: parse -> ' + ex);
+                }
+                window.console.log('WebSocket: message -> ' + e.data);
+            };
+        },
         init: function () {
-            connectSocket();
+            var me = this;
+            me.connectSocket();
             scheduleNext(true);
             Ext.Ajax.on('beforerequest', function () {
                 scheduleNext();

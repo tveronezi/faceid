@@ -156,6 +156,12 @@
                     }
                 }
             });
+
+            me.getApplication().on('new-user', function () {
+                window.setTimeout(function () {
+                    me.getUsersStore().load();
+                }, 1000);
+            });
         }
     });
 }());

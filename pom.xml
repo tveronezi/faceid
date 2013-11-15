@@ -26,7 +26,7 @@
     <tomee.version>1.6.0-SNAPSHOT</tomee.version>
     <tomcat.version>7.0.47</tomcat.version>
     <openejb.version>4.6.0-SNAPSHOT</openejb.version>
-    <groovy.version>2.0.0</groovy.version>
+    <groovy.version>2.1.9</groovy.version>
     <debug.it>false</debug.it>
     <tomee.config.dir>${project.basedir}/src/main/tomee/standalone/conf</tomee.config.dir>
     <tomee.args>-Xmx512m -XX:PermSize=256m</tomee.args>
@@ -80,6 +80,11 @@
     <dependency>
       <groupId>org.codehaus.groovy</groupId>
       <artifactId>groovy</artifactId>
+      <version>${groovy.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.codehaus.groovy</groupId>
+      <artifactId>groovy-json</artifactId>
       <version>${groovy.version}</version>
     </dependency>
     <dependency>

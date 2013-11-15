@@ -44,7 +44,6 @@
 
         init: function () {
             var me = this;
-
             me.control({
                 'faceid-portlet-log button[action=refreshPanel]': {
                     click: me.refreshPanel
@@ -57,6 +56,11 @@
                         me.getAuthenticationLogStore().load();
                     }
                 }
+            });
+            me.getApplication().on('authentication-log', function () {
+                window.setTimeout(function () {
+                    me.getAuthenticationLogStore().load();
+                }, 1000);
             });
         }
     });

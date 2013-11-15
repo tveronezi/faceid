@@ -26,10 +26,6 @@
             'AuthenticationTest'
         ],
 
-        stores: [
-            'AuthenticationLog'
-        ],
-
         refs: [
             {
                 ref: 'loginPanel',
@@ -49,7 +45,6 @@
                     var form = panel.query('form')[0];
                     form.getForm().reset();
                     panel.enable();
-                    me.getAuthenticationLogStore().load();
                 }
             });
         },
