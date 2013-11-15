@@ -24,6 +24,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <tomee.version>1.6.0-SNAPSHOT</tomee.version>
+    <tomcat.version>7.0.47</tomcat.version>
     <openejb.version>4.6.0-SNAPSHOT</openejb.version>
     <groovy.version>2.0.0</groovy.version>
     <debug.it>false</debug.it>
@@ -91,6 +92,12 @@
       <groupId>org.apache.openejb</groupId>
       <artifactId>openejb-core</artifactId>
       <version>${openejb.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.tomcat</groupId>
+      <artifactId>tomcat-websocket-api</artifactId>
+      <version>${tomcat.version}</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
