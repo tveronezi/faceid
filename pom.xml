@@ -26,13 +26,27 @@
     <tomee.version>1.6.0-SNAPSHOT</tomee.version>
     <openejb.version>4.6.0-SNAPSHOT</openejb.version>
     <groovy.version>2.0.0</groovy.version>
+    <debug.it>false</debug.it>
     <tomee.config.dir>${project.basedir}/src/main/tomee/standalone/conf</tomee.config.dir>
+    <tomee.args>-Xmx512m -XX:PermSize=256m</tomee.args>
   </properties>
   <profiles>
     <profile>
       <id>solution</id>
       <properties>
         <tomee.config.dir>${project.basedir}/src/main/tomee/network/conf</tomee.config.dir>
+      </properties>
+    </profile>
+    <profile>
+      <id>debug</id>
+      <properties>
+        <debug.it>true</debug.it>
+      </properties>
+    </profile>
+    <profile>
+      <id>remote-jmx</id>
+      <properties>
+        <tomee.args>-Xmx512m -XX:PermSize=256m -Dcom.sun.management.jmxremote.port=9999 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false</tomee.args>
       </properties>
     </profile>
   </profiles>
@@ -157,13 +171,16 @@
         <configuration>
           <context>faceid</context>
           <config>${tomee.config.dir}</config>
-          <args>-Xmx512m -XX:PermSize=256m</args>
+          <args>${tomee.args}</args>
           <tomeeClassifier>plus</tomeeClassifier>
           <debugPort>5015</debugPort>
           <tomeeAjpPort>8019</tomeeAjpPort>
           <tomeeHttpPort>8081</tomeeHttpPort>
           <tomeeShutdownPort>8015</tomeeShutdownPort>
-          <debug>false</debug>
+          <debug>${debug.it}</debug>
+          <webapps>
+            <webapp>org.apache.openejb:tomee-webaccess:${tomee.version}?name=webaccess</webapp>
+          </webapps>
         </configuration>
       </plugin>
     </plugins>
