@@ -22,7 +22,7 @@
     var DELAY = 1000 * 60 * 4; // 4 minutes
     var timeoutKey = null;
 
-    function scheduleNext() {
+    function scheduleNext(now) {
         if (timeoutKey !== null) {
             window.clearInterval(timeoutKey);
             window.console.log('keep-alive callback canceled.', timeoutKey);
@@ -38,17 +38,23 @@
                     window.console.error('keep-alive callback error.');
                     window.setTimeout(function () {
                         window.location.reload();
-                    }, 10000);
+                    }, 1000);
                 }
             });
         }
-        timeoutKey = window.setTimeout(timeoutCallback, DELAY);
+        if(now) {
+            timeoutCallback();
+        } else {
+            timeoutKey = window.setTimeout(timeoutCallback, DELAY);
+        }
+
         window.console.log('keep-alive callback created.', timeoutKey);
     }
 
     Ext.define('faceid.controller.KeepAlive', {
         extend: 'Ext.app.Controller',
         init: function () {
+            scheduleNext(true);
             Ext.Ajax.on('beforerequest', function () {
                 scheduleNext();
             });

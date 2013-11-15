@@ -16,36 +16,24 @@
  *  limitations under the License.
  */
 
-package faceid.rest
+package faceid.data.dto
 
-import faceid.data.dto.SessionDataDto
+import javax.xml.bind.annotation.XmlAccessType
+import javax.xml.bind.annotation.XmlAccessorType
+import javax.xml.bind.annotation.XmlElement
+import javax.xml.bind.annotation.XmlRootElement
 
-import javax.servlet.http.HttpServletRequest
-import javax.ws.rs.GET
-import javax.ws.rs.Path
-import javax.ws.rs.core.Context
+@XmlAccessorType(XmlAccessType.NONE)
+@XmlRootElement
+class SessionDataDto implements Serializable {
 
-@Path("/keep-alive")
-class KeepAlive {
+    @XmlElement
+    String userName
 
-    @GET
-    static SessionDataDto ping(@Context HttpServletRequest request) {
-        def session = request.getSession()
-        def principal = request.getUserPrincipal()
-        def userName
-        def logged
-        if (principal) {
-            userName = principal.getName()
-            logged = true
-        } else {
-            userName = "guest"
-            logged = false
-        }
-        new SessionDataDto(
-                userName: userName,
-                sessionId: session.id,
-                logged: logged
-        )
-    }
+    @XmlElement
+    String sessionId
+
+    @XmlElement
+    Boolean logged
 
 }

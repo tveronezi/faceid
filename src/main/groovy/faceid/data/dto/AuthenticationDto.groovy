@@ -38,4 +38,5 @@ class AuthenticationDto implements Serializable {
 
     @XmlElement
     String type
+
 }
