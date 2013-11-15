@@ -52,11 +52,12 @@
                 'faceid-portlet-log': {
                     refreshpanel: function () {
                         me.getAuthenticationLogStore().load();
+                    },
+                    render: function () {
+                        me.getAuthenticationLogStore().load();
                     }
                 }
             });
-
-            me.getAuthenticationLogStore().load();
         }
     });
 

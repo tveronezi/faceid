@@ -23,12 +23,7 @@
     var timeoutKey = null;
 
     function scheduleNext(now) {
-        if (timeoutKey !== null) {
-            window.clearInterval(timeoutKey);
-            window.console.log('keep-alive callback canceled.', timeoutKey);
-            timeoutKey = null;
-        }
-        function timeoutCallback() {
+        var timeoutCallback = function () {
             Ext.Ajax.request({
                 'url': window.ROOT_URL + 'rest/keep-alive',
                 success: function (response, opts) {
@@ -41,8 +36,13 @@
                     }, 1000);
                 }
             });
+        };
+        if (timeoutKey !== null) {
+            window.clearInterval(timeoutKey);
+            window.console.log('keep-alive callback canceled.', timeoutKey);
+            timeoutKey = null;
         }
-        if(now) {
+        if (now) {
             timeoutCallback();
         } else {
             timeoutKey = window.setTimeout(timeoutCallback, DELAY);

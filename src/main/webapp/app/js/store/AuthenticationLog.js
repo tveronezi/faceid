@@ -18,5 +18,6 @@
 
 Ext.define('faceid.store.AuthenticationLog', {
     extend: 'Ext.data.Store',
-    model: 'faceid.model.AuthenticationLog'
+    model: 'faceid.model.AuthenticationLog',
+    autoLoad: false
 });

@@ -150,11 +150,12 @@
                 'faceid-portlet-users': {
                     refreshpanel: function () {
                         me.getUsersStore().load();
+                    },
+                    'render': function () {
+                        me.getUsersStore().load();
                     }
                 }
             });
-
-            me.getUsersStore().load();
         }
     });
 }());

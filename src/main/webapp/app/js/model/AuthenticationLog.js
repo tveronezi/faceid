@@ -22,7 +22,6 @@ Ext.define('faceid.model.AuthenticationLog', {
         name: 'timestamp',
         type: 'int'
     }, 'account', 'type'],
-
     proxy: {
         type: 'rest',
         reader: {

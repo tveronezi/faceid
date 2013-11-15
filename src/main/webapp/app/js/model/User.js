@@ -19,7 +19,6 @@
 Ext.define('faceid.model.User', {
     extend: 'Ext.data.Model',
     fields: ['id', 'name', 'account', 'password', 'groups'],
-
     proxy: {
         type: 'rest',
         reader: {
