@@ -51,9 +51,25 @@
         window.console.log('keep-alive callback created.', timeoutKey);
     }
 
+    function connectSocket() {
+        var location = window.location;
+        var wsPath = 'ws://' + location.hostname + ':' + location.port + window.ROOT_URL + 'ws/connection';
+        var connection = new window.WebSocket(wsPath);
+        connection.onopen = function () {
+            window.console.log('WebSocket: connection started.');
+        };
+        connection.onerror = function (error) {
+            window.console.log('WebSocket: Error ' + error);
+        };
+        connection.onmessage = function (e) {
+            window.console.log('WebSocket: message -> ' + e.data);
+        };
+    }
+
     Ext.define('faceid.controller.KeepAlive', {
         extend: 'Ext.app.Controller',
         init: function () {
+            connectSocket();
             scheduleNext(true);
             Ext.Ajax.on('beforerequest', function () {
                 scheduleNext();

@@ -50,6 +50,9 @@ class UserImpl {
     @EJB
     private BaseEAO baseEAO
 
+    @EJB
+    private Connections connections
+
     @Inject
     private StringEncrypt encrypt
 
@@ -199,6 +202,7 @@ class UserImpl {
             if (LOG.isInfoEnabled()) {
                 LOG.info("User confirmed. Account: ${confirmation.user.account}")
             }
+            connections.sendToAll("User confirmed: '${confirmation.user.account}'")
         } else {
             LOG.warn("'from' does not match account. Account: ${confirmation.user.account}. from: ${from}")
         }

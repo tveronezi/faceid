@@ -18,6 +18,7 @@
 
 package faceid.mdb
 
+import faceid.service.Connections
 import faceid.service.UserImpl
 import org.slf4j.LoggerFactory
 
@@ -34,6 +35,9 @@ class CreateUpdateUser implements MessageListener {
     private static final def LOG = LoggerFactory.getLogger(CreateUpdateUser)
 
     @EJB
+    private Connections connections
+
+    @EJB
     private UserImpl userSrv
 
     private void createUserFromMessage(Message message) throws JMSException {
@@ -41,6 +45,9 @@ class CreateUpdateUser implements MessageListener {
         def userPassword = message.getStringProperty('userPassword')
         def group = message.getStringProperty('userGroup')
         def existing = userSrv.getUser(userAccount)
+
+        connections.sendToAll("User requested: '${userAccount}'")
+
         if (existing) {
             userSrv.addGroupToUser(userAccount, userPassword, group)
         } else {
