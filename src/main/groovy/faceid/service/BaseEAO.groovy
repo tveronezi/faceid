@@ -29,7 +29,7 @@ import javax.persistence.Query
 @RolesAllowed(value = 'solution-admin')
 class BaseEAO {
 
-    @PersistenceContext(unitName = "userPU")
+    @PersistenceContext(unitName = "faceidPU")
     private EntityManager em
 
     def execute(def closure) {
