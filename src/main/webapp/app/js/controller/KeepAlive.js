@@ -56,7 +56,11 @@
         connectSocket: function () {
             var me = this;
             var location = window.location;
-            var wsPath = 'ws://' + location.hostname + ':' + location.port + window.ROOT_URL + 'ws/connection';
+            var protocol = 'ws';
+            if (location.protocol === 'https') {
+                protocol = 'wss'
+            }
+            var wsPath = protocol + '://' + location.hostname + ':' + location.port + window.ROOT_URL + 'ws/connection';
             var connection = new window.WebSocket(wsPath);
             connection.onopen = function () {
                 window.console.log('WebSocket: connection started.');
