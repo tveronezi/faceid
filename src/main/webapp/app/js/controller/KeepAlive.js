@@ -57,7 +57,7 @@
             var me = this;
             var location = window.location;
             var protocol = 'ws';
-            if (location.protocol === 'https') {
+            if (location.protocol === 'https:' || location.protocol === 'https') {
                 protocol = 'wss';
             }
             var wsPath = protocol + '://' + location.hostname + ':' + location.port + window.ROOT_URL + 'ws/connection';
